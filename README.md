@@ -1,3 +1,9 @@
+## Requirements
+
+1. MySQL
+2. Postgres
+3. Sphinx
+
 ## Installation
 
 1. `git clone git@github.com:open-cook/ok-2018.git open-cook.ru`
