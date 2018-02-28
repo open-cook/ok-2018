@@ -18,7 +18,7 @@
 6. `DEPLOY_ENV=production ruby deploy.rb dump_db`
 7. `DEPLOY_ENV=production ruby deploy.rb dump_files`
 
-### Becoming a deployer
+## Becoming a deployer
 
 1. [How to generate a new ssh key Manual](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/#generating-a-new-ssh-key)
 2. `mkdir -p ~/.ssh/ && cd ~/.ssh`
