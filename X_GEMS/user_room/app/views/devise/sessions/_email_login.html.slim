@@ -1,0 +1,48 @@
+- intro_visible   = 'display:none' if  visible
+- content_visible = 'display:none' if !visible
+- gray_style = 'form-classic--lightgray-theme' if !visible
+
+.form-classic@registration-accordion(class=gray_style)
+  @registration-accordion--intro(style=intro_visible)
+
+    @registration-accordion--switcher
+      input#accounted-off-always.radio-btn(type='checkbox' autocomplete='off')
+      label(for='accounted-off')
+        span.fs16 У меня уже есть учетная запись на OPEN-COOK.RU
+
+  @registration-accordion--content(style=content_visible)
+    .table.w100p
+      .row
+        .cell.pl10
+          p.mt0 У меня уже есть учетная запись
+
+          = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+
+            .mb15.clearfix
+              .pull-left.mr20.mb5
+                = f.label :email, 'Ваша электронная почта', class: 'block fs14 lh120 mb5 '
+                = f.text_field :email, value: '', autofocus: true, class: 'ptz--input ptz--size-14 w250'
+
+              .pull-left.mr20.mb5
+                = f.label :password, 'Ваш пароль', class: 'block fs14 lh120 mb5 '
+                = f.password_field :password, value: '', autocomplete: :off, class: 'ptz--input ptz--size-14 w250'
+
+            .clearfix
+              - if devise_mapping.rememberable?
+                .mb15.clearfix.mb0
+                  = f.check_box :remember_me, { checked: true, autocomplete: :off }
+                  ' &nbsp;
+                  span.fs13= t('devise.sessions.remember_me')
+
+              .pull-left.mr20.mb5
+                = f.submit t('devise.sessions.login'), class: 'ptz--btn ptz--size-14 ptz--style-0--btn w100'
+
+        .cell.w50p.pl30
+          p.mt0 Подсказка:
+          p.fs14.mt0.mb10 &mdash; <span class='b'>Забыли пароль?</span> Запросите одноразовую ссылку для входа ниже.
+          p.fs14.mt0.mb10 &mdash; После входа пароль можно сменить в личном кабинете
+          p.fs14.mt0.mb10 &mdash; Особенно удобно пользоваться входом через социальные сети
+
+  / .cell.pl0.pt10.pr10.w40
+  /   input#accounted-on-always.radio-btn(type='checkbox' checked='checked' autocomplete='off')
+  /   label(for='accounted-on')

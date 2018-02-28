@@ -1,0 +1,16 @@
+- if object.avatar.blank?
+  = form_for object, html: { enctype: 'multipart/form-data', class: 'form-classic' } do |f|
+    = render partial: 'notifications/form', locals: { object: object, format: :json }
+
+    .mb15
+      .block.fs14.lh120.mb10 Загрузите главное изображение
+
+    .mb15
+      = f.file_field :avatar, class: 'ptz--input ptz--size-12'
+
+    .form-classic--actions
+      = f.submit 'Загрузить', class: 'ptz--btn ptz--size-14'
+
+- else
+  = render partial: 'user_room/avatar/toolbar', locals: { object: object }
+

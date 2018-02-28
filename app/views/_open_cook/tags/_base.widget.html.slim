@@ -1,0 +1,7 @@
+- if post.tags.present?
+  - post.tags.each do |tag|
+    = link_to tag_path(tag.name), class: 'fs14 di mr20 nobr' do
+      .fa.fa-tag.fs13
+      '
+      = tag.name
+    '

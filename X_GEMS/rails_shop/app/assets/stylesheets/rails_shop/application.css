@@ -1,0 +1,50 @@
+/*
+  #= require ptz/reset
+  #= require ptz/base
+  #= require ptz/framework
+
+  #= require ptz/inputs-buttons/base
+  #= require ptz/inputs-buttons/sizes
+  #= require ptz/inputs-buttons/icons
+
+  #= require protozaur_theme/theme-0/radio-buttons
+  #= require protozaur_theme/theme-0/styles
+  #= require protozaur_theme/theme-0/table-light
+  #= require protozaur_theme/theme-0/paginator
+  #= require protozaur_theme/theme-0/content-typography
+
+  #= require user_room/layout/user-room-header
+  #= require user_room/social-login-btn
+
+  #= require layouts/table-holy-grail/styles
+
+  #= require crop_tool/crop_tool
+  #= require crop_tool/jcrop/jquery.Jcrop
+
+  #= require ./main/link-marker
+  #= require ./main/user
+  #= require ./main/shop-header
+  #= require ./main/shop-sub-header
+
+  #= require ./main/info-block
+  #= require ./main/catalog-menu
+  #= require ./main/products-list
+  #= require ./main/product-breadcrumbs
+  #= require ./main/product-card
+  #= require ./main/product-delivery
+  #= require ./main/shop-cart
+
+  #= require ./main/cart-delivery-info
+  #= require ./main/payment-systems
+  #= require ./main/order-process-steps
+
+  #= require notifications/vendors/toastr
+  #= require ./main/gem-notifications
+  #= require ./main/notifications
+
+  #= require ./main/content-style-default
+  #= require ../../javascripts/vendors/custom_select/custom_select
+
+  #= require _open_cook/section-switcher
+  #= require ./main/shop-footer
+*/

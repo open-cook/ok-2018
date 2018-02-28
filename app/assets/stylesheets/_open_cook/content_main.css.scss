@@ -1,0 +1,167 @@
+.vk-like--right-fix div{
+  margin-left: 15px
+}
+
+.day-recipe--img-link{
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  border-radius: 2px;
+  display: block;
+  height: 138px;
+  width: 178px;
+}
+
+.ok-in-web--link{
+  font-family: Georgia;
+  font-style: italic;
+  font-size: 16px;
+  display: inline-block;
+  height: 32px;
+  line-height: 32px;
+}
+
+.product-block-{
+  display: block;
+  background: #f1f1f1;
+  border: 1px solid #cdcdcd;
+  border-radius: 4px;
+  padding: 20px 15px;
+  overflow: hidden;
+  text-decoration: none;
+
+  &:hover{ text-decoration: none !important }
+
+  &-img{
+    width: 120px;
+    height: 120px;
+
+    float: left;
+
+    overflow: hidden;
+    border-radius: 120px;
+
+    display: block;
+    border: 1px solid #cdcdcd;
+
+    img{
+      width: 120px;
+      height: 120px;
+    }
+  }
+
+  &-content{
+    margin-left: 150px;
+  }
+
+  &-title{
+    color: #ad181c;
+    font-size: 11px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  &-text{
+    color: #000;
+    font-size: 16px;
+    margin: 20px 0;
+    text-transform: uppercase;
+  }
+
+  &-btn{
+    color: white;
+    background: #ad181c;
+    border: 1px solid #ad181c;
+
+    font-size: 11px;
+    padding: 3px 5px;
+
+    border-radius: 3px;
+    display: inline-block;
+    float: right;
+    transition: color .2s ease, border-color .2s ease, background-color .2s ease;
+
+    &:hover{
+      color: #ad181c;
+      background: white;
+      border-color: lightgray;
+    }
+  }
+}
+
+
+main{
+  article{
+    margin-bottom: 10px;
+
+    .h2, .goto{
+      a{ text-decoration: underline; }
+      a:hover{ text-decoration: none; }
+    }
+
+    .goto{
+      a{
+        font-size: 15px;
+        display: inline-block;
+        border: 1px solid #d3d3d3;
+
+        padding: 7px 15px;
+        background: #efefef;
+        border-radius: 2px;
+      }
+    }
+
+    .preview{
+      margin: 0 10px 10px 0;
+    }
+  }
+}
+
+
+.comments{
+  .comment{
+    time{ font-size: 11px; float:right; margin-right: 10px; }
+
+    p{
+      margin-bottom: 5px;
+      line-height: 170%;
+      font-size: 1.3em;
+    }
+  }
+}
+
+p{
+  margin-bottom: 5px;
+  line-height: 170%;
+  font-size: 1.3em;
+}
+
+.text_input{
+  border: 1px solid lightgray;
+  border-radius: 2px;
+  font-size: 1.4em;
+  padding: 2%;
+  width: 94%;
+}
+
+.show_all_comments-notice {
+  padding: 25px;
+  border: 5px solid rgb(208, 39, 24);
+}
+
+.show_all_comments {
+  box-shadow: rgb(245, 151, 142) 0px 1px 0px 0px inset;
+  background: linear-gradient(rgb(242, 69, 55) 5%, rgb(198, 45, 31) 100%) rgb(242, 69, 55);
+  border-radius: 6px;
+  border: 1px solid rgb(208, 39, 24);
+  display: inline-block;
+  cursor: pointer;
+  color: rgb(255, 255, 255);
+  font-family: Arial;
+  font-size: 30px;
+  padding: 25px;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: rgb(129, 14, 5) 0px 1px 0px;
+}

@@ -1,0 +1,18 @@
+:javascript
+  var CKEDITOR_BASEPATH = "/javascripts/ckeditor/";
+
+= javascript_include_tag "ckeditor/ckeditor"
+= javascript_include_tag "bootstrap_default/addons/ckeditor_custom_handlers"
+
+%main
+  .content_widgets@content_widgets
+
+  .toolbar@toolbar
+    .tool.append.ck_editor Editor
+    .tool.append.photo_set Photo Set
+
+  .hidden
+    = form_for AttachedFile.new, url: photo_set_uploader_attached_files_path, html: { id: nil, class: :photo_set_uploader_form, multipart: true } do |f|
+      = hidden_field_tag :storage_id,   @pub.to_param
+      = hidden_field_tag :storage_type, @pub.class
+      = file_field_tag 'files[]', multiple: true, autocomplete: :off

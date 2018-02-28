@@ -1,0 +1,7 @@
+en:
+  the_audit: 
+    list: All records
+    edit: Edit record
+    save: Save
+    list_title: Audit
+    show_record: Show audit record

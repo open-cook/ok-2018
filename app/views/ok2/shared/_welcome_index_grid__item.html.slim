@@ -1,0 +1,22 @@
+.welcome-index-grid--item
+  .welcome-index-grid--img.tac
+    = link_to pub, alt: pub.title, title: pub.title, class: 'welcome-index-grid--img-a' do
+      = image_tag pub.main_image(:base), alt: pub.title, title: pub.title
+  h2.welcome-index-grid--title
+    = link_to pub.title, pub
+  .welcome-index-grid--more
+    = link_to raw('Читать далее &raquo;'), pub, class: 'ptz--btn ptz--size-14'
+
+  .welcome-index-grid--stats
+    - if pub.comments_sum > 0
+      = link_to polymorphic_path(pub, anchor: :comments), alt: 'Комментарии', title: 'Комментарии', class: 'welcome-index-grid--stats-item mr20' do
+        i.fa.fa-comments-o.mr5
+        = pub.comments_sum
+
+    = link_to polymorphic_path(pub), alt: 'Просмотров', title: 'Просмотров', class: 'welcome-index-grid--stats-item' do
+      i.fa.fa-eye.mr5
+      = pub.show_count
+
+  .welcome-index-grid--social
+    .welcome-index-grid--social-item.clearfix
+      .pull-left.ml70=  render partial: 'layouts/items/vk.like',  locals: { pub: pub }

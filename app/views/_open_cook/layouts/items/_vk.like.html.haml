@@ -1,0 +1,16 @@
+- if true #Rails.env.production?
+  - url = if pub.legacy_url.present?
+    -# polymorphic_url(pub, id: pub.legacy_url, format: nil)
+    - "https://open-cook.ru/recipes/#{ pub.legacy_url }"
+  - else
+    - polymorphic_url(pub, host: 'https://open-cook.ru')
+
+  - prefix   = local_assigns[:prefix] ? prefix : ''
+  - vkid     = "#{ prefix }_vk_like_#{ pub.class.to_s }_#{ pub.id }"
+  - vk_title = CGI.escapeHTML pub.title
+  - vk_text  = CGI.escapeHTML( Sanitize.clean(pub.intro, {}).noendl.strip[0..140] )
+  - vk_image = image_url(pub.main_image.url(:original)) if pub.main_image.present?
+  - type     = local_assigns[:type]   ? type   : 'button'
+  - height   = local_assigns[:height] ? height : '24'
+
+  .vk_like{ id: vkid, url: url, title: vk_title, text: vk_text, image: vk_image, type: type, height: height }

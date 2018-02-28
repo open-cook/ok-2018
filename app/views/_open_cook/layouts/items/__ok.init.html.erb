@@ -1,0 +1,29 @@
+<script type="text/javascript">
+  setTimeout(function(){
+    log('OK init');
+
+    !function (d, id, did, st) {
+      var id = 'ok-script';
+      return if (d.getElementById(id));
+
+      var js = d.createElement("script");
+      js.id  = id;
+      js.setAttribute('type', 'text/javascript');
+      js.src = "https://connect.ok.ru/connect.js";
+
+      js.onload = js.onreadystatechange = function () {
+      if (!this.readyState || this.readyState == "loaded" || this.readyState == "complete") {
+        if (!this.executed) {
+          this.executed = true;
+
+          setTimeout(function() {
+            window.OK_Social_widgets.group()
+            window.OK_Social_widgets.likes()
+          }, 0);
+        }
+      }}
+      d.documentElement.appendChild(js);
+    }(document);
+
+  }, 2000)
+</script>

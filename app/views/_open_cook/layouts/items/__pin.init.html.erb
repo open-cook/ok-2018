@@ -1,0 +1,18 @@
+<script type="text/javascript">
+  setTimeout(function(){
+    log('PIN init');
+
+    !function (d, id, did, st) {
+      var id = 'pin-script';
+      if (d.getElementById(id)) return;
+
+      var js = d.createElement("script");
+      js.id  = id;
+      js.src = '//assets.pinterest.com/js/pinit.js';
+      js.setAttribute('type', 'text/javascript');
+
+      d.documentElement.appendChild(js);
+    }(document);
+
+  }, 2000)
+</script>

@@ -1,0 +1,47 @@
+.sessions.new{
+  .login_form{
+    margin-bottom: 50px;
+    td{ padding: 15px; }
+    td.first{ border-right: 1px solid #ccdae7; }
+  }
+  .social_login{
+    text-align: center;
+    margin-bottom: 50px;
+
+    a{
+      display: inline-block;
+      width: 75px; height: 75px;
+      margin: 0 20px;
+      background: image-url('social_icons.png') no-repeat scroll center center transparent;
+    }
+    .vk{ background-position: 0      0; }
+    .ok{ background-position: -84px  0; }
+    .fb{ background-position: -168px 0; }
+    .tw{ background-position: -251px 0; }
+    .gp{ background-position: -334px 0; }
+  }
+
+  .delimiter{
+    color: #b61a1e;
+    font-size: 1.3em;
+    text-align: center;
+    position: relative;
+    margin-bottom: 25px;
+
+    span{
+      display: inline-block;
+      position: relative;
+
+      &:before, &:after{
+        top: 50%;
+        content: '';
+        width: 350px;
+        display: block;
+        position: absolute;
+        border-bottom: 1px solid #CCDAE7;
+      }
+      &:before{ right: 40px; }
+      &:after { left:  40px; }
+    }
+  }
+}

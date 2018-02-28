@@ -1,0 +1,14 @@
+ruby:
+  prevs   = hub.recipes.where("id < ?", pub.id).published.limit(3)
+  nexts   = hub.recipes.where("id > ?", pub.id).published.limit(3)
+  recipes = (nexts | prevs)[0..2]
+
+- if recipes.count > 0
+  .same-recipes.tac
+    .same-recipes--title.fs15.lh120.mt10.mb15 Ух ты! Что-то вкусненькое!
+
+    - recipes.each do |recipe|
+      .same-recipes--item.tac.mt10.mb20.ml15.mr15
+        = link_to recipe, class: 'same-recipes--a' do
+          = image_tag recipe.main_image.url(:preview), class: 'same-recipes--img'
+          .same-recipes--a-text.mt10.fs13= recipe.title

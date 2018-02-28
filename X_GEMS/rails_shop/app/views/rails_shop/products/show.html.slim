@@ -1,0 +1,78 @@
+- content_for :meta_data do
+  = render template: 'rails_shop/meta_data/product', locals: { object: @product }
+
+= render template: 'rails_shop/layouts/items/header_footer'
+
+ul.product-breadcrumbs.mt20.mb10
+  li.product-breadcrumbs--item= link_to 'Магазинчик Ани Нечаевой', '/shop', class: 'product-breadcrumbs--link'
+
+  li.product-breadcrumbs--item
+    - pcs = @product.product_categories.published.map do |pc|
+      - link_to pc.title, pc, class: 'product-breadcrumbs--link'
+    = raw pcs.join("<span class='product-breadcrumbs--link'> | </span>")
+
+  li.product-breadcrumbs--item
+    .product-breadcrumbs--link= @product.title
+
+h1.fs24.mt10.mb20= @product.title
+
+.product-card.table.w100p
+  .row
+    .product-card--image-block.cell
+      - img = @product.main_image.url(:v500x500)
+      .product-card--image(style="background-image:url(#{ img })")
+
+      .product-delivery
+        .product-delivery--title.mb25 Варианты доставки товаров
+        .product-delivery--item.lh140.fs14 250 руб. &mdash; Почта России. Посылка.
+        .product-delivery--item.lh140.fs14 100 руб. &mdash; Почта России. Письмо. <b>Только наклейки и пакетики.</b>
+        .product-delivery--item.lh140.fs14 50 руб. &mdash; Самовывоз. г. Иваново, <nobr>Ивановская обл.</nobr> <nobr>Выдача в ТРЦ "Тополь"</nobr> <nobr>(ул. Лежневская, д. 55).</nobr> <nobr>1 раз в неделю. Вторник в 19:00.</nobr>
+        .product-delivery--item.lh140.fs14 50 руб. &mdash; Самовывоз. г. Иваново, <nobr>Ивановская обл.</nobr> <nobr>Выдача в ТРЦ "РИО"</nobr> <nobr>(Кохомское шоссе, 1д).</nobr> <nobr>1 раз в неделю. Четверг в 19:00.</nobr>
+        .product-delivery--item.lh140.fs14 0 руб. Самовывоз. г.Кохма, Ивановская обл. Остановка "Рабочий поселок", у входа в магазин "Магнит. У дома."
+
+
+      - if current_user.try(:rails_shop_admin?)
+        .mt20.mb20
+          = link_to 'Редактировать товар', [:edit, @product], class: 'ptz--btn ptz--size-12'
+
+    .product-card--text.cell.w75p
+      .content-style-default
+        = raw @product.content
+
+        - if @product.dimensions.present? || @product.equipment.present? || @product.sku.present?
+          h4.b.mt20.mb20 Дополнительная информация
+
+          table.table-light--table.w100p
+            - if @product.dimensions.present?
+              tr.table-light--tr
+                td.table-light--td Размеры (см)
+                td.table-light--td.w50p= @product.dimensions
+
+            - if @product.equipment.present?
+              tr.table-light--tr
+                td.table-light--td Комплектация
+                td.table-light--td.w50p= @product.equipment
+
+            - if @product.sku.present?
+              tr.table-light--tr
+                td.table-light--td Артикул
+                td.table-light--td.w50p= @product.sku
+
+    .product-card--price-block.cell.w25p
+      .product-card--price-title.fs20.mb20 цена:
+      .product-card--price-val.mt20.mb20.fs24.pl15
+        = money_to_text @product.price
+        '
+        | руб.
+
+      .product-card--buy-btn.mt20.mb40
+        = render partial: 'carts/vacation_message'
+        / = render partial: 'to_cart_block', locals: { product: @product }
+
+      - if @product.price_text.present?
+        .product-card--price-val-ext.fs15= @product.price_text
+
+      - if @product.equipment.present?
+        .product-card--available.fs13= @product.equipment
+
+      .product-card--available.fs13 На складе: #{ @product.amount }

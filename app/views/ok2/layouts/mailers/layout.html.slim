@@ -1,0 +1,21 @@
+= render template: 'layouts/mailers/common_styles'
+
+center.ma.letter--bg.pt30.pb30
+  .w800.letter--block
+
+    .letter--head.tac
+      = link_to 'https://open-cook.ru', class: :iblock do
+        = image_tag attachments['ok_logo.png'].url, class: 'm20'
+      = link_to 'https://open-cook.ru/shop', class: :iblock do
+        = image_tag attachments['ok_shop_logo.png'].url, class: 'm20'
+
+    = yield
+
+    .letter--footer
+      .letter-body--text.fs13
+        = link_to 'OPEN-COOK.RU', 'https://open-cook.ru', class: 'letter-link fs13 arial'
+        '
+        | &mdash;
+        '
+        | Кулинарный проект Анны Нечаевой, который содержит сотни проверенных рецептов на каждый день.
+        .tac 2011 &mdash; #{ Time.now.year } гг.

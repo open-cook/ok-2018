@@ -1,0 +1,56 @@
+header{
+  font-size: 1.4em;
+  background: none repeat scroll 0 0 #ddd;
+  border-bottom: 3px solid gray;
+  margin-bottom: 10px;
+  padding: 5px;
+  padding-left: 10px;
+
+  a{
+    color: black;
+    margin-right: 35px;
+    text-decoration: none;
+  }
+}
+
+.about.open_cook{
+  width: 100%;
+  height: 130px;
+  position: relative;
+
+  a{
+    display: block;
+    height: 130px;
+    background: image-url('/default_images/open-cook-ru.png') no-repeat scroll center center transparent;
+  }
+  p{
+    position: absolute;
+    top: 105px; right: 146px;
+    height: 17px;
+    width:100%;
+    overflow:hidden;
+    font-size: 12px;
+    text-align: right;
+    font-style: italic;
+  }
+}
+
+footer{
+  border-radius: 3px;
+
+  .counters a{
+    margin-right: 20px;
+  }
+  p{
+    font-size: 1.3em;
+    margin: 10px 0;
+  }
+}
+
+.decor--div--style-0{
+  color: red;
+
+  &:hover{
+    text-decoration: underline;
+  }
+}

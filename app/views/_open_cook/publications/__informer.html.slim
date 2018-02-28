@@ -1,0 +1,21 @@
+- cache pub.cache_key, expires_in: 10.minutes do
+  .pub-informer.fs13
+    .pull-left
+      .ok-vk-like= render partial: 'layouts/items/vk.like', locals: { pub: pub }
+
+    - if pub.published_at
+      .pull-right
+        = raw I18n.l(pub.published_at, format: raw("%-d %B %Y &nbsp;%H:%M"))
+
+    .pull-right.mr25.pub-informer--comments(alt='Комментарии' title='Комментарии')
+      = link_to polymorphic_path(pub, anchor: :comments) do
+        i.fa.fa-comments-o.mr5
+        = pub.comments_sum
+
+    .pull-right.mr15.pub-informer--counter(alt='Просмотры' title='Просмотры')
+      i.fa.fa-eye.mr5
+      = pub.show_count
+
+
+
+

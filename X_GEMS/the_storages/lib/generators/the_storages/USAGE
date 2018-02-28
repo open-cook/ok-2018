@@ -1,0 +1,14 @@
+Description:
+  TheStorages generator will copy files to organize file uploads in your web project
+
+This text:
+  bundle exec rails g the_storages --help
+
+Generators:
+  bundle exec rails g the_storages install
+
+  This will create:
+   config/initializers/the_storages.rb
+
+Migrations:
+  bundle exec rake the_storages_engine:install:migrations

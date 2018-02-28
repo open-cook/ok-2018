@@ -1,0 +1,12 @@
+%table.table
+  %tr
+    %td
+      %p © 2001 — #{ Time.now.year }
+
+  -#
+    - if !(spages = system_pages).blank?
+      %tr
+        %td
+          %ul.nav.nav-pills.nav-justified
+            - spages.each do |page|
+              %li= link_to page.title, page_url(page.slug)

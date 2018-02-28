@@ -1,0 +1,26 @@
+- if @post_hubs.present?
+  - content_for :sidebar do
+    %h3 Статьи
+    - @post_hubs.each do |hub|
+      %p= link_to hub.title  + ' ' + hub.pubs_published_count.to_s , hub
+
+- @posts.each do |post|
+  .panel.panel-success
+    .panel-heading
+      %h3
+        = link_to post.title, show_url(post)
+        (#{ post.state })
+    .panel-body
+      %p
+        - if post.main_image?
+          = link_to show_url(post) do
+            %span{ style: "float: left; margin: 0 10px 10px 0;" }= image_tag post.main_image.url(:preview), class: :preview
+
+        = raw post.intro
+      = render partial: "posts/read_more", locals: { post: post }
+
+    .panel-footer
+      .tags= tags_links(post.inline_tags)
+      = render partial: "posts/informer", locals: { post: post }
+
+= paginate @posts

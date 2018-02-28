@@ -1,0 +1,21 @@
+.aside-informer
+  .aside-informer--title Поиск по тегам
+
+  .aside-informer--content.ob
+    .fs15.mb15
+      input.w100p.ptz--input.ptz--size-12@tags-search--tag-word(placeholder='Что вы ищите?')
+
+
+
+    @tags-search--tag-result
+    @tags-search--tag-storage.hidden(style='display:none')
+      - tags = ActsAsTaggableOn::Tag.all.sort{ |a,b| a.name <=> b.name }
+      - tags.each do |tag|
+        .mb10@tags-search--tag(data={ tag: tag.name })
+          .nobr
+            = link_to tag_path(tag.name), class: 'fs14' do
+              .fa.fa-tag.fs13
+              '
+              = tag.name
+
+    / .all.aside_header= link_to 'Показать все теги', '#'

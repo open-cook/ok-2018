@@ -1,0 +1,7 @@
+.aside_block
+  %p.aside_header Навигация
+  .m10.ofh
+    %p= link_to 'Мой кабинет', cabinet_url
+    - if @pub && current_user.owner?(@pub)
+      %p= link_to 'Редактировать', [:edit, @pub]
+    %p= link_to "Новых комментариев (#{ @user.draft_comcoms_count })", [:manage, :comments]

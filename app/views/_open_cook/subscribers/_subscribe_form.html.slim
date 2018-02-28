@@ -1,0 +1,16 @@
+.aside-informer
+  .aside-informer--title.lh120
+    | Подписка на Новости
+    br
+    | OPEN-COOK.RU
+  .aside-informer--content.ob
+    = form_tag add_subscriber_path, remote: true, data: { role: :JODY_form } do
+      .mb10
+        = text_field_tag :email, nil, class: 'ptz--input ptz--size-12 w100p', placeholder: t('subscribers.form_placeholder')
+      .mb10
+        = submit_tag t('subscribers.form_title'), class: 'ptz--btn ptz--size-14'
+      .fs12
+        | Активных подписчиков:
+        - cache("mail_chimp_active_subscribers", expires_in: 30.minutes) do
+          '
+          span.b= MailChimpModel.total

@@ -1,0 +1,15 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: open_cook_dev
+  username: the-teacher
+  password: qwerty
+  pool: 5
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: open_cook_test
+  username: the-teacher
+  password: qwerty
+  pool: 5

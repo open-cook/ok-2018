@@ -1,0 +1,18 @@
+- content_for :express_nav do
+  %p= link_to t('app.cabinet'), cabinet_url, class: 'btn btn-default'
+
+  %p= link_to t(:show, scope: @pub.class.table_name), url_for(@pub), class: 'btn btn-warning'
+  %p= link_to "Печать", [@pub, :print], class: 'btn btn-default'
+  %p= link_to "SLUG", [@pub, :slug], class: 'btn btn-default', data: { confirm: "Смена символьной метки у опубликованной статьи повлияет на доступность статьи по текущему адресу. Вы уверены, что хотите изменить SLUG?" }
+  %p= link_to "Стиль отображения", [@pub, :view_templates], class: 'btn btn-default'
+
+  - if current_user.admin?
+    %hr
+    %p= link_to "Мета Данные", [:edit, @pub.meta_data], class: 'btn btn-info'
+
+%h1= t :edit, scope: @pub.class.table_name
+
+= render 'publications/form'
+
+= render partial: 'the_storages/form', locals: { storage: @pub }
+= render partial: 'the_storages/list', locals: { storage: @pub }

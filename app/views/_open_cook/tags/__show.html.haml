@@ -1,0 +1,37 @@
+-# LEFT SIDEBAR
+- content_for :left_sidebar do
+  = render template: 'layouts/items/day_recipe'
+
+  - cache(:recent_comments_widget, expires_in: 12.minutes) do
+    = render partial: 'comments/recent.widget'
+
+  - cache(:top_10_widget, expires_in: 6.hours) do
+    = render partial: 'layouts/items/top'
+
+-# RIGHT SIDEBAR
+- content_for :right_sidebar do
+  = render partial: 'tags/search.widget'
+
+  - cache(:site_stats, expires_in: 15.minutes) do
+    = render partial: 'layouts/items/stat'
+
+- content_for :top_menu do
+  = render partial: 'layouts/items/top_menu'
+
+- content_for :breadcrumbs do
+  .pub-breadcrumbs
+    = link_to 'open-cook.ru', root_path, class: 'pub-breadcrumbs--item'
+    .pub-breadcrumbs--item &nbsp;&raquo;&nbsp;
+    .pub-breadcrumbs--item Тег
+    .pub-breadcrumbs--item &nbsp;&raquo;&nbsp;
+    .pub-breadcrumbs--item= @tag
+
+- if @taggings.blank?
+  %p.h2 Увы, здесь пока ничего нет
+- else
+  = paginate @taggings
+
+  - @taggings.each do |rel|
+    = render partial: 'publications/intro_block', locals: { pub: rel.published_pub }
+
+  = paginate @taggings

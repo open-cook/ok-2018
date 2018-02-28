@@ -1,0 +1,6 @@
+= form_tag search_orders_path, method: :get, enforce_utf8: false do
+  .nobr.fs0
+    = text_field_tag :number, params[:number], class: 'ptz--input ptz--size-15 w200', placeholder: 'Номер заказа'
+
+    = button_tag type: :submit, class: 'ptz--btn ptz--size-15 ptz--btn--side-right' do
+      | Найти заказ

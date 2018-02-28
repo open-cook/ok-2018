@@ -1,0 +1,37 @@
+# See http://www.robotstxt.org/wc/norobots.html for documentation on how to use the robots.txt file
+#
+# To ban all spiders from the entire site uncomment the next two lines:
+# User-agent: *
+# Disallow: /
+
+Host: https://open-cook.ru
+
+#########################
+# All User Agents
+#########################
+
+User-Agent: *
+
+# Site urls
+Disallow: /search/
+Disallow: /hubs/*
+Disallow: /tag/*
+Disallow: /users/*
+
+# Pagination
+Disallow: /*page=
+
+#########################
+# Yandex
+#########################
+
+User-Agent: Yandex
+
+# Site urls
+Disallow: /search/
+Disallow: /hubs/*
+Disallow: /tag/*
+Disallow: /users/*
+
+# Pagination
+Disallow: /*page=

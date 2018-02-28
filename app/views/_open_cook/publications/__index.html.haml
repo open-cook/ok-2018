@@ -1,0 +1,86 @@
+-# META
+- content_for :meta_data do
+  - if controller_name == 'hubs'
+    = render template: "meta_data/hubs/show", locals: { post: @hub }
+  - else
+    = render template: "meta_data/default"
+
+- content_for :header do
+  = render template: 'ok2/layouts/items/header', locals: { current_section: :main }
+
+- content_for :footer do
+  = render template: 'ok2/layouts/items/footer'
+
+-# FOOTER
+/ - content_for :footer_js do
+/   = render partial: 'layouts/items/vk.init'
+/   = render partial: 'layouts/items/ok.init'
+
+-# LEFT SIDEBAR
+- content_for :left_sidebar do
+  - unless %w[ interviews intervyu ].include? @hub.try(:slug).try(:downcase)
+    = render template: 'layouts/items/day_recipe'
+
+  - cache(:recent_comments_widget, expires_in: 12.minutes) do
+    = render partial: 'comments/recent.widget'
+
+  - cache(:top_10_widget, expires_in: 6.hours) do
+    = render partial: 'layouts/items/top'
+
+  - cache(:site_stats, expires_in: 15.minutes) do
+    = render partial: 'layouts/items/stat'
+
+-# RIGHT SIDEBAR
+- content_for :right_sidebar do
+  = render partial: 'layouts/items/vk.group'
+  %br
+  = render partial: 'layouts/items/ok.group'
+  %br
+  = render partial: 'layouts/items/ok_in_web'
+
+  = render partial: 'subscribers/subscribe_form'
+
+  - cache(:tags_search_widget_index, expires_in: 15.minutes) do
+    = render partial: 'tags/search.widget'
+
+-# BREADCRUMBS
+- content_for :top_menu do
+  = render partial: 'layouts/items/top_menu'
+
+- content_for :breadcrumbs do
+  - if @hub
+    .pub-breadcrumbs
+      = link_to 'open-cook.ru', root_path, class: 'pub-breadcrumbs--item'
+      .pub-breadcrumbs--item &nbsp;&raquo;&nbsp;
+      %h1.pub-breadcrumbs--item= link_to @hub.title, @hub
+
+  - elsif @squery
+    .pub-breadcrumbs
+      = link_to 'open-cook.ru', root_path, class: 'pub-breadcrumbs--item'
+      .pub-breadcrumbs--item &nbsp;&raquo;&nbsp;
+      .pub-breadcrumbs--item Поиск
+      .pub-breadcrumbs--item &nbsp;&raquo;&nbsp;
+      .pub-breadcrumbs--item= @squery
+
+  - else
+    .w1000.ma.mt25.mb20.clearfix
+      %h1.tac.fs30.fwn.i.pt20.pb25.ffg{ style: 'color:#024e9f' } Откртытая Кухня Анны Нечаевой
+
+-# MAIN CONTENT
+- if @pubs.blank?
+  %p.h2 Увы, здесь пока ничего нет
+- else
+  .mb20
+    - if controller_name == 'welcome' && action_name == 'index'
+      - cache_name = Digest::MD5.hexdigest( @pubs.map{|o| o.publication.cache_key }.join )
+      - cache cache_name, expires_in: 15.minutes do
+        - @pubs.each do |pub|
+          = render partial: 'publications/intro_block', locals: { pub: pub.publication }
+    - else
+      - cache_name = Digest::MD5.hexdigest( @pubs.map{|o| o.cache_key }.join )
+      - cache cache_name, expires_in: 15.minutes do
+        - @pubs.each do |pub|
+          = render partial: 'publications/intro_block', locals: { pub: pub }
+
+    - if (products_paginator = paginate @pubs, views_prefix: 'protozaur_theme/paginator').present?
+      .mb20= products_paginator

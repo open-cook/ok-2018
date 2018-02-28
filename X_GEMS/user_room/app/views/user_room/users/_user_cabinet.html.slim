@@ -1,0 +1,60 @@
+= render partial: 'user_room/users/header_footer'
+
+- content_for :left_sidebar do
+  = render partial: 'user_room/users/left_sidebar'
+
+.m20
+  - if @orders.blank?
+    .fs18.mb25 На данный момент на этой странице ничего нет
+
+    .fs15.lh120.mb35 Оформите заказ в Магазинчике Ани Нечаевой, и здесь будет отображаться список ваших заказов и их статус
+
+    .fs18.mb25 Прямо сейчас вы можете:
+
+    ol.ol.fs16.mb35
+      li.mb10 Загрузить Фото
+      li.mb10 Указать информацию о себе
+      li.mb10 Привязать ваш профиль к социальным сетям для удобного входа на сайт
+      li.mb10 Установить ваш новый пароль
+      li.mb10 Посмотреть какие комментарии вы оставили на сайте
+
+    .fs18.mb25 Кроме того, скоро мы улучшим эту страницу и разместим здесь что-нибудь интересное
+
+  - if @orders.any?
+    .fs22.mb20 Ваши заказы:
+
+    table.table-light--table.w100p
+      tr.table-light--tr
+        th.table-light--th.fs15 Номер заказа
+        th.table-light--th.fs15 Позиций
+        th.table-light--th.fs15 Цена
+
+        th.table-light--th.fs15 Товары
+
+        th.table-light--th.fs15 Статус
+        th.table-light--th.fs15 Дата создания
+
+      - @orders.each do |order|
+        tr.table-light--tr
+          td.table-light--td.vam
+            = link_to order.uid.upcase, order, class: 'link--block fs15 pt0 lh120'
+
+          td.table-light--td.vam
+            .fs15.pt0.lh120 = order.order_items_counter
+
+          td.table-light--td.vam
+            .fs15
+              span.nobr.ml10(title='Полная цена')
+                = money_to_text order.total_price
+                '
+                | руб.
+
+          td.table-light--td.vam.w100p
+            .fs15
+              - order.products.each do |product|
+                - product = product.item
+                = image_tag product.main_image.url(:v100x100), width: '30', title: product.title
+          td.table-light--td.vam
+            .fs15.nobr= t order.state, scope: %w[ rails_shop orders state ]
+          td.table-light--td.vam
+            .fs15.nobr= order.created_at.strftime('%d.%m.%Y %H:%M')

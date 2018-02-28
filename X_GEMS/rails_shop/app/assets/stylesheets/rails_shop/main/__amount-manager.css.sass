@@ -1,0 +1,52 @@
+.amount-manager
+  display: inline-block
+
+  &--form
+    display: inline-block
+
+  &--btn
+    font-size: 20px
+    line-height: 19px
+    padding: 4px
+    width: 28px
+    position: relative
+
+    &:disabled
+      color: #eee
+      background: white
+      cursor: not-allowed
+
+      &:hover
+        background: white
+
+    &:after
+      position: absolute
+      top:  3px
+      left: 0px
+      width: 100%
+      display: block
+
+  &--btn-left
+    margin-right: -1px
+
+    &:after
+      content: '-'
+      top: 4px
+
+  &--btn-right
+    margin-left: -1px
+
+    &:after
+      content: '+'
+      top: 5px
+
+  &--input
+    vertical-align: top
+    text-align: center
+    font-size:   19px
+    line-height: 19px
+    padding: 4px
+    width: 30px
+    border-radius: 0
+
+    border: 1px solid rgba(0, 0, 0, 0.2)

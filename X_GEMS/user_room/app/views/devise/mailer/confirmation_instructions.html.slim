@@ -1,0 +1,25 @@
+.letter--header.tac.arial.p15.fs20 Подтвердить учетную запись для сайта OPEN-COOK.RU
+
+.letter--body.m20.tal.arial
+  .letter-body--text.mb15
+    | Для того активировать ваш профиль на сайте
+    '
+    = link_to 'OPEN-COOK.RU', 'http://open-cook.ru', class: 'letter-link fs16 arial'
+    '
+    span.nobr "Открытая кухня Анны Нечаевой"
+    '
+    ' воспользуйтесь следующей ссылкой:
+
+  .letter-body--activation.tac
+    table.w100p
+      tr
+        td.w50p
+        td
+          .letter-body--activation-border
+            span.nobr= link_to 'Активировать учетную запись', confirmation_url(@resource, confirmation_token: @token), class: 'letter-body--activation-link'
+        td.w50p
+
+  .letter-body--text.mt20.mb15 Если ссылка не активна, то скопируйте следующий адрес в адресную строку своего браузера:
+
+  .letter-body--plain-activation= confirmation_url(@resource, confirmation_token: @token)
+

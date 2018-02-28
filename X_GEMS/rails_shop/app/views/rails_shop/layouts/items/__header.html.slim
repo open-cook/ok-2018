@@ -1,0 +1,44 @@
+.shop-header.table.w100p
+  .pt10.pb10
+    - if current_user
+      .table.w100p
+        .row
+          .cell.vam.pr20
+            = render template: 'ok2/layouts/items/sections_switcher', locals: { current_section: :shop }
+
+          .cell.tal.vam.pr20.w100p
+            = render partial: 'rails_shop/layouts/items/order_search_form'
+
+          .cell.vam.pr20
+            = render template: 'rails_shop/carts/cart_btn'
+          .cell.vam.pr20
+            - title = current_user.username if current_user.username.present?
+            - if current_user.avatar.present?
+              = image_tag current_user.avatar.url(:v100x100), class: 'user-room-header--avatar-image w100', data: { role: 'user-avatar--v1x1' }, title: title
+            - else
+              .user-room-header--avatar-placeholder(title=title) ?
+          .cell.vam.pr10
+            - if !current_page?( cabinet_path )
+              .mt5.mb5= link_to "Мой кабинет", cabinet_path, class: 'ptz--btn ptz--size-12'
+
+            - if !current_page?( url_for(current_user) )
+              .mt5.mb5= link_to "Мой профиль", current_user, class: 'ptz--btn ptz--size-12'
+
+            .mt5.mb5= link_to "Выход", destroy_user_session_path, method: :delete, class: 'ptz--btn ptz--size-12'
+
+    - else
+      .table.w100p
+        .row
+          .cell.vam.pr20
+            = render template: 'ok2/layouts/items/sections_switcher', locals: { current_section: :shop }
+
+          .cell.tal.vam.pr20.w100p
+            = render partial: 'rails_shop/layouts/items/order_search_form'
+
+          .cell.vam.pr20
+            = render template: 'rails_shop/carts/cart_btn'
+          .cell.vam.pr10
+            - if !current_page?( new_user_session_path )
+              .mt5.mb5= link_to "Вход", new_user_session_path, class: 'ptz--btn ptz--size-12', rel: :nofollow
+            - if !current_page?( new_user_registration_path )
+              .mt5.mb5= link_to "Регистрация", new_user_registration_path, class: 'ptz--btn ptz--size-12', rel: :nofollow

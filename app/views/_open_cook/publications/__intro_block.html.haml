@@ -1,0 +1,13 @@
+%article.ofh
+  %h2.lh125.mt5.mb25.fs26.ffg.fwn.i{ style: 'color:#024e9f' }
+    = link_to pub.title, pub
+
+  - if pub.main_image.present?
+    = link_to pub, class: 'preview db fl' do
+      = image_tag pub.main_image(:base), alt: pub.title
+
+  .content_typography= raw pub.intro
+
+  %p.goto= link_to raw('Читать далее &raquo;'), pub
+
+= render partial: 'publications/informer', locals: { pub: pub }

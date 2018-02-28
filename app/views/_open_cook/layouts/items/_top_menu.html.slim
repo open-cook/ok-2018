@@ -1,0 +1,57 @@
+- cache("left_sidebar_#{ @hub.try(:id) }", expires_in: 30.minutes) do
+  .w1000.ma
+    nav.top_menu.mt15.mb15
+      - if (@recipes_hubs ||= Hub.published_tree(:recipes)).present?
+        - all_count = @recipes_hubs.map(&:pubs_published_count).sum
+        - active = @recipes_hubs.include?(@hub) ? :active : nil
+        = content_tag :span, class: "top_menu--menu-link #{ active }", data: { role: 'top_menu--menu-link', menu: 'top_menu--recipes-menu' } do
+          = 'Рецепты'
+          '
+          noindex.di.top_menu--menu-span.i= "(#{ all_count })"
+
+      - if (@posts_hubs ||= Hub.published_tree(:posts)).present?
+        - all_count = @posts_hubs.map(&:pubs_published_count).sum
+        - active = @posts_hubs.include?(@hub) ? :active : nil
+        = content_tag :span, class: "top_menu--menu-link #{ active }", data: { role: 'top_menu--menu-link', menu: 'top_menu--posts-menu' } do
+          = 'Статьи'
+          '
+          noindex.di.top_menu--menu-span.i= "(#{ all_count })"
+
+      = link_to hub_path(:blogs), class: 'top_menu--menu-link' do
+        | Блог
+        '
+        noindex.di.top_menu--menu-span.i
+          = "(#{ Hub.friendly_first(:blogs).try(:pubs).try(:published).try(:count) })"
+
+      = link_to hub_path(:intervyu), class: 'top_menu--menu-link' do
+        | Интервью
+        '
+        noindex.di.top_menu--menu-span.i
+          = "(#{ Hub.friendly_first(:intervyu).try(:pubs).try(:published).try(:count) })"
+
+      = link_to hub_path(:hots), class: 'top_menu--menu-link' do
+        | Чулан
+        '
+        noindex.di.top_menu--menu-span.i
+          = "(#{ Hub.friendly_first(:hots).try(:pubs).try(:published).try(:count) })"
+
+      = link_to 'О сайте', page_path(:about), class: 'top_menu--menu-link'
+
+      .menu_holder@top_menu--menu_holder
+        .top_menu--ul@top_menu--ul@top_menu--recipes-menu(style='display:none')
+          - @recipes_hubs.each do |hub|
+            .top_menu--li
+              - active = (hub == @hub) ? :active : nil
+              = link_to hub, class: "top_menu--menu-a #{ active }" do
+                = hub.title
+                '
+                noindex.di.top_menu--menu-span.i= "(#{ hub.pubs_published_count})"
+
+        ul.top_menu--ul@top_menu--ul@top_menu--posts-menu(style='display:none')
+          - @posts_hubs.each do |hub|
+            .top_menu--li
+              - active = (hub == @hub) ? :active : nil
+              = link_to hub, class: "top_menu--menu-a #{ active }" do
+                = hub.title
+                '
+                noindex.di.top_menu--menu-span.i= "(#{ hub.pubs_published_count})"

@@ -1,0 +1,28 @@
+- content_for :express_nav do
+  p= link_to t('app.cabinet'), cabinet_url, class: 'btn btn-default'
+
+  p= link_to t(:show, scope: @pub.class.table_name), url_for(@pub), class: 'btn btn-warning'
+  p= link_to "Печать", [@pub, :print], class: 'btn btn-default'
+  p= link_to "SLUG", [@pub, :slug], class: 'btn btn-default', data: { confirm: "Смена символьной метки у опубликованной статьи повлияет на доступность статьи по текущему адресу. Вы уверены, что хотите изменить SLUG?" }
+
+  - if current_user.admin?
+    hr
+    p= link_to "Мета Данные", [:edit, @pub.meta_data], class: 'btn btn-info'
+
+h3 Изменить шаблоны отображения
+
+= form_for @pub, html: { role: :form } do |f|
+  = hidden_field_tag 'pub_id',    @pub.id
+  = hidden_field_tag 'pub_klass', @pub.class
+
+  .form-group
+    = f.label :view_layout, "Макет отображения"
+    - options = options_for_select([["Обычный макет", ""], ["Макет магазина", "rails_shop/layouts/table-holy-grail"], ["Макет инфо страниц", "ok2/layouts/application"]], @pub.view_layout)
+    = f.select :view_layout, options, {}, autocomplete: :off, class: 'form-control'
+
+    = f.label :view_template, "Шаблон отображения"
+    - options = options_for_select([["Обычный шаблон", ""], ["Шаблон магазина", "rails_shop/pages/template"], ["Шаблон инфо страниц", "ok2/pages/inform_template"]], @pub.view_template)
+    = f.select :view_template, options, {}, autocomplete: :off, class: 'form-control'
+
+  .form-group
+    = f.submit t('pubs.save'), class: 'btn btn-danger btn-lg'

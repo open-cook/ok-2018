@@ -1,0 +1,5 @@
+- if !@order.paid?
+  - money = money_to_text(@order.total_price)
+  = submit_tag "ОПЛАТИТЬ #{ money } руб.", class: 'ptz--btn ptz--size-22 ptz--style-0--btn', disabled: :disabled, data: { role: 'order-payment-button' }
+- else
+  .ptz--btn.ptz--size-22 Заказ уже оплачен

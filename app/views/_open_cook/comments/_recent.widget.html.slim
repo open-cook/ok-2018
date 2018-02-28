@@ -1,0 +1,16 @@
+- if (comments = Comment.recent_three).present?
+  .aside-informer
+    .aside-informer--title Комментарии
+    .aside-informer--content.ob
+      - comments.each_with_index do |comment, index|
+        - bottom_margin = 'mb15' if (index.next != comments.count)
+        div(class=bottom_margin)
+          .mb5.fs13.lh120= link_to comment.commentable_title, "#{ comment.commentable_url }#comment_#{ comment.anchor }"
+
+          - comment_body = Sanitize.clean(comment.content, {}).split.slice(0, 10).join(' ') + ' ...'
+          - name = comment.user ? comment.user.try(:username) : Sanitize.clean(comment.title).strip
+
+          .fs12.lh130
+            - name = name.blank? ? 'Гость' : name
+            span.i= name + ': '
+            = comment_body

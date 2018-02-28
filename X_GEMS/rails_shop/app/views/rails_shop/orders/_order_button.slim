@@ -1,0 +1,14 @@
+/ SUBMIT BUTTONS
+- if @order.moderation?
+
+  .ptz--btn.ptz--size-22 Заказ на Модерации
+
+- elsif @order.paid?
+
+  .ptz--btn.ptz--size-22 Заказ уже оплачен
+
+- else
+  - if @order.delivery && @order.delivery.special?
+    = f.submit 'Отправить заказ', class: 'ptz--btn ptz--size-22 ptz--style-0--btn'
+  - else
+    = f.submit 'Оплатить заказ', class: 'ptz--btn ptz--size-22 ptz--style-0--btn'

@@ -1,0 +1,140 @@
+= render partial: 'user_room/users/header_footer'
+
+- content_for :left_sidebar do
+  = render partial: 'user_room/users/left_sidebar'
+
+.m15
+  .fs20.mb40 Кабинет Администратора
+
+  .fs24.mb30.mt30.b Магазинчик Ани Нечаевой
+
+  .fs20.mb30 Товары:
+
+  .mb40
+    .mb20.fs14.clearfix
+      .pull-left
+        = link_to 'Категории товаров', manage_product_categories_url
+
+    .mb20.fs14.clearfix
+      .pull-left
+        = link_to 'Список Товаров', manage_products_path
+
+      .pull-right
+        span.iblock.nobr.tar.mr20
+          | Черновики: #{ Product.draft.count }
+        span.iblock.nobr.tar.mr20
+          | Опубликовано: #{ Product.published.count }
+        span.iblock.nobr.tar
+          | Доступно: #{ Product.published.in_stock.count }
+
+
+  .fs20.mb30 Варианты Доставки:
+
+  .mb40
+    .mb20.fs14.clearfix
+      .pull-left
+        = link_to 'Управлять вариантами доставки', manage_delivery_types_path
+
+  .fs20.mb30 Корзины:
+
+  .mb40
+    .mb20.fs14.clearfix
+      .pull-left
+        = link_to "Корзин в системе: #{ Cart.filled.count  }", manage_carts_path
+
+      .pull-right
+        span.iblock.nobr.tar.mr20
+          | Пустых: #{ Cart.empty.count }
+        span.iblock.nobr.tar
+          | Всего: #{ Cart.count }
+
+  .fs20.mb30 Заказы:
+
+  .mb40
+    .mb20.fs14
+      = link_to "На модерации: #{ Order.moderation.count }", manage_orders_path(state: :moderation)
+
+    .mb20.fs14
+      = link_to "Готовы к оплате: #{ Order.ready_to_payment.count }", manage_orders_path(state: :ready_to_payment)
+
+    .mb20.fs14
+      = link_to "Оплачены: #{ Order.paid.count }", manage_orders_path(state: :paid)
+
+    .mb20.fs14
+      = link_to "Отправлены: #{ Order.delivery.count }", manage_orders_path(state: :delivery)
+
+    .mb20.fs14
+      = link_to "Исполнены: #{ Order.completed.count }", manage_orders_path(state: :completed)
+
+    .mb20.fs14
+      = link_to "Отменены: #{ Order.refund.count }", manage_orders_path(state: :refund)
+
+  hr
+
+  .fs24.mb30.mt30.b Открытая Кухня Анны Нечаевой
+
+
+  .fs20.mb30 Создать:
+
+  .mb20
+    div
+      - %w[ recipes posts pages ].each do |model_name|
+        = link_to t(:new, scope: model_name), [:new, model_name.singularize], class: 'ptz--btn ptz--size-14 mb5 mr5'
+
+    div
+      - %w[ blogs interviews hots ].each do |model_name|
+        = link_to t(:new, scope: model_name), [:new, model_name.singularize], class: 'ptz--btn ptz--size-14 mb5 mr5'
+
+
+  .fs20.mb30 Мои публикации (управление):
+
+  .mb40
+    - %w[ recipes posts pages blogs interviews hots ].each do |model_name|
+      .mb20.fs14.clearfix
+        .pull-left
+          = link_to [:my, @user, model_name]do
+            = t("my_#{ model_name }", scope: [ :users, :cabinet ])
+
+        .pull-right
+          span.iblock.nobr.tar.mr20
+            | Черновики: #{ @user.send(model_name).with_state(:draft).count }
+          span.iblock.nobr.tar.w130
+            | Опубликовано: #{ @user.send(model_name).with_state(:published).count }
+
+  .fs20.mb30 Управление публикациями:
+
+  .mb40
+    - %w[ recipes posts pages blogs interviews hots ].each do |model_name|
+      .mb20.fs14.clearfix
+        .pull-left
+          = link_to [:manage, model_name]do
+            = t("#{ model_name }.manage")
+
+        .pull-right
+          span.iblock.nobr.tar.mr20
+            | Черновики: #{ model_name.classify.constantize.with_state(:draft).count }
+          span.iblock.nobr.tar.w130
+            | Опубликовано: #{ model_name.classify.constantize.with_state(:published).count }
+
+  .fs20.mb30 Разделы сайта:
+
+  .mb40
+    .fs14
+      = link_to 'Разделы сайта', manage_hubs_url
+
+  .fs20.mb30 Комментарии:
+
+  .mb40
+    .mb20.fs14.clearfix
+      .pull-left
+        = link_to 'Управлять', [:manage, :comments]
+
+      .pull-right
+        span.iblock.nobr.tar.mr20
+          | На модерации: #{ @user.draft_comcoms_count }
+
+        span.iblock.nobr.tar.mr20
+          | Написано к моим постам: #{ @user.comcoms.active.count }
+
+        span.iblock.nobr.tar
+          | Написано мной: #{ @user.my_comments.active.count }

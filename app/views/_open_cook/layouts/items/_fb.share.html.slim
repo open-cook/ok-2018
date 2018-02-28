@@ -1,0 +1,11 @@
+ruby:
+  url = if pub.legacy_url.present?
+    "http://open-cook.ru/recipes/#{ pub.legacy_url }"
+  else
+    polymorphic_url(pub)
+  end
+
+/ box_count | button | button_count | icon | icon_link | link
+- type = local_assigns[:type] ? type : 'button_count'
+
+.fb-share-button(data-href=url data-layout=type)

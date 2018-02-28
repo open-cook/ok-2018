@@ -1,0 +1,7 @@
+= form_tag search_path(squery: ''), method: :get, data: { role: :search_line_form }, enforce_utf8: false do
+  .nobr.fs0
+    = text_field_tag :squery, params[:squery], data: { role: :search_line, autocomplete_path: autocomplete_path }, class: 'ptz--input ptz--size-15 w250', placeholder: 'ПОИСК ПО РЕЦЕПТАМ'
+
+    = button_tag type: :submit, class: 'ptz--btn ptz--size-15 ptz--btn--side-right' do
+      i.fa.fa-search
+

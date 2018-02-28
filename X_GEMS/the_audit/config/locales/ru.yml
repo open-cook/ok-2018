@@ -1,0 +1,7 @@
+ru:
+  the_audit: 
+    list: Все записи
+    edit: Редактировать запись
+    save: Сохранить
+    list_title: Аудит
+    show_record: Просмотр записи аудита

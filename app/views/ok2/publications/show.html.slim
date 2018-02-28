@@ -1,0 +1,117 @@
+-# META
+- content_for :meta_data do
+  = render template: "meta_data/posts/show", locals: { post: @pub }
+
+-# HEADER
+- content_for :top_menu do
+  = render partial: 'layouts/items/top_menu'
+
+-# LEFT SIDEBAR
+- content_for :left_sidebar do
+  - unless %w[ interviews intervyu ].include? @hub.try(:slug).try(:downcase)
+    = render template: 'layouts/items/day_recipe'
+
+  - cache(:top_10_widget, expires_in: 6.hours) do
+    = render partial: 'layouts/items/top'
+
+  - cache(:recent_comments_widget, expires_in: 12.minutes) do
+    = render partial: 'comments/recent.widget'
+
+  - cache(:tags_search_widget, expires_in: 16.minutes) do
+    = render partial: 'tags/search.widget'
+
+  = render partial: 'subscribers/subscribe_form'
+
+  noindex= render template: 'promos/left_sidebar_shop_banner'
+
+-# RIGHT SIDEBAR
+- content_for :right_sidebar do
+  noindex
+    - if current_user.try(:admin?)
+      .aside-informer
+        .aside-informer--title Администратору
+        .aside-informer--content
+          = link_to 'Редактировать', [:edit, @pub], class: 'ptz--btn ptz--size-14'
+
+    - cache(@pub.cache_key, expires_in: 1.day) do
+      .aside-informer.aside-informer--style-0(style='height:260px')
+        .aside-informer--title МНЕ ЭТО НРАВИТСЯ
+        .aside-informer--content.tac
+          .mb15.vk-like--right-fix= render partial: "layouts/items/vk.like", locals: { pub: @pub, prefix: :right_sidebar }
+          .mb15= render partial: "layouts/items/ok.like",  locals: { pub: @pub }
+          .mb15= render partial: "layouts/items/fb.share", locals: { pub: @pub }
+          .mb15.tw-like= render partial: "layouts/items/tw.like", locals: { pub: @pub }
+          .mb15= render partial: "layouts/items/pin.button"
+
+    = render partial: "layouts/items/vk.group"
+    br
+    = render partial: "layouts/items/ok.group"
+    br
+    = render partial: "layouts/items/ok_in_web"
+
+  - if @pub.is_a? Recipe
+    - cache([@hub.cache_key, @pub.cache_key].join, expires_in: (Time.zone.now.end_of_day - Time.zone.now).to_i) do
+      = render partial: "layouts/items/same_recipes", locals: { hub: @hub, pub: @pub }
+
+-# BREADCRUMBS
+- content_for :breadcrumbs do
+  .pub-breadcrumbs
+    = link_to 'open-cook.ru', root_path, class: 'pub-breadcrumbs--item'
+    .pub-breadcrumbs--item &nbsp;&raquo;&nbsp;
+    = link_to @hub.title, @hub, class: 'pub-breadcrumbs--item'
+    .pub-breadcrumbs--item &nbsp;&raquo;&nbsp;
+    .pub-breadcrumbs--item= @pub.title
+
+/ - content_for :top_banner do
+/   .top-informer.ma.tac.mt30
+/     = link_to "/pages/master-klass-shef-konditera-emmanuelya-amona", class: 'posrel dib top-informer--link' do
+/       = image_tag "/special-projects/mk-spb-march-2016.png"
+/       = button_tag raw("Узнать&nbsp;больше&nbsp;&raquo;"), class: 'posabs top-informer--btn'
+
+-# MAIN CONTENT
+article.ofh(itemscope=true itemtype='http://schema.org/Article')
+  h1.lh125.mt5.mb25.fs26.ffg.fwn.i(style='color:#024e9f' itemprop='name')= @pub.title
+  .content_typography
+    .clearfix
+      - if @pub.main_image.present?
+        = image_tag @pub.main_image(:base), alt: @pub.title, class: 'preview db fl'
+      = raw @pub.intro
+
+    noindex= render template: 'promos/top_banner'
+
+    = raw @pub.content
+
+  - cache("pub_tags_#{ @pub.id }", expires_in: 15.minutes) do
+    - tags = render partial: 'tags/base.widget', locals: { title: 'Теги страницы', post: @pub }
+    - if tags.present?
+      .mt10.mb10= tags
+
+  .mt10.mb5= render partial: 'ok2/publications/informer', locals: { pub: @pub }
+
+noindex.mt20.mb30= render template: 'promos/bottom_shop_banner'
+
+-# COMMENTS
+- if @pub.comments_on?
+  .comments_sum.fs20.mt20.mb20
+    - if @pub.comments_sum.zero?
+      | Вы можете стать первым, кто оставит комментарий!
+    - else
+      | Комментариев: #{ @pub.comments_sum }
+
+  - if browser.search_engine?
+    = render partial: "comments/tree", locals: { commentable: @pub, comments_tree: @comments }
+  - else
+    - if browser.mobile?
+      - if @pub.comments_sum > 200
+        .fs20.mt25.mb25.lh140.show_all_comments-notice
+          ' На данной странице очень много комментариев. Загрузка комментариев на мобильных устройствах может привести к длительному зависанию устройств в процессе отображения всей информации.
+          br
+          br
+          b Рекомендуем просматривать комментарии на персональном компьютере.
+
+      = render 'ok2/publications/show_all_comments'
+    - else
+      - if @pub.comments_sum > 100
+        = render 'ok2/publications/show_all_comments'
+      - else
+        = render partial: "comments/tree", locals: { commentable: @pub, comments_tree: @comments }

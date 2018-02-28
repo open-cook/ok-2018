@@ -1,0 +1,78 @@
+doctype html
+html*{'lang' => 'ru', 'xmlns:fb' => "http://ogp.me/ns/fb#" }
+  head(prefix="og: http://ogp.me/ns# object: http://ogp.me/ns/object#")
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
+    / meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title= content_for?(:title) ? yield(:title) : "open-cook.ru"
+
+    = yield(:meta_data)
+    = raw render(template: 'layouts/items/on_load_event').noendl
+
+    = javascript_include_tag :application
+    = stylesheet_link_tag    :application
+    = yield :js
+
+    link(href="//open-cook.ru/favicon.ico" rel="shortcut icon")
+    meta(id="env_token" name="env_token" content="#{ Rails.env.to_s }" data-log-js=Rails.env.development?)
+
+    = csrf_meta_tags
+
+  body
+    / TLAYOUT
+    .table.w100p
+      .row
+        .cell
+          .user-room--header-holder
+            .ma.content-holder
+              .content-holder-spacer
+                .header.clearfix
+                  .ma.w1000
+                    = render template: 'ok2/layouts/items/header', locals: { current_section: :main, search_block: true }
+
+    .body#top
+      / = render partial: '_open_cook/layouts/items/header'
+      = render partial: 'notifications/flash'
+
+      = yield :top_menu
+
+      - if content_for?(:breadcrumbs)
+        = yield :top_banner
+        = yield(:breadcrumbs)
+
+      - else
+        h1.h1.tac.lh200.main_title
+          | Открытая кухня
+          span.nobr Анны Нечаевой
+
+      table.content
+        tr
+          td.left
+            noindex
+              aside.ofh= yield :left_sidebar
+
+          td.main
+            main.ofh= yield
+          td.right
+            aside.ofh
+              = yield :right_sidebar
+
+      noindex
+        #to_top
+          = link_to raw('&#9650;'), '#top', rel: :nofollow, title: 'Наверх'
+
+    .app_preloader.hidden(style='display:none')
+      = image_tag 'preloader.gif', nopin: true
+
+    .table.w100p
+      .row
+        .cell
+          .user-room--footer-holder
+            .ma.content-holder
+              .content-holder-spacer
+                .ma.w1000.fs14
+                  = render template: 'ok2/layouts/items/footer'
+
+  link(href='//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css' rel='stylesheet' type='text/css')
+
+= yield :footer_js

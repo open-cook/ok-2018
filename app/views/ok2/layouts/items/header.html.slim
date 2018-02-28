@@ -1,0 +1,59 @@
+- hide_side_elements = local_assigns[:hide_side_elements]
+
+.pt10.pb10.clearfix
+  noindex
+    - if current_user
+      .table.w100p
+        .row
+          .cell.vam.pr20
+            = render template: 'ok2/layouts/items/sections_switcher', locals: { current_section: current_section }
+
+          - if current_section.to_s == 'shop'
+            .cell.w100p.vam.pr20 = render partial: 'ok2/layouts/items/order_search_form'
+            .cell.vam.pr20 = render template: 'rails_shop/carts/cart_btn'
+
+          - if search_block
+            .cell.w100p.vam.pr20
+              = render partial: 'ok2/layouts/items/search'
+
+          .cell.vam.pr20.tar
+            - title = current_user.username if current_user.username.present?
+            - if current_user.avatar.present?
+              = image_tag current_user.avatar.url(:v100x100), class: 'user-room-header--avatar-image w100', data: { role: 'user-avatar--v1x1' }, title: title
+            - else
+              .user-room-header--avatar-placeholder(title=title) ?
+          .cell.vam.pr10
+            - if current_user.try(:admin?)
+              - if !(comments_count = Comment.with_state(:draft).count).zero?
+                .mt5.mb5
+                  = link_to [:manage, :comments], class: 'fs14 ffa' do
+                    i.fa.fa-comments
+                    '
+                    = comments_count
+
+            .mt5.mb5= link_to "Мой кабинет", cabinet_path, class: 'ptz--btn ptz--size-11'
+            .mt5.mb5= link_to "Выход", destroy_user_session_path, method: :delete, class: 'ptz--btn ptz--size-11'
+
+    - else
+      .table.w100p
+        .row
+          .cell.vam.pr20
+            = render template: 'ok2/layouts/items/sections_switcher', locals: { current_section: current_section }
+
+          - if !hide_side_elements
+            - if current_section.to_s == 'shop'
+              .cell.w100p.vam.pr20
+                = render partial: 'ok2/layouts/items/order_search_form'
+              .cell.vam.pr20
+                = render template: 'rails_shop/carts/cart_btn'
+
+            - if search_block
+              .cell.w100p.vam.pr20
+                = render partial: 'layouts/items/search'
+
+            .cell.vam.pr10
+              - if !current_page?( new_user_session_path )
+                .mt5.mb5= link_to "Вход", new_user_session_path, class: 'ptz--btn ptz--size-11', rel: :nofollow
+
+              - if !current_page?( new_user_registration_path )
+                .mt5.mb5= link_to "Регистрация", new_user_registration_path, class: 'ptz--btn ptz--size-11', rel: :nofollow

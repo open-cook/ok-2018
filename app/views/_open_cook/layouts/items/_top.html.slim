@@ -1,0 +1,13 @@
+.aside-informer
+  .aside-informer--title ТОП
+  .aside-informer--content.ob
+    - recipes = Recipe.recent(:show_count).limit(3)
+    - recipes.each_with_index do |pub, index|
+      - bottom_margin = 'mb15' if (index.next != recipes.count)
+      .fs13.lh130(class=bottom_margin title="Просмотров: #{ pub.show_count.to_s.pretty_number }")
+        = pub.show_count.to_s.pretty_number
+        '
+        | &mdash;
+        '
+        = link_to pub.title, pub
+

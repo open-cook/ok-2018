@@ -1,0 +1,39 @@
+- cache 'ok_in_web', expires_in: 7.days do
+  .aside-informer
+    .aside-informer--title.lh120
+      OPEN-COOK.RU
+      span.nobr в Интеренте
+
+    .aside-informer--content
+      .fs14.mb10
+        = link_to 'https://vk.com/opencook', class: 'ok-in-web--link', rel: :nofollow do
+          = image_tag '/default_images/social/vkontakte.png'
+          | &nbsp; opencook
+      .fs14.mb10
+        = link_to 'http://www.ok.ru/opencook', class: 'ok-in-web--link', rel: :nofollow do
+          = image_tag '/default_images/social/odnoklassniki.png'
+          | &nbsp; opencook
+      .fs14.mb10
+        = link_to 'https://twitter.com/opencook_ru', class: 'ok-in-web--link', rel: :nofollow do
+          = image_tag '/default_images/social/twitter.png'
+          | &nbsp; opencook_ru
+      .fs14.mb10
+        = link_to 'http://mrs_home.livejournal.com', class: 'ok-in-web--link', rel: :nofollow do
+          = image_tag '/default_images/social/livejournal.png'
+          | &nbsp; mrs_home
+      .fs14.mb10
+        = link_to 'http://instagram.com/mrs_home', class: 'ok-in-web--link', rel: :nofollow do
+          = image_tag '/default_images/social/instagram.png'
+          | &nbsp; mrs_home
+      .fs14.mb10
+        = link_to 'http://instagram.com/magazinchik_ani', class: 'ok-in-web--link', rel: :nofollow do
+          = image_tag '/default_images/social/instagram.png'
+          | &nbsp; Магазинчик
+      .fs14.mb10
+        = link_to 'http://www.pinterest.com/mrs_home', class: 'ok-in-web--link', rel: :nofollow do
+          = image_tag '/default_images/social/pinterest.png'
+          | &nbsp; mrs_home
+      div
+        = mail_to 'admin@open-cook.ru', subject: "Здравствуйте, Анна!", encode: :javascript, class: 'ok-in-web--link fs14 ffa fsn', rel: :nofollow do
+          = image_tag '/default_images/social/mail_32.png'
+          | &nbsp; admin@open-cook.ru

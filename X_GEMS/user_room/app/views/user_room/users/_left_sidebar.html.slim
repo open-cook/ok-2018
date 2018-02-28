@@ -1,0 +1,21 @@
+.mt20
+  .mb15
+    .fs13.b Мой профиль
+
+  .mb15= link_to "Мой кабинет",  cabinet_path, class: 'ptz--btn ptz--size-14'
+  .mb15= link_to "Моя страница", @user, class: 'ptz--btn ptz--size-14'
+  .mb15= link_to "Редактировать", [ :edit, @user ], class: 'ptz--btn ptz--size-14'
+
+  .mb15
+    hr
+
+  .mb15
+    .fs13.b Магазинчик
+
+  .mb15= link_to "Мои корзины: #{ @user.carts.active.count }/#{ @user.carts.count }", carts_path, class: 'ptz--btn ptz--size-14'
+  .mb15= link_to "Мои заказы:  #{ @user.orders.count }", orders_path, class: 'ptz--btn ptz--size-14'
+
+  / .mb15
+  /   .fs13.b Кулинарный раздел
+
+  / .mb15= link_to "Мои комментарии #{ current_user.my_comments_count }", my_comments_comments_path, class: 'ptz--btn ptz--size-14'

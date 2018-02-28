@@ -1,0 +1,69 @@
+- content_for :meta_data do
+  = render template: "meta_data/posts/show", locals: { post: @pub }
+
+= render partial: 'ok2/shared/header_footer'
+
+-# RIGHT SIDEBAR
+- content_for :right_sidebar do
+  - if current_user.try(:admin?)
+    .aside-informer
+      .aside-informer--title Администратору
+      .aside-informer--content
+        - if !(comments_count = Comment.with_state(:draft).count).zero?
+          .mb10= link_to "Комментарии: #{ comments_count }", [:manage, :comments], class: 'ptz--btn ptz--size-14'
+
+        = link_to 'Редактировать', [:edit, @pub], class: 'ptz--btn ptz--size-14'
+
+  - cache(@pub.cache_key, expires_in: 1.day) do
+    .aside-informer.aside-informer--style-0(style='height:260px')
+      .aside-informer--title МНЕ ЭТО НРАВИТСЯ
+      .aside-informer--content.tac
+        .mb15.vk-like--right-fix= render partial: "layouts/items/vk.like", locals: { pub: @pub, prefix: :right_sidebar }
+        .mb15= render partial: "layouts/items/ok.like",  locals: { pub: @pub }
+        .mb15= render partial: "layouts/items/fb.share", locals: { pub: @pub }
+        .mb15.tw-like= render partial: "layouts/items/tw.like", locals: { pub: @pub }
+        .mb15= render partial: "layouts/items/pin.button"
+
+  = render partial: "layouts/items/vk.group"
+  br
+  = render partial: "layouts/items/ok.group"
+  br
+  = render partial: "layouts/items/ok_in_web"
+
+-# BREADCRUMBS
+- content_for :breadcrumbs do
+  .pub-breadcrumbs
+    = link_to 'open-cook.ru', root_path, class: 'pub-breadcrumbs--item'
+    .pub-breadcrumbs--item &nbsp;&raquo;&nbsp;
+    = link_to @hub.title, @hub, class: 'pub-breadcrumbs--item'
+    .pub-breadcrumbs--item &nbsp;&raquo;&nbsp;
+    .pub-breadcrumbs--item= @pub.title
+
+-# MAIN CONTENT
+article.ofh(itemscope=true itemtype='http://schema.org/Article')
+  h1.lh125.mt5.mb25.fs26.ffg.fwn.i(style='color:#024e9f' itemprop='name')= @pub.title
+  .content_typography
+    .clearfix
+      - if @pub.main_image.present?
+        = image_tag @pub.main_image(:base), alt: @pub.title, class: 'preview db fl'
+      = raw @pub.intro
+
+    = raw @pub.content
+
+  - cache("pub_tags_#{ @pub.id }", expires_in: 15.minutes) do
+    - tags = render partial: 'tags/base.widget', locals: { title: 'Теги страницы', post: @pub }
+    - if tags.present?
+      .mt10.mb10= tags
+
+  .mt10.mb5= render partial: 'publications/informer', locals: { pub: @pub }
+
+.mt20.mb20
+  -# COMMENTS
+  - if @pub.comments_on?
+    .comments_sum.h4
+      - if @pub.comments_sum.zero?
+        | Вы можете стать первым, кто оставит комментарий!
+      - else
+        | Комментариев: #{ @pub.comments_sum }
+
+    = render partial: "comments/tree", locals: { commentable: @pub, comments_tree: @comments }

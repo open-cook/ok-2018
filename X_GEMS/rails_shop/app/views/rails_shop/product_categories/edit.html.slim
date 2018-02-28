@@ -1,0 +1,27 @@
+= render template: 'rails_shop/layouts/items/header_footer'
+
+- content_for :left_sidebar do
+  .mt25.mb20
+    ul
+      li.mb10= link_to 'Главная', '/shop', class: 'ptz--btn ptz--size-14'
+      li= link_to 'Просмотр категории', @product_category, class: 'ptz--btn ptz--size-14'
+
+  = render partial: 'rails_shop/layouts/items/left_sidebar'
+
+h3.mt20.mb20.fs18 Редактировать категорию товаров
+
+= form_for @product_category, html: { class: 'form-classic' } do |f|
+  = render partial: 'notifications/form', locals: { object: @product_category }
+
+  .mb15
+    = f.label :title, 'Название', class: 'block fs13 mb5'
+    = f.text_field :title, class: 'ptz--input ptz--size-15 w500 '
+
+  .mb15
+    = f.label :state, 'Видимость', class: 'block fs13 mb5'
+
+    - options = options_for_select([:draft, :published], @product_category.state)
+    = f.select :state, options, {}, autocomplete: :off, class: 'ptz--input ptz--size-15 w150 form-classic--select'
+
+  .form-classic--actions
+    = f.submit 'Обновить категорию', class: 'ptz--btn ptz--size-14'

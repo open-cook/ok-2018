@@ -1,0 +1,25 @@
+module TheRoleAddons
+  extend ActiveSupport::Concern
+
+  included do
+    def app_role_access_denied
+      if request.xhr?
+        return render json: {
+          current_user: { id: current_user.try(:id), login: current_user.try(:login) },
+
+          controller_name:      controller_name,
+          action_name:          action_name,
+          has_access_to_action: current_user.has_role?(controller_path, action_name),
+
+          owner_check_object:   @owner_check_object,
+          has_access_to_object: current_user.owner?(@owner_check_object)
+        }
+      else
+        current_user ? redirect_back(notice: t('users.have_not_role')) : redirect_to('/')
+      end
+    end
+
+    alias_method :user_require,       :authenticate_user!
+    alias_method :role_access_denied, :app_role_access_denied
+  end
+end

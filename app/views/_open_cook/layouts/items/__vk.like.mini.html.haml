@@ -1,0 +1,13 @@
+- if true #Rails.env.production?
+  - url = if pub.legacy_url.present?
+    -# polymorphic_url(pub, id: pub.legacy_url, format: nil)
+    - "http://open-cook.ru/recipes/#{ pub.legacy_url }"
+  - else
+    - polymorphic_url(pub)
+
+  - vkid     = "vk_mini_like_#{ pub.class.to_s }_#{ pub.id }"
+  - vk_title = CGI.escapeHTML pub.title
+  - vk_text  = CGI.escapeHTML Sanitize.clean(pub.intro, {}).noendl.strip
+  - vk_image = image_url(pub.main_image.url(:base)) if pub.main_image.present?
+
+  %span.vk_mini_like{ id: vkid, url: url, title: vk_title, text: vk_text, image: vk_image }

@@ -1,0 +1,8 @@
+- cache(:day_recipe, expires_in: (Time.zone.now.end_of_day - Time.zone.now).to_i )  do
+  .aside-informer.aside-informer--style-1
+    .aside-informer--title Рецепт Дня
+    .aside-informer--content
+      .ofh.tac
+        - recipe = Recipe.published.random.first
+        .ma.mb20= link_to '', recipe, class: 'day-recipe--img-link', title: recipe.title, alt: recipe.title, style: "background-image: url(#{ image_path recipe.main_image(:base) })"
+        .fs15.lh120= link_to recipe.title, recipe

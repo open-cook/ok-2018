@@ -1,0 +1,29 @@
+// background: image-url('/default_images/search.png') no-repeat scroll 6px center transparent;
+
+.ui-state-hover,
+.ui-widget-header  .ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-state-focus,
+.ui-widget-header  .ui-state-focus,
+.ui-widget-content .ui-state-focus{
+  margin: 0 !important;
+  border: 0 !important;
+  color: #b61a1e !important;
+  background: #f1fff3 !important;
+  border-bottom: 1px solid #d3d3d3 !important;
+}
+
+.ui-menu-item{
+  background: #fdfff5;
+}
+
+.ui-menu .ui-menu-item {
+  width: 100%;
+  box-sizing: border-box;
+
+  font-size: 16px;
+  line-height: 160%;
+
+  border-bottom: 1px solid #d3d3d3;
+  padding: 7px !important;
+}

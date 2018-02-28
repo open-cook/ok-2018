@@ -1,0 +1,74 @@
+doctype html
+html(lang='en')
+  head(data-log-js=Rails.env.development?)
+    link(href='https://fonts.googleapis.com/css?family=Open+Sans&subset=latin,cyrillic' rel='stylesheet' type='text/css')
+    link(href='//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css' rel='stylesheet' type='text/css')
+
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1')
+    title= content_for?(:title) ? yield(:title) : t(:title, scope: :app)
+    link(href='favicon.ico' rel='shortcut icon')
+    meta(id='env_token' name='env_token' content=Rails.env.to_s)
+
+    / = stylesheet_link_tag    'application', media: :all, 'data-turbolinks-track' => true
+    / = javascript_include_tag 'application', 'data-turbolinks-track' => true
+
+    = csrf_meta_tags
+
+    = yield :js
+    = yield :css
+
+  body
+    / TLAYOUT
+    .table.tlayout
+      - if content_for :header
+        header.row
+          .cell
+
+            .ma.content-holder
+              .content-holder-spacer
+                .header= yield :header
+
+      main.row
+        .cell
+
+          / TCOLUMNER
+          .table.tcolumner
+            .row
+
+              / LEFT ASIDE
+              .cell.left-spacer
+              - if content_for :left_sidebar
+                aside.cell.left
+                  .left-sidebar= yield :left_sidebar
+
+              / MAIN
+              .cell.main
+                / TCONETNT
+                .table.tcontent
+                  .row
+                    .cell.main
+                      - if content_for :breadcrumbs
+                        = yield :breadcrumbs
+
+                      .main-content= yield
+
+                  - if content_for :paginator
+                    .row
+                      .cell.bottom
+                        = yield :paginator
+
+              / RIGHT ASIDE
+              - if content_for :right_sidebar
+                aside.cell.right
+                  .right-sidebar= yield :right_sidebar
+
+              .cell.right-spacer
+
+      - if content_for :footer
+        footer.row
+          .cell
+
+            .ma.content-holder
+              .content-holder-spacer
+                .footer= yield :footer

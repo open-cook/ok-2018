@@ -1,0 +1,52 @@
+ruby:
+  cards = [
+    [
+      'https://open-cook.ru/shop?b2',
+      'https://open-cook.ru/shop/products-images/product-image-0.jpg',
+      'Чудесные формочки с совушками для выпечки ваших вкуснейших капкейков'
+    ],
+    [
+      'https://open-cook.ru/shop?b3',
+      'https://open-cook.ru/shop/products-images/product-image-1.jpg',
+      'Формочки для леденцов. Ностальгия в современном исполнении'
+    ],
+    [
+      'https://open-cook.ru/shop?b4',
+      'https://open-cook.ru/shop/products-images/product-image-2.jpg',
+      'Милые формочки с цветами для выпечки ваших красивых кексов'
+    ],
+    [
+      'https://open-cook.ru/shop?b5',
+      'https://open-cook.ru/shop/products-images/product-image-3.jpg',
+      '"Вкусные ложки" подарят хорошее настроение на весь день'
+    ],
+    [
+      'https://open-cook.ru/shop?b6',
+      'https://open-cook.ru/shop/products-images/product-image-4.jpg',
+      'Яркие бумажные соломинки для вкусных напитков'
+    ],
+    [
+      'https://open-cook.ru/shop?b7',
+      'https://open-cook.ru/shop/products-images/product-image-5.jpg',
+      'Разнообразие полезных и удобных вещиц для кулинарного волшебства'
+    ]
+  ]
+
+- card = cards.sample
+
+- url = card[0]
+- img = card[1]
+- txt = card[2]
+
+.inform-block.inform-block--style-2
+  .inform-block--content.m20.clearfix
+    .inform-block--image.pull-left.mr20
+      = link_to url do
+        = image_tag img, class: 'inform-block--img'
+
+    = link_to 'В магазинчике Ани Нечаевой', url, class: 'block fs20 lh120 mb20 inform-block--title'
+
+    .fs15.lh150.mb25.upcase= txt
+
+    .pull-right
+      = link_to raw('В магазинчик &raquo;'), url, class: 'ptz--btn ptz--size-15 inform-block--btn'

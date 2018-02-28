@@ -1,0 +1,62 @@
+.top_menu
+  text-align: center
+
+  .menu_holder
+    position: relative
+
+  &--ul
+    position: absolute
+    top: -1px
+    left: 0
+
+    display: none
+    text-align: left
+
+    z-index: 10
+    width: 980px
+
+    background: #fcfcff
+    border: 1px solid #a1bddb
+    border-radius: 3px
+    box-shadow: 0 0 2px 0 #a1bddb
+
+  &--li
+    display: inline-block
+    overflow: hidden
+    height: 40px
+    margin: 3px
+    width: 30%
+
+  &--menu-a
+    display: block
+    border-radius: 3px
+    font-size: 16px
+    line-height: 135%
+    padding: 10px
+
+    &:hover
+      color: red
+      background: #f2f2ff
+
+  &--menu-span
+    color: #cbd9eb
+
+  &--menu-link
+    margin: 0 40px
+    cursor: pointer
+
+    color: gray
+    display: inline-block
+    font-size: 15px
+    text-decoration: none
+    position: relative
+    z-index: 10
+
+    &:hover
+      color: red
+      border-color: lightblue
+      // box-shadow: 0 1px 2px #666666
+
+    &.active
+      color: #b61a1e
+      border-color: lightblue

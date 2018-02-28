@@ -1,0 +1,46 @@
+.letter--header.tac.arial.p15.fs20= @subject
+
+.letter--body.m20.tal.arial
+
+  .letter-body--text.mb15
+    | Здравствуйте!
+    br
+    | Кто-то создал запрос на регистрацию на сайте
+    '
+    = link_to 'OPEN-COOK.RU', 'http://open-cook.ru', class: 'letter-link fs16 arial'
+    '
+    span.nobr "Открытая кухня Анны Нечаевой".
+
+  .letter-body--text.mb15 Если это были вы и вы действительно хотите выполнить регистрацию на сайте, то, пожалуйста, перейдите по следующей ссылке:
+
+  .letter-body--activation.tac
+    table.w100p
+      tr
+        td.w50p
+        td
+          .letter-body--activation-border
+            span.nobr= link_to 'Активировать учетную запись', activate_email_registration_request_url(@uid, callback_path: @callback_path), class: 'letter-body--activation-link'
+        td.w50p
+
+  .letter-body--text.mb10
+    .b Обратите внимание:
+    | Мы автоматически создадим пароль для завершения регистрации и никто его не узнает (даже мы). После завершения регистрации мы советуем Вам установить новый пароль в вашем личном кабинете.
+  .letter-body--text.mb10
+    .b Кроме того:
+    | Вы можете вообще не запоминать пароль к сайту! Просто запросите на ваш Email одноразовую ссылку для входа! Это очень просто и удобно!
+  .letter-body--text.mb10
+    .b А еще:
+    | В личном кабинете Вы можете привязать свою учетную запись к социальным сетям и заходить на сайт в один клик!
+
+  .letter-body--text.mt20.mb15 Если ссылка не активна, то скопируйте следующий адрес в адресную строку своего браузера:
+
+  .letter-body--plain-activation= activate_email_registration_request_url(@uid, callback_path: @callback_path)
+
+
+  .letter-body--text.mb15
+    | Регистрация на сайте
+    '
+    = link_to 'OPEN-COOK.RU', 'http://open-cook.ru', class: 'letter-link fs16 arial'
+    '
+    ' позволяет вам стать полноправным пользователем кулинарного сайта и привилегированным покупателем в Магазинчике Ани Нечаевой
+

@@ -1,0 +1,12 @@
+.aside_block
+  .aside_header Немного статистики
+  .m10.ofh
+    .fs13.mb15
+      Всего просмотров: #{ (Recipe.sum(:show_count) + Post.sum(:show_count)).to_s.pretty_number }
+    .fs13.mb15
+      Публикаций: #{ Recipe.published.count + Post.published.count }
+    .fs13.mb15
+      Комментариев: #{ Comment.published.count }
+    .fs13
+      Сайт работает (дней):
+      = (DateTime.now.to_i -  DateTime.new(2011,9,18).to_i)/1.day

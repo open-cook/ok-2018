@@ -1,0 +1,46 @@
+/*
+
+#= require ptz/reset
+#= require ptz/base
+#= require ptz/framework
+
+#= require ptz/inputs-buttons/base
+#= require ptz/inputs-buttons/sizes
+
+#= require protozaur_theme/theme-0/paginator
+
+#= require ../base/layout
+
+#= require ./header_footer
+#= require ./headers
+#= require ./layout
+
+#= require ./content_main
+#= require ./pagination
+
+*= require notifications/vendors/toastr
+*= require ../vendors/toastr/style
+
+*= require the_comments
+*= require ./login_signin
+*= require ./forms
+*= require ./search_line
+
+#= require ./frame_classes
+#= require ./content_typography
+#= require jquery-ui/autocomplete
+
+#= require layouts/table-holy-grail/styles
+
+#= require user_room/layout/user-room
+#= require user_room/layout/user-room-header
+
+#= require ./section-switcher
+#= require ./top_menu
+#= require ./pub-breadcrumbs
+#= require ./welcome-index-grid
+#= require ./aside-informer
+#= require ./same-recipes
+#= require ./pub-informer
+#= require ./inform-block
+*/

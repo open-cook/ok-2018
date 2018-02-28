@@ -1,0 +1,119 @@
+- content_for :the_audit_main do
+  %h1= t('the_audit.list_title')
+
+  .alert.alert-warning
+    %p Данная страница позволяет наблюдать за заходами на различные страницы сайта.
+    %p Здесь можно проследить IP адрес посетителя, название его браузера и некоторую другую информацию.
+
+  .alert.alert-info
+    %p Основная задача сбора этой информации - отслеживание заходов Поисковых ботов на конкретную страницу.
+
+  %p
+    Записей: #{ @audits_count }
+
+  = paginate @audits
+
+  .panel.panel-success
+    .panel-heading
+      Фильтры
+    = form_tag '', method: :get, role: :form do
+      .panel-body
+        .form-group
+          .row
+            .col-xs-4
+              %label{ for: :user_id }
+                user_id
+                = link_to "X", params.except(:user_id)
+              = text_field_tag :user_id, params[:user_id], placeholder: "user_id", class: 'form-control'
+            .col-xs-4
+              %label{ for: :ip }
+                IP адрес
+                = link_to "X", params.except(:ip)
+              = text_field_tag :ip, params[:ip], placeholder: "IP адрес", class: 'form-control'
+            .col-xs-4
+              %label{ for: :user_agent }
+                User Agent
+                = link_to "X", params.except(:user_agent)
+              = text_field_tag :user_agent, params[:user_agent], placeholder: "User agent", class: 'form-control'
+        .form-group
+          .row
+            .col-xs-4
+              %label{ for: :obj_type }
+                obj_type
+                = link_to "X", params.except(:obj_type)
+              = text_field_tag :obj_type, params[:obj_type], placeholder: "obj_type", class: 'form-control'
+            .col-xs-4
+              %label{ for: :obj_id }
+                obj_id
+                = link_to "X", params.except(:obj_id)
+              = text_field_tag :obj_id, params[:obj_id], placeholder: "obj_id", class: 'form-control'
+            .col-xs-4
+              %label{ for: :referer }
+                referer
+                = link_to "X", params.except(:referer)
+              = text_field_tag :referer, params[:referer], placeholder: "referer", class: 'form-control'
+        .form-group
+          .row
+            .col-xs-3
+              %label{ for: :date_start }
+                Дата (от)
+                = link_to "X", params.except(:date_start)
+              = text_field_tag :date_start, params[:date_start], data: { role: :date_start }, placeholder: "Дата (от)", class: 'form-control'
+            .col-xs-3
+              %label{ for: :date_end }
+                Дата (до)
+                = link_to "X", params.except(:date_end)
+              = text_field_tag :date_end, params[:date_end],   data: { role: :date_end   }, placeholder: "Дата (до)", class: 'form-control'
+      .panel-footer
+        = submit_tag "Выбор", name: nil, class: 'btn btn-primary'
+        = link_to "Сбросить фильтры", params.except(:user_id, :date_start, :date_end, :sort_column, :sort_type, :ip, :fullpath, :referer, :user_agent, :referer, :controller_action, :created_at, :obj_id), class: 'btn btn-default'
+
+  %table.table.table-striped.table-hover
+    %thead
+      %tr
+        %th User
+        %th Obj
+        %th@ctrl_acts
+          - opts = options_for_select @ctrl_acts.collect{|opt| base_name = [ opt.controller_name, opt.action_name ].join(':'); [ "#{ base_name } (#{ opt.count })", base_name ] }, selected: params[:controller_action]
+          = select_tag :controller_action, opts, prompt: "Controller/Action", class: 'form-control'
+        %th= link_to 'Fullpath↕', simple_sort_url(:fullpath, params), title: :fullpath
+
+        %th= link_to 'IP↕', simple_sort_url(:ip, params), title: :description
+        %th= link_to 'Referer↕', simple_sort_url(:referer, params), title: :referer
+        %th= link_to 'User agent↕', simple_sort_url(:user_agent, params), title: :user_agent
+        %th= link_to 'created_at↕', simple_sort_url(:created_at, params), title: :created_at
+        %th Action
+
+    %tbody
+      - @audits.each do |audit|
+        %tr
+          %td
+            - if audit.user
+              = link_to audit.user_name, params.merge(user_id: audit.user_id)
+              / = link_to audit.user_name, audit.user_path(self)
+            - else
+              Guest
+
+          %td
+            - if audit.obj_type.present?
+              - l_1 = link_to audit.obj_type, params.merge(obj_type: audit.obj_type)
+              - l_2 = link_to audit.obj_id, params.merge(obj_id: audit.obj_id)
+              - l_3 = link_to '[all]', params.merge(obj_type: audit.obj_type, obj_id: audit.obj_id)
+              #{ l_1 }:#{ l_2 }&nbsp;#{ l_3 }
+
+          %td= [ audit.controller_name, audit.action_name ].join ':'
+          %td{ title: audit.fullpath }= audit.fullpath.to_s[0..30]
+
+          %td= link_to audit.ip, params.merge(ip: audit.ip)
+
+          %td{ title: audit.referer }
+            = link_to audit.referer.to_s[0..30], params.merge(referer: audit.referer)
+
+          %td{ title: audit.user_agent }
+            - agent = bot_marker(audit.user_agent) || audit.user_agent.to_s[0..30]
+            = link_to agent, params.merge(user_agent: audit.user_agent)
+
+          %td= audit.created_at.to_s(:db)
+          %td= link_to('Show', audit_path(audit))
+
+  = paginate @audits

@@ -1,0 +1,127 @@
+= render template: 'rails_shop/layouts/items/header_footer'
+
+- content_for :left_sidebar do
+  .mt25.mb20
+    ul
+      li.mb10= link_to 'Главная', '/shop', class: 'ptz--btn ptz--size-12'
+      li= link_to 'Просмотр товара', @product, class: 'ptz--btn ptz--size-12'
+
+  = render partial: 'rails_shop/layouts/items/left_sidebar'
+
+h3.mt20.mb20.fs18 Редактировать товар
+
+= render partial: 'main_image/uploader', locals: { object: @product }
+
+= form_for @product, html: { class: 'form-classic' } do |f|
+  = render partial: 'notifications/form', locals: { object: @product }
+
+  .mb15
+    = f.label :title, 'Название', class: 'block fs13 mb5'
+    = f.text_field :title, class: 'ptz--input ptz--size-15 w500 '
+
+  .mb15.clearfix
+    .pull-left.mr30
+      = f.label :price, 'Цена (комплекта)', class: 'block fs13 mb5'
+      = f.number_field :price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, placeholder: '1000', autocomplete: :off
+    .pull-left.mr30
+      = f.label :price_text, 'Текстовая цена', class: 'block fs13 mb5'
+      = f.text_field :price_text, class: 'ptz--input ptz--size-15 w150 ', maxlength: 200, placeholder: '1000 за 6 штук', autocomplete: :off
+    .pull-left
+      = f.label :discount, 'Скидка (проценты)', class: 'block fs13 mb5'
+      = f.number_field :discount, class: 'ptz--input ptz--size-15 w150 ', maxlength: 2, min: 0, max: 90, placeholder: '20', autocomplete: :off
+
+  .mb15.clearfix
+    .pull-left.mr30
+      = f.label :sku, 'Артикль', class: 'block fs13 mb5'
+      = f.text_field :sku, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, placeholder: '77-00001'
+    .pull-left.mr30
+      = f.label :amount, 'Количество на складе (комплектов)', class: 'block fs13 mb5'
+      = f.number_field :amount, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, placeholder: '0', autocomplete: :off
+
+  .mb15.clearfix
+    .pull-left.mr30
+      = f.label :weight, 'Вес (граммы)', class: 'block fs13 mb5'
+      = f.text_field :weight, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, placeholder: '50'
+
+    .pull-left
+      = f.label :dimensions, 'Размеры (сантиметры)', class: 'block fs13 mb5'
+      = f.text_field :dimensions, class: 'ptz--input ptz--size-15 w150 ', placeholder: '5x10x5'
+
+  .mb15
+    = f.label :equipment, 'Комплектация', class: 'block fs13 mb5'
+    = f.text_area :equipment, class: 'ptz--textarea ptz--size-15 w500 form-classic--textarea'
+
+  / .mb15
+  /   = f.label :raw_intro, 'Вводное описание товара', class: 'block fs13 mb5'
+  /   = f.text_area :raw_intro, class: 'ptz--textarea ptz--size-15 w500 form-classic--textarea'
+
+  .mb15
+    = f.label :raw_content, 'Подробное описание товара', class: 'block fs13 mb5'
+    = f.text_area :raw_content, rows: 7, class: 'ptz--textarea ptz--size-15 w500 form-classic--textarea'
+
+  .mb15.clearfix
+    .pull-left.mr30
+      = f.label :state, 'Видимость', class: 'block fs13 mb5'
+
+      - options = options_for_select({ 'Черновик' => :draft, 'Опубликовано' => :published }, @product.state)
+      = f.select :state, options, {}, autocomplete: :off, class: 'ptz--input ptz--size-15 w150 form-classic--select'
+
+    .pull-left
+      = f.label :special_marker, 'Специальная отметка', class: 'block fs13 mb5'
+
+      - options = options_for_select({ 'Нет отметки' => '', 'Новинка' => :new, 'Аня рекомендует' => :recommended }, @product.special_marker)
+      = f.select :special_marker, options, {}, autocomplete: :off, class: 'ptz--input ptz--size-15 w200 form-classic--select'
+
+  hr
+
+  .form-classic--actions.clearfix
+    .pull-right
+      = f.submit 'Обновить товар', class: 'ptz--btn ptz--size-22'
+
+= form_for '#', html: { class: 'form-classic' } do |f|
+  - pcs = ProductCategory.all
+  - selected_pcs = @product.product_categories
+
+  .block fs13 mb5 Категории товаров
+  .w100p
+    - pcs_list = pcs.map{|item| [ item.title, item.id ] }
+    - options  = options_for_select pcs_list, selected_pcs.map(&:id)
+
+    - custom_select_locale = { locale: { not_set: 'Не выбрано', selected: 'Выбрано элементов: %{count}', no_results: 'Нет совпадений', placeholder: 'Поиск' } }
+    - custom_select_params = { 'custom-select-options' => { size: 4, search: true, checkboxed: true, solid: true } }
+
+    - update_path = realtion_category_product_url(@product)
+    = select_tag('product_category_relations', options, data: { url: update_path, role: 'custom-select product-category-relation' }.merge(custom_select_locale).merge(custom_select_params), multiple: :multiple, autocomplete: :off, class: 'ptz--input ptz--size-15 w150 form-classic--select')
+
+= form_for @product.meta_data, html: { class: 'form-classic' }  do |f|
+  = render partial: 'notifications/form', locals: { object: @product.meta_data }
+  = hidden_field_tag :redirect_path, request.original_url
+
+  @editable-block
+    .clearfix@editable-block--intro
+      .pull-left
+        h3.fs15.b Мета Информация
+      .pull-right
+        = link_to 'Редактировать', jsvoid, class: 'fs13 lh140', data: { role: 'editable-block--switcher' }
+
+    .clearfix@editable-block--content(style='display:none')
+      .pull-right
+        = link_to 'Скрыть', jsvoid, class: 'fs13 lh140', data: { role: 'editable-block--switcher' }
+
+      h3.fs15.mb20 Главные мета поля
+
+      - %w[ title keywords description author ].each do |fname|
+        .mb15
+          = f.label fname, class: 'block fs13 mb5'
+          = f.text_field fname, class: 'ptz--input ptz--size-15 w90p '
+
+      h3.fs15.mt20.mb20 OpenGraph поля
+
+      - %w[ og_title og_description og_image og_url og_type og_site_name ].each do |fname|
+        .mb15
+          = f.label fname, class: 'block fs13 mb5'
+          = f.text_field fname, class: 'ptz--input ptz--size-15 w90p '
+
+      .form-classic--actions
+        = f.submit "Сохранить", class: 'ptz--btn ptz--size-14'
+

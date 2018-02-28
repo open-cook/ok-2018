@@ -1,0 +1,30 @@
+nav.catalog-menu.mt20.mr30
+  .catalog-menu--item
+    .catalog-menu--title Разделы
+
+    - if pc = ProductCategory.published.where(id: 11).first
+      - if @product_category && @product_category == pc
+        = link_to pc.title, pc, class: 'catalog-menu--link catalog-menu--link-current catalog-menu--special'
+      - else
+        = link_to pc.title, pc, class: 'catalog-menu--link catalog-menu--special'
+
+    - ProductCategory.published.where(id: [17]).each do |pc|
+      - if @product_category && @product_category == pc
+        = link_to pc.title, pc, class: 'catalog-menu--link catalog-menu--link-current catalog-menu--pink'
+      - else
+        = link_to pc.title, pc, class: 'catalog-menu--link catalog-menu--pink'
+
+    - ProductCategory.published.order(title: :asc).each do |pc|
+      - unless [11, 17].include?(pc.id) # new year, pink crazy
+        - if @product_category && @product_category == pc
+          = link_to pc.title, pc, class: 'catalog-menu--link catalog-menu--link-current'
+        - else
+          = link_to pc.title, pc, class: 'catalog-menu--link'
+
+  .catalog-menu--item
+    .catalog-menu--title Как сделать заказ?
+
+    / = link_to 'О магазинчике',       '/pages/about-shop', class: 'link--block'
+    = link_to 'Как сделать заказ?',  '/pages/how-to-buy', class: 'catalog-menu--link'
+    = link_to 'Способы оплаты',      '/pages/payments',   class: 'catalog-menu--link'
+    = link_to 'Способы доставки',    '/pages/delivery',   class: 'catalog-menu--link'

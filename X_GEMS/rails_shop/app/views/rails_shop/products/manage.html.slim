@@ -1,0 +1,40 @@
+= render template: 'rails_shop/layouts/items/header_footer'
+
+- content_for :left_sidebar do
+  = render partial: 'rails_shop/layouts/items/left_sidebar'
+
+h3.mt20.mb20.fs18 Редактировать товары
+
+.mb10= link_to 'Новый товар', new_product_url, class: 'ptz--btn ptz--size-14'
+
+.clearfix
+  .pull-right.fs12
+    = link_to 'Сбросить фильтры', url_for( reset_simple_sort )
+
+table.table-light--table.w100p
+  tr.table-light--tr
+    th.table-light--th
+    th.table-light--th.fs15= link_to 'Название ↕',  simple_sort_url(:title)
+    th.table-light--th.fs15= link_to 'Цена ↕',      simple_sort_url(:price)
+    th.table-light--th.fs15= link_to 'На складе ↕', simple_sort_url(:amount)
+    th.table-light--th.fs15= link_to 'Артикул ↕',   simple_sort_url(:sku)
+    th.table-light--th
+
+  - @products.each do |product|
+    tr.table-light--tr
+      td.table-light--td.w100
+        = image_tag product.main_image.url(:v100x100), width: 50
+      td.table-light--td
+        = link_to product.title, [:edit, product], class: 'link--block fs15 pt0 lh120'
+      td.table-light--td.w100
+        .fs15= money_to_text product.price
+      td.table-light--td.w100
+        .fs15= product.amount
+      td.table-light--td.w100
+        .fs15= product.sku
+      td.table-light--td
+        = link_to product, method: :delete, data: { confirm: 'Удалить товар?' } do
+          i.fs14.fa.fa-trash
+
+- if (products_paginator = paginate @products, views_prefix: 'protozaur_theme/paginator').present?
+  .ptz--theme-0.mb20= products_paginator

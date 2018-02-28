@@ -1,0 +1,130 @@
+body
+  font-family: 'Open Sans', Arial, sans-serif
+
+html, body
+  width:  100%
+  height: 100%
+
+// TABLE
+.table
+  display: table
+
+.row
+  display: table-row
+
+.cell
+  display: table-cell
+  vertical-align: top
+
+// TLAYOUT
+.tlayout
+  width:   100%
+  height:  100%
+
+.tlayout > main
+  height: 100%
+
+.tlayout > header,
+.tlayout > footer
+  min-height: 50px
+  height: 50px
+
+.tlayout > main,
+.tlayout > header,
+.tlayout > footer
+  > .cell
+    width:  100%
+
+.tlayout > main > .cell
+  height: 100%
+
+// TCOLUMNER
+.tcolumner
+  margin: auto
+  display: table
+
+  width: 100%
+  height: 100%
+
+  min-width: 980px
+  max-width: 1256px
+
+.tcolumner > .row
+  height: 100%
+
+.tcolumner > .row > .cell
+  height: 100%
+  // background: lightyellow
+
+  &.left, &.right
+    width: 20%
+    // background: lightblue
+
+.tcolumner
+  .cell.left-spacer,
+  .cell.right-spacer
+    width: 10px
+    transition: width .5s
+
+@media all and (max-width: 980px)
+  .tcolumner > .row > .cell
+    &.left-spacer, &.right-spacer
+      width: 1px
+
+// TCONTENT
+.tcontent
+  width:  100%
+  height: 100%
+
+.tcontent > .row
+  width: 100%
+
+.tcontent > .row > .cell.main
+  height: 100%
+
+// CONTENT HOLDER/SPACER
+.content-holder
+  width: 100%
+  min-width: 980px
+  max-width: 1256px
+
+.content-holder-spacer
+  margin: 0 10px
+  transition: margin-left .5s, margin-right .5s
+
+@media all and (max-width: 980px)
+  .content-holder-spacer
+    margin: 0 0
+
+// // // // // // // // // // // // // //
+// Small Screen
+// // // // // // // // // // // // // //
+
+@media all and (max-width: 600px)
+  .tcolumner, .content-holder
+    min-width: auto
+    max-width: auto
+
+  .tcolumner
+    display: block
+
+  .tcolumner > .row
+    height:  auto
+    display: flex
+    flex-flow: row wrap
+
+  .tcolumner > .row > .cell
+    display: block
+    overflow: auto
+
+  .tcolumner > .row > .cell.main
+    width: 100%
+    order: 2
+
+  .tcolumner > .row > .cell.left
+    width: 100%
+    order: 1
+
+  .tcolumner > .row > .cell.right
+    width: 100%
+    order: 3

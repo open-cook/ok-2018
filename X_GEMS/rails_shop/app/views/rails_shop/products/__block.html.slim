@@ -1,0 +1,61 @@
+/ - res = [1,2,3,4].sample
+/ - if res == 1
+/   = link_to 'https://open-cook.ru/LILI-WORKSHOP', title: '29–31 октября. Трёхдневный воркшоп в Санкт-Петербурге', target: :_blank do
+/     = image_tag '/workshop/lililoveme_ws_small.jpg'
+/ - elsif res == 2
+/   = link_to 'https://open-cook.ru/LILI-OK', title: '29–31 октября. Трёхдневный воркшоп в Санкт-Петербурге', target: :_blank do
+/     = image_tag '/workshop/lili-ok-small.png'
+/ - elsif res == 3
+/   = link_to 'https://open-cook.ru/LILI-OK', title: '29–31 октября. Трёхдневный воркшоп в Санкт-Петербурге', target: :_blank do
+/     = image_tag '/workshop/lili-ok-small-2.png'
+/ - else
+/   = link_to 'https://open-cook.ru/LILI-OK', title: '29–31 октября. Трёхдневный воркшоп в Санкт-Петербурге', target: :_blank do
+/     = image_tag '/workshop/lili-ok-small-3.png'
+
+/ = image_tag '/workshop/lililoveme_ws_wide.jpg'
+ruby:
+  cards = [
+    [
+      'https://instagram.com/p/4jj5jOTW-d',
+      '/shop/products-images/product-image-0.jpg',
+      'Чудесные формочки с совушками для выпечки ваших вкуснейших капкейков'
+    ],
+    [
+      'https://instagram.com/p/3LyK0XzW-d',
+      '/shop/products-images/product-image-1.jpg',
+      'Формочки для леденцов. Ностальгия в современном исполнении'
+    ],
+    [
+      'https://instagram.com/p/3jESCPTW6i',
+      '/shop/products-images/product-image-2.jpg',
+      'Милые формочки с цветами для выпечки ваших красивых кексов'
+    ],
+    [
+      'https://instagram.com/p/3rEXSATW70',
+      '/shop/products-images/product-image-3.jpg',
+      '"Вкусные ложки" подарят хорошее настроение на весь день'
+    ],
+    [
+      'https://instagram.com/p/5Ha-odzW6u',
+      '/shop/products-images/product-image-4.jpg',
+      'Яркие бумажные соломинки для вкусных напитков'
+    ],
+    [
+      'https://instagram.com/magazinchik_ani',
+      '/shop/products-images/product-image-5.jpg',
+      'Разнообразие полезных и удобных вещиц для кулинарного волшебства'
+    ]
+  ]
+
+- card = cards.sample
+
+- url = card[0]
+- img = card[1]
+- txt = card[2]
+
+= link_to 'https://open-cook.ru/shop', class: 'product-block-', title: 'Перейти в магазинчик', target: :_blank do
+  i.product-block--img= image_tag img
+  .product-block--content
+    b.product-block--title В магазинчике Ани Нечаевой
+    p.product-block--text= txt
+    .product-block--btn Перейти в магазинчик &raquo;

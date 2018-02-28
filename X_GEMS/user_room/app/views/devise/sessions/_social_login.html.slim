@@ -1,0 +1,53 @@
+- intro_visible   = 'display:none' if  visible
+- content_visible = 'display:none' if !visible
+- gray_style = 'form-classic--lightgray-theme' if !visible
+
+.form-classic@registration-accordion(class=gray_style)
+  @registration-accordion--intro(style=intro_visible)
+
+    @registration-accordion--switcher
+      input#social-ligin-off-always.radio-btn(type='checkbox' autocomplete='off')
+      label(for='social-ligin-off')
+        span.fs16 Вход / Регистрация через социальную сеть
+
+  @registration-accordion--content(style=content_visible)
+    .table.w100p
+      .row
+        .cell.pl10
+          p.mt0 Вход / Регистрация через социальные сети
+          - callback_path = local_assigns[:callback_path]
+
+          .table.mt40.mb40
+            .row
+              .cell.pr40.tac
+                = link_to '', user_omniauth_authorize_path(:vkontakte,     callback_path: callback_path), class: 'social-login-btn social-login-btn--vk fa fa-vk',            data: { role: 'social-login-btn' },              title: 'ВКонтакте'
+                .fs11.mt5 ВКонтакте
+              .cell.pr40.tac
+                = link_to '', user_omniauth_authorize_path(:odnoklassniki, callback_path: callback_path), class: 'social-login-btn social-login-btn--ok fa fa-odnoklassniki', data: { role: 'social-login-btn', width: 650 },  title: 'Одноклассники'
+                .fs11.mt5 Одноклассники
+              .cell.pr40.tac
+                = link_to '', user_omniauth_authorize_path(:facebook,      callback_path: callback_path), class: 'social-login-btn social-login-btn--fb fa fa-facebook',      data: { role: 'social-login-btn', height: 600 }, title: 'Facebook'
+                .fs11.mt5 Facebook
+              .cell.pr40.tac
+                = link_to '', user_omniauth_authorize_path(:twitter,       callback_path: callback_path), class: 'social-login-btn social-login-btn--tw fa fa-twitter',       data: { role: 'social-login-btn', height: 650 }, title: 'Твиттер'
+                .fs11.mt5 Twitter
+              .cell.pr40.tac
+                = link_to '', user_omniauth_authorize_path(:google_oauth2, callback_path: callback_path), class: 'social-login-btn social-login-btn--gp fa fa-google-plus',   data: { role: 'social-login-btn', height: 600 }, title: 'Google+'
+                .fs11.mt5 Google+
+
+          .fs12.mb10 &mdash; Регистрация через социальную сеть это быстро, безопасно, удобно!
+          .fs12 &mdash; В личном кабинете вы сможете привязать несколько социальных сетей к своему профилю
+
+        .cell.w50p.pl30
+          p.mt0.mb15 Регистрация позволяет вам:
+          ol.ol.fs15.mb0
+            li Присоедениться к сообществу "Открытая&nbsp;Кухня"
+            li Получить <u>скидку 2%</u> на первый заказ
+            li Получить <u>скидку 5%</u> на все последующие заказы
+            li Отслеживать состояние всех ваших заказов
+            li Оставлять комментарии без модерации
+            li Следить за активностью на сайте, которая может быть вам интересной
+
+  / .cell.pl0.pt10.pr10.w40
+  /  input#social-ligin-on-always.radio-btn(type='checkbox' checked='checked' autocomplete='off')
+  /  label(for='social-ligin-on')

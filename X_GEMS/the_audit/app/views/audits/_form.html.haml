@@ -1,0 +1,79 @@
+= form_for([:admin, @audit]) do |f|
+  -if @audit.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@audit.errors.count, "error")} prohibited this audit from being saved:"
+      %ul
+        - @audit.errors.full_messages.each do |msg|
+          .alert.alert-danger
+            %li= msg
+  %table.table.table-striped.table-hover
+    %tr
+      %td
+        / #TODO Place the button to better place
+        = f.submit t('the_audit.save'), class: 'btn btn-info'
+      %td
+    %tr
+      %td
+        =f.label :user_id
+      %td
+        =f.label "#{@audit.user_id.nil? ? 'Guest' : @audit.user_id}", class: 'form-control'
+    %tr
+      %td
+        =f.label :obj_id
+      %td
+        =f.text_field :obj_id, class: 'form-control'
+    %tr
+      %td
+        =f.label :obj_type
+      %td
+        =f.text_field :obj_type, class: 'form-control'
+    %tr
+      %td
+        =f.label :controller_name
+      %td
+        =f.text_field :controller_name, class: 'form-control'
+    %tr
+      %td
+        =f.label :action_name
+      %td
+        =f.text_field :action_name, class: 'form-control'
+    %tr
+      %td
+        =f.label :ip, 'IP'
+      %td
+        =f.text_field :ip, class: 'form-control'
+    %tr
+      %td
+        =f.label :remote_ip, 'Remote IP'
+      %td
+        =f.text_field :remote_ip, class: 'form-control'
+    %tr
+      %td
+        =f.label :fullpath
+      %td
+        =f.text_field :fullpath, class: 'form-control'
+    %tr
+      %td
+        =f.label :referer
+      %td
+        =f.text_field :referer, class: 'form-control'
+    %tr
+      %td
+        =f.label :user_agent
+      %td
+        =f.text_field :user_agent, class: 'form-control'
+    %tr
+      %td
+        =f.label :remote_addr
+      %td
+        =f.text_field :remote_addr, class: 'form-control'
+    %tr
+      %td
+        =f.label :remote_host
+      %td
+        =f.text_field :remote_host, class: 'form-control'
+    %tr
+      %td
+        =f.label :data
+      %td
+        =f.text_area :data, class: 'form-control'  

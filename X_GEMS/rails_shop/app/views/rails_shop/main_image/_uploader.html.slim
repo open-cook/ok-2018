@@ -1,0 +1,15 @@
+- if object.main_image.blank?
+  = form_for object, html: { enctype: 'multipart/form-data', class: 'form-classic' } do |f|
+    = render partial: 'notifications/form', locals: { object: object, format: :json }
+
+    .mb15
+      .block fs13 mb5 Загрузите главное изображение
+
+    .mb15
+      = f.file_field :main_image, class: 'input'
+
+    .form-classic--actions
+      = f.submit 'Загрузить', class: 'ptz--btn ptz--size-14'
+
+- else
+  = render partial: 'main_image/toolbar', locals: { object: object }

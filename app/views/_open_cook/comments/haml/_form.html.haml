@@ -1,0 +1,12 @@
+.h3= link_to t('the_comments.new'), '#', id: :new_root_comment
+
+= form_for Comment.new, remote: true, authenticity_token: true do |f|
+  - if current_user
+    = render partial: 'comments/haml/logined_form', locals: { f: f, commentable: commentable }
+  - else
+    = render partial: 'comments/haml/guest_form', locals: { f: f, commentable: commentable }
+  .table
+    .cell.vam
+      = f.submit t('the_comments.form.create'), class: 'ptz--btn ptz--size-18'
+    .cell.vam.pl30
+      .fs15= t('the_comments.form.thank_you')

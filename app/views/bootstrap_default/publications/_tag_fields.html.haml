@@ -1,0 +1,5 @@
+.form-group
+  - id = "tag_list"
+  = f.label id, t("pubs.tags.list")
+  = f.text_field id, value: pub.send("inline_tags"), data: { tags: @tags.to_json }
+

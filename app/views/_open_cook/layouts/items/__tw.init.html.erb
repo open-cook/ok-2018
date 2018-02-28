@@ -1,0 +1,18 @@
+<script type="text/javascript">
+  setTimeout(function(){
+    log('TW init');
+
+    !function (d, id, did, st) {
+      var id = 'twitter-script';
+      if (d.getElementById(id)) return;
+
+      var js = d.createElement("script");
+      js.id  = id;
+      js.setAttribute('type', 'text/javascript');
+      js.src = "https://platform.twitter.com/widgets.js";
+      d.documentElement.appendChild(js);
+    }(document);
+
+  }, 2000)
+</script>
+

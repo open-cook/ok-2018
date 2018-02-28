@@ -1,0 +1,9 @@
+- content_for :header do
+  = render template: 'ok2/layouts/items/header', locals: { current_section: :main, search_block: true }
+
+- content_for :top_menu do
+  = render partial: 'layouts/items/top_menu'
+
+- content_for :footer do
+  = render template: 'ok2/layouts/items/footer'
+

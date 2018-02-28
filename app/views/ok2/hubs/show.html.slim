@@ -1,0 +1,24 @@
+= render template: "meta_data/hubs/show", locals: { post: @hub, childs: @pubs }
+
+= render partial: "ok2/shared/header_footer"
+
+- content_for :breadcrumbs do
+
+  .w1000.ma.mt25.mb20.clearfix
+    h1.tac.fs30.fwn.i.pt20.pb15.ffg(style='color:#024e9f')
+      = @hub.title
+
+-# MAIN CONTENT
+- if @pubs.blank?
+  h2 Увы, здесь пока ничего нет
+- else
+  .welcome-index-grid.clearfix@welcome-index-grid
+
+    - @pubs.each do |pub|
+      = render partial: 'ok2/shared/welcome_index_grid__item', locals: { pub: pub }
+
+  - if (products_paginator = paginate @pubs, views_prefix: 'protozaur_theme/paginator').present?
+    .ptz--theme-0.mb20= products_paginator
+
+- @pubs.each do |pub|
+  div(style='overflow:hidden;width:1px;height:1px;float:left;opacity:0.2')= image_tag pub.main_image.url(:original)

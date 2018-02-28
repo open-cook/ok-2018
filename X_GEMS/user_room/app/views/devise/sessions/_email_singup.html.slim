@@ -1,0 +1,42 @@
+- intro_visible   = 'display:none' if  visible
+- content_visible = 'display:none' if !visible
+- gray_style = 'form-classic--lightgray-theme' if !visible
+
+.form-classic@registration-accordion(class=gray_style)
+  @registration-accordion--intro(style=intro_visible)
+
+    @registration-accordion--switcher
+      input#email-signin-off-always.radio-btn(type='checkbox' autocomplete='off')
+      label(for='email-signin-off')
+        span.fs16 Регистрация через электронную почту
+
+  @registration-accordion--content(style=content_visible)
+    .table.w100p
+      .row
+        .cell.pl10
+          = form_tag create_email_registration_request_path do
+            = hidden_field_tag(:callback_path, callback_path) if local_assigns[:callback_path]
+
+            .fs16.mt5.mb10 Регистрация через электронную почту
+            .mt5.fs13 Вам придет письмо для активации вашей учетной записи
+
+            .mb15.mt40.mb40
+              .block.fs14.lh120.mb10 Ваша электронная почта
+              = text_field_tag :email, '', class: 'ptz--input ptz--size-14 w250'
+              = button_tag 'Зарегистрироваться', class: 'ptz--btn ptz--size-14 ptz--style-0--btn ptz--btn--side-right'
+
+            p.fs12.mt0.mb10 &mdash; Если письмо не пришло в считаные минуты, то не забудте проверить папку <b>СПАМ</b>. Иногда даже полезные письма туда попадают.
+
+        .cell.w50p.pl30
+          p.mt0.mb15 Регистрация позволяет вам:
+          ol.ol.fs15.mb0
+            li Присоедениться к сообществу "Открытая&nbsp;Кухня"
+            li Получить <u>скидку 2%</u> на первый заказ
+            li Получить <u>скидку 5%</u> на все последующие заказы
+            li Отслеживать состояние всех ваших заказов
+            li Оставлять комментарии без модерации
+            li Следить за активностью на сайте, которая может быть вам интересной
+
+  / .cell.pl0.pt10.pr10.w40
+  /   input#email-signin-on-always.radio-btn(type='checkbox' checked='checked' autocomplete='off')
+  /   label(for='email-signin-on')

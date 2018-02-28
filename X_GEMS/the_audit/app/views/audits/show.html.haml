@@ -1,0 +1,73 @@
+%h1= t("the_audit.show_record")
+
+- content_for :the_audit_main do
+  -# #TODO set bootstrap style for notice
+  %p#notice= notice
+
+  %table.table.table-striped
+    %tbody
+      %tr
+        %td
+          %strong User:
+        %td
+          -# #TODO show Guest unless User present
+          = @audit.user_id
+      %tr
+        %td
+          %strong Obj:
+        %td
+          = @audit.obj_id
+      %tr
+        %td
+          %strong Obj type:
+        %td
+          = @audit.obj_type
+      %tr
+        %td
+          %strong Controller name:
+        %td
+          = @audit.controller_name
+      %tr
+        %td
+          %strong Action name:
+        %td
+          = @audit.action_name
+      %tr
+        %td
+          %strong IP:
+        %td
+          = @audit.ip
+      %tr
+        %td
+          %strong Remote IP:
+        %td
+          = @audit.remote_ip
+      %tr
+        %td
+          %strong Fullpath:
+        %td
+          = @audit.fullpath
+      %tr
+        %td
+          %strong Referer:
+        %td
+          = @audit.referer
+      %tr
+        %td
+          %strong User agent:
+        %td
+          = @audit.user_agent
+      %tr
+        %td
+          %strong Remote addr:
+        %td
+          = @audit.remote_addr
+      %tr
+        %td
+          %strong Data:
+        %td
+          = @audit.data
+    /#TODO maybe show buttons insted links
+    = link_to t('the_audit.edit'), edit_audit_path(@audit)
+    |
+    = link_to t('the_audit.list'), audits_path

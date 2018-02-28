@@ -1,0 +1,92 @@
+doctype html
+html(lang='en')
+  head(data-log-js=Rails.env.development?)
+    link(href='https://fonts.googleapis.com/css?family=Open+Sans&subset=latin,cyrillic' rel='stylesheet' type='text/css')
+    link(href='//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css' rel='stylesheet' type='text/css')
+
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1')
+
+    title= content_for?(:title) ? yield(:title) : t(:title, scope: [:application, :layout])
+    = yield :meta_tags
+
+    link(href='https://open-cook.ru/favicon.ico' rel='shortcut icon')
+    meta(id='env_token' name='env_token' content=Rails.env.to_s)
+
+    = stylesheet_link_tag    :application, media: :all, 'data-turbolinks-track' => true
+    = javascript_include_tag :application, 'data-turbolinks-track' => true
+
+    = csrf_meta_tags
+
+    = yield :js
+    = yield :css
+
+  body#top
+    / TLAYOUT
+    .table.tlayout
+      - if content_for :header
+        header.row
+          .cell
+
+            .user-room--header-holder
+
+              .ma.content-holder
+                .content-holder-spacer
+                  .header= yield :header
+
+      .row
+        .cell
+          noindex= yield :top_menu
+          = yield :breadcrumbs
+
+      main.row
+        .cell
+
+          / TCOLUMNER
+          .table.tcolumner
+            .row
+
+              / LEFT ASIDE
+              .cell.left-spacer
+              - if content_for :left_sidebar
+                aside.cell.left
+                  .left-sidebar.mr20= yield :left_sidebar
+
+              / MAIN
+              .cell.main
+                / TCONETNT
+                .table.tcontent
+                  .row
+                    .cell.main
+                      .main-content
+                        = render partial: 'notifications/flash'
+                        = yield
+
+                  - if content_for :paginator
+                    .row
+                      .cell.bottom
+                        = yield :paginator
+
+              / RIGHT ASIDE
+              - if content_for :right_sidebar
+                aside.cell.right
+                  .right-sidebar.ml20= yield :right_sidebar
+
+              .cell.right-spacer
+
+      - if content_for :footer
+        footer.row
+          .cell
+
+            .user-room--footer-holder
+
+              .ma.content-holder
+                .content-holder-spacer
+                  .footer= yield :footer
+
+    noindex
+      #to_top
+        = link_to raw('&#9650;'), '#top', rel: :nofollow
+
+    = yield :crop_tool
+    = yield :footer_js

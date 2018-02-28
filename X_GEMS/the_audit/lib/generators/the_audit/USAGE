@@ -1,0 +1,29 @@
+Description:
+  This generators helps to install TheAudit gem into your Application
+
+  Usage: [bundle exec] rails g the_audit NAME
+
+# This text:
+  > rails g the_audit --help
+
+# Main generator:
+  > rails g the_audit install
+
+  This will create:
+   app/controllers/admin/audits_controller.rb
+   app/models/audit.rb
+
+# Controller generators:
+  > rails g the_audit controller
+
+  This will create:
+    app/controllers/admin/audits_controller.rb
+    
+# Model generators:
+  > rails g the_audit model
+  
+  This will create:
+    app/models/audit.rb
+
+# Migrations:
+  > rake the_audit_engine:install:migrations

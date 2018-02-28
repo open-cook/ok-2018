@@ -1,0 +1,27 @@
+.aside_block
+  %p.aside_header Поздравьте Анну :)
+  .m10.ofh.tac
+    = link_to page_path('den-rozhdeniya-sajta-nam-3-goda') do
+      = image_tag '/default_images/bday3.png'
+    %p
+      %br
+      = link_to raw('Поздравить &raquo;'), page_path('den-rozhdeniya-sajta-nam-3-goda')
+
+/ %aside.ofh
+/   .aside_block.aside-banner--shop
+/     .aside_header
+/       ОГО!
+/       %br
+/       ВОТ ЭТО НОВОСТЬ!
+/     .m10.ofh.tac
+/       %p
+/         = link_to "/shop", alt: 'Магазинчик Ани', title: 'Магазинчик Ани' do
+/           = image_tag "/logos/ok_shop_w200_h200.png", alt: 'Магазинчик Ани', title: 'Магазинчик Ани', width: 178, class: :pic
+/       %p
+/         = link_to "/shop", class: 'aside-banner--hl' do
+/           Аня запускает магазинчик!
+/       %p
+/         Следите за обновлениями
+/         %br
+/         в Instagram
+

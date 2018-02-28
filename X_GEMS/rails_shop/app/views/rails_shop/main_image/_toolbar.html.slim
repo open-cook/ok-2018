@@ -1,0 +1,171 @@
+- content_for :crop_tool do
+  = render partial: 'crop_tool/canvas', locals: { image: object.main_image.url(:original) }
+
+= form_for object, html: { enctype: 'multipart/form-data', class: 'form-classic' } do |f|
+  = render partial: 'notifications/form', locals: { object: object, format: :json }
+  .clearfix@main-image-manage-intro
+    .pull-left
+      .mb10.block fs13 mb5
+        | Главное изображение
+
+      .pull-left.mr10
+        = image_tag object.main_image.url(:v100x100), data: { role: 'main-image--v1x1' }, class: 'w100'
+      .pull-left
+
+        .table
+          .row
+            .cell
+              .mb15.fs13
+                span.b 4:3 &nbsp;
+            .cell
+              .mb15.fs13
+                = link_to '1024x768', object.main_image.url(:v1024x768)
+                |,
+                '
+                = link_to '800x600',  object.main_image.url(:v800x600)
+                |,
+                '
+                = link_to '640x480',  object.main_image.url(:v640x480)
+
+          .row
+            .cell
+              .mb15.fs13
+                span.b 16:9 &nbsp;
+            .cell
+              .mb15.fs13
+                = link_to '1600x900', object.main_image.url(:v1600x900)
+                |,
+                '
+                = link_to '1280x720', object.main_image.url(:v1280x720)
+                |,
+                '
+                = link_to '640x360',  object.main_image.url(:v640x360)
+
+          .row
+            .cell
+              .mb15.fs13
+                span.b 1:1 &nbsp;
+            .cell
+              .mb15.fs13
+                = link_to '500x500', object.main_image.url(:v500x500)
+                |,
+                '
+                = link_to '100x100', object.main_image.url(:v100x100)
+
+    .pull-right
+      = link_to 'Редактировать', '#', class: 'fs12', data: { role: 'main-image-manage-switcher' }
+
+
+  @main-image-manage(style='display:none')
+    .mb15
+      .block fs13 mb5
+        | Главное изображение
+        .pull-right
+          = link_to 'Свернуть', '#', class: 'fs12', data: { role: 'main-image-manage-switcher' }
+
+    ruby:
+      crop_data_16x9 = {
+        role:   'crop-tool--open',
+        url:    url_for([:main_image_crop_16x9, object]),
+        source: object.main_image.url(:original),
+        holder:  { width: 500 },
+        preview: { width: 320, height: 180 },
+        callback_handler: "MainImage.crop_tool_callback"
+      }
+
+      crop_data_4x3 = {
+        role:   'crop-tool--open',
+        url:    url_for([:main_image_crop_4x3, object]),
+        source: object.main_image.url(:original),
+        holder:  { width: 500 },
+        preview: { width: 320, height: 240 },
+        callback_handler: "MainImage.crop_tool_callback"
+      }
+
+      crop_data_1x1 = {
+        role:   'crop-tool--open',
+        url:    url_for([:main_image_crop_1x1, object]),
+        source: object.main_image.url(:original),
+        holder:  { width: 500 },
+        preview: { width: 100, height: 100 },
+        callback_handler: "MainImage.crop_tool_callback"
+      }
+
+    .mb15
+      table.w100p
+        tr
+          th
+            .fs15.mt10.mb10.tal Оригинал
+          th
+          th
+            .fs15.mt10.mb10.tal 4x3
+          th
+          th
+            .fs15.mt10.mb10.tal 16x9
+          th
+          th
+            .fs15.mt10.mb10.tal 1x1
+        tr
+          td
+            .mb15
+              = link_to [:main_image_rotate_left, object], method: :patch,  class: 'ptz--btn ptz--size-14 mr15' do
+                .fa.fa-undo
+
+              = link_to [:main_image_rotate_right, object], method: :patch, class: 'ptz--btn ptz--size-14'
+                .fa.fa-repeat
+
+            .mb15= image_tag object.main_image.url(:original), width: '100%'
+            .mb15.fs13= link_to 'source image', object.main_image.url(:original)
+
+          td.w20
+          td.w200
+            .mb15
+              = link_to '#', class: 'ptz--btn ptz--size-14 mr15', data: crop_data_4x3 do
+                .ptz--btn--icon.fa.fa-crop
+                |4x3
+
+            .mb15= image_tag object.main_image.url(:v1024x768), width: '100%', data: { role: 'main-image--v4x3' }
+
+            .mb15.fs13
+              = link_to '1024x768', object.main_image.url(:v1024x768)
+              |,
+              '
+              = link_to '800x600',  object.main_image.url(:v800x600)
+              |,
+              '
+              = link_to '640x480',  object.main_image.url(:v640x480)
+          td.w20
+          td.w200
+            .mb15
+              = link_to '#', class: 'ptz--btn ptz--size-14 mr15', data: crop_data_16x9 do
+                .ptz--btn--icon.fa.fa-crop
+                |16x9
+
+            .mb15= image_tag object.main_image.url(:v1600x900), width: '100%', data: { role: 'main-image--v16x9' }
+
+            .mb15.fs13
+              = link_to '1600x900', object.main_image.url(:v1600x900)
+              |,
+              '
+              = link_to '1280x720', object.main_image.url(:v1280x720)
+              |,
+              '
+              = link_to '640x360',  object.main_image.url(:v640x360)
+
+          td.w20
+          td.w100
+            .mb15
+              = link_to '#', class: 'ptz--btn ptz--size-14 mr15', data: crop_data_1x1 do
+                .ptz--btn--icon.fa.fa-crop
+                |1x1
+
+            .mb15= image_tag object.main_image.url(:v500x500), width: '100px', data: { role: 'main-image--v1x1' }
+            .mb15.fs13
+              = link_to '500x500', object.main_image.url(:v500x500)
+              |,
+              '
+              = link_to '100x100', object.main_image.url(:v100x100)
+
+    .form-classic--action.clearfix
+      .pull-right
+        = link_to 'Удалить', [:main_image_delete, object], method: :delete, class: 'ptz--btn ptz--size-14', data: { confirm: "Сохраните изменения в тексте перед удалением главного изображения. Продолжить?" }

@@ -1,0 +1,8 @@
+ruby:
+  url = if pub.legacy_url.present?
+    "http://open-cook.ru/recipes/#{ pub.legacy_url }"
+  else
+    polymorphic_url(pub)
+  end
+
+.fb-like(data-href=url data-layout="button_count" data-action="like" data-show-faces="true" data-share="false")

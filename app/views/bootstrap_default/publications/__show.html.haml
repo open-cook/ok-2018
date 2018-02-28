@@ -1,0 +1,4 @@
+%h1= @post.title
+= raw @post.intro
+= raw @post.content
+= render partial: 'the_comments/tree', locals: { commentable: @post, comments_tree: @comments }

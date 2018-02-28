@@ -1,0 +1,16 @@
+= render template: 'rails_shop/layouts/items/header_footer'
+
+- content_for :left_sidebar do
+  = render partial: 'rails_shop/layouts/items/left_sidebar'
+
+h3.mt20.mb20.fs18 Новая категория товаров
+
+= form_for @product_category, html: { class: 'form-classic' } do |f|
+  = render partial: 'notifications/form', locals: { object: @product_category }
+
+  .mb15
+    = f.label :title, 'Название', class: 'block fs13 mb5'
+    = f.text_field :title, class: 'ptz--input ptz--size-15 w500 '
+
+  .form-classic--actions
+    = f.submit 'Создать категорию', class: 'ptz--btn ptz--size-14'

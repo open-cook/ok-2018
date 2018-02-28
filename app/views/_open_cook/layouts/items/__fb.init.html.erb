@@ -1,0 +1,18 @@
+<div id="fb-root"></div>
+
+<script type="text/javascript">
+  setTimeout(function(){
+    log('FB init');
+
+    !function (d, id, did, st) {
+      var id = 'facebook-jssdk';
+      if (d.getElementById(id)) return;
+      var js = d.createElement("script");
+      js.id  = id;
+      js.src = "//connect.facebook.net/ru_RU/sdk.js#xfbml=1&appId=263525720524797&version=v2.0";
+      js.setAttribute('type', 'text/javascript');
+      d.documentElement.appendChild(js);
+    }(document);
+
+  }, 2000)
+</script>

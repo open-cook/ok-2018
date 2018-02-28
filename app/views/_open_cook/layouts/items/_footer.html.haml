@@ -1,0 +1,40 @@
+.m20
+  %noindex
+    %p{ style: 'background:#eee;border-radius:3px;text-align:center;' }
+      При копировании материалов данного сайта, пожалуйста, не забывайте размещать активную ссылку на
+      = link_to 'open-cook.ru', root_path, rel: :nofollow
+
+    %table.footer_table
+      %tr
+        %td
+          %p= link_to 'О сайте', page_url(:about)
+          %p= link_to 'Правила сайта', page_url(:rules)
+          %p= link_to 'Правообладателям', page_url(:copyright)
+          %p= link_to 'Наши Партнеры и Друзья', page_url(:partners)
+
+        %td{ style: 'text-align:center' }
+          = render template: 'layouts/items/counters'
+
+          %p
+            = link_to '/recipes.rss', rel: :nofollow, title: 'RSS лента' do
+              = image_tag 'social/rss.png', title: 'RSS лента', alt: 'RSS лента'
+
+          %p.madeinspb
+            Сделано с Любовью
+            = image_tag '/default_images/spb-lion.png'
+            в Санкт-Петербурге
+
+        %td{ style: 'text-align:right' }
+          %noindex
+            %p
+              - if current_user
+                = link_to cabinet_url, rel: :nofollow do
+                  Кабинет (#{ current_user.login })
+              - else
+                = link_to 'Войти', new_user_session_path, rel: :nofollow
+
+            %p
+              = link_to 'open-cook.ru', root_path, rel: :nofollow
+              &copy; &nbsp; 2011 &mdash; #{Time.now.year}
+
+-# link_to '', 'https://plus.google.com/u/0/102684373704141336030', rel: :publisher

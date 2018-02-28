@@ -1,0 +1,4 @@
+- if @cart.active?
+  = link_to 'Оформить заказ', orders_path(cart_id: @cart), method: :post, class: 'ptz--btn ptz--size-22 ptz--style-0--btn'
+- else
+  .ptz--btn.ptz--size-22 Корзина Просрочена

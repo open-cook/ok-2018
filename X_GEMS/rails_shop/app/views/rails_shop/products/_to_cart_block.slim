@@ -1,0 +1,14 @@
+- if @product.amount > 0
+  - if current_cart
+    - if current_cart.cart_items.where(item: @product).blank?
+      = link_to add_to_cart_path(@product, cart_id: current_cart), method: :post, class: 'ptz--btn ptz--size-18 ptz--style-0--btn' do
+        i.fa.fa-cart-plus.ptz--btn--icon
+        | В корзину
+    - else
+      .ptz--btn.ptz--size-18 Уже в корзине
+  - else
+    = link_to add_to_cart_path(@product, cart_id: current_cart), method: :post, class: 'ptz--btn ptz--size-18 ptz--style-0--btn' do
+      i.fa.fa-cart-plus.ptz--btn--icon
+      | В корзину
+- else
+  .ptz--btn.ptz--size-18 Нет в наличии

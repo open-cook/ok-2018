@@ -1,0 +1,29 @@
+<script type="text/javascript">
+  setTimeout(function(){
+    log('VK init');
+    !function (d, id, did, st) {
+      var id = 'vk-script';
+      if (d.getElementById(id)) return;
+
+      var js = d.createElement("script");
+      js.id = id;
+      js.setAttribute('type', 'text/javascript');
+      js.src = "https://userapi.com/js/api/openapi.js?49";
+
+      js.onload = js.onreadystatechange = function () {
+      if (!this.readyState || this.readyState == "loaded" || this.readyState == "complete") {
+        if (!this.executed) {
+          this.executed = true;
+
+          setTimeout(function () {
+            VK.init({apiId: 2924934, onlyWidgets: true});
+            VK.Widgets.Group("vk_groups", {mode: 0, width: "200", height: "300", color1: 'EFEFFD', color2: '2B587A', color3: '5B7FA6'}, 38112740);
+            VK_Social_widgets.likes();
+          }, 100);
+        }
+      }}
+      d.documentElement.appendChild(js);
+    }(document);
+
+  }, 2000)
+</script>

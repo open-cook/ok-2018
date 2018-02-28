@@ -1,0 +1,8 @@
+.comments#comments
+  - if commentable.comments_sum > 100
+    .mt20.mb20.ofh= render partial: 'comments/haml/form', locals: { commentable: commentable }
+
+  %ol.comments_tree{ data: { comments: { tolarance_time: TheComments.config.tolerance_time  } } }
+    = render partial: 'the_comments/haml/comment', locals: { tree: comments_tree }
+
+  = render partial: 'comments/haml/form', locals: { commentable: commentable }

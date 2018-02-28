@@ -1,0 +1,19 @@
+- title = 'Магазинчик Ани Нечаевой. Бумажные стаканчики для капкейков. Подарки на Новый год. Пакеты для сладостей. Наклейки'
+
+- content_for :title
+  = title
+
+meta( name='keywords'    content='Бумажные стаканчики для капкейков. Подарки на Новый год. Пакеты для сладостей. Наклейки'.strip )
+meta( name='description' content=title.strip )
+meta( name='author'      content='OPEN-COOK.RU/SHOP' )
+
+- content_for :meta_data
+  - og_image = image_url '/logos/ok_shop_w1200_h800.png'
+  - og_title = "Магазинчик Ани Нечаевой"
+  - og_descr = "Товары для кулинарного волшебства. Для капкейков, для печенья, для выпечки"
+  - og_sname = "OPEN-COOK.RU/SHOP"
+
+  meta(property="og:image"       content=og_image.strip)
+  meta(property='og:title'       content=og_title.strip)
+  meta(property='og:description' content=og_descr.strip)
+  meta(property='og:site_name'   content=og_sname.strip)

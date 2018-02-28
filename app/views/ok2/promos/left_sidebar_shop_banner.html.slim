@@ -1,0 +1,14 @@
+- promo_link = 'https://open-cook.ru/shop?b1'
+.inform-block.inform-block--style-1
+  .inform-block--content.m10.clearfix
+    .inform-block--image.mb20
+      .tac
+        = link_to promo_link do
+          = image_tag 'https://open-cook.ru/logos/ok_shop_w200_h200.png', class: 'inform-block--img'
+
+    = link_to 'Магазинчик открыт', promo_link, class: 'fs15 tac block mb15 br-off inform-block--title'
+
+    .fs13.taj.lh140.mb15 Мы рады пригласить Вас в наш Интернет-магазин.
+    .fs13.taj.lh140.mb15 Аня лично выбирала для Вас самые интересные и качественные товары
+    .tac
+      = link_to raw('В магазинчик Ани &raquo;'), promo_link, class: 'ptz--btn ptz--size-13 inform-block--btn'

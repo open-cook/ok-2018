@@ -1,0 +1,26 @@
+.pt20.pb5
+  noindex.clearfix
+    .pull-left.mr50
+      .fs13.mb15.b Открытая Кухня Анны Нечаевой
+      .fs12.mb15= link_to 'О проекте', '/pages/about'
+      .fs12.mb15= link_to 'Партнеры и друзья', '/pages/partners'
+      .fs12.mb15= link_to 'Пользователи', '/users'
+      .fs12.mb15= link_to 'Правила сайта', '/pages/rules'
+
+    .pull-left.mr50
+      .fs13.mb15.b Магазинчик Ани Нечаевой
+      .fs12.mb15= link_to 'Как сделать заказ', '/pages/how-to-buy'
+      .fs12.mb15= link_to 'Как оплатить', '/pages/payments'
+      .fs12.mb15= link_to 'Доставка и получение', '/pages/delivery'
+      .fs12.mb15= link_to 'Контактная информация', '/pages/contacts'
+
+    .pull-left.mr50
+      / .fs12.mb15= link_to 'Сообщить об ошибке на сайте', '/pages/bugs'
+      .fs13.mb15.b Юридическая информация
+      .fs12.mb15= link_to 'Пользовательское соглашение', '/pages/user-agreement'
+      .fs12.mb15= link_to 'Правообладателям', '/pages/copyright'
+
+    .pull-left
+      .fs13.mb15.b Статистика
+      .mb15= render template: 'layouts/items/counters'
+      .fs12.mb15= link_to 'Публичный отчет. 2015 г.', '/stats-2015', class: 'decor--div--style-0'

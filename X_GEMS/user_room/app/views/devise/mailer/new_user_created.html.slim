@@ -1,0 +1,19 @@
+.letter--header.tac.arial.p15.fs20= @subject
+
+.letter--body.m20.tal.arial
+
+  .letter-body--text.mb15
+    | Зарегистрирован новый пользователь #{ link_to @user.login, @user }
+
+  - if (email = @user.actual_email).present?
+    .letter-body--text.mb15
+      | Пользователь зарегистрирован по email: <b>#{ email }</b>
+
+  - if credential = @user.credentials.first
+    .letter-body--text.mb15
+      | Пользователь зарегистрирован через Соц. Сеть: <b>#{ credential.provider }</b>
+
+    - %w[ vk_addr ok_addr tw_addr fb_addr gp_addr ].each do |addr|
+      - if (addr = @user.try(addr)).present?
+        .letter-body--text.mb15
+          | Ссылка на профиль: #{ link_to addr, addr }
