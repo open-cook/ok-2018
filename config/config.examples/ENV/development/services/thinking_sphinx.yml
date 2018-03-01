@@ -1,0 +1,17 @@
+<% RAILS_APPLICATION_ROOT = "your app root path" %>
+
+development:
+  mysql41: 9156
+  address: localhost
+
+  min_infix_len: 3
+  morphology: 'stem_en, stem_ru'
+
+  indices_location:   <%= RAILS_APPLICATION_ROOT %>/db/SPHINX
+  configuration_file: <%= RAILS_APPLICATION_ROOT %>/config/SPHINX.config
+
+  log:         <%= RAILS_APPLICATION_ROOT %>/log/searchd.development.log
+  query_log:   <%= RAILS_APPLICATION_ROOT %>/log/searchd.development.query.log
+
+  binlog_path: <%= RAILS_APPLICATION_ROOT %>/binlog/development
+  pid_file:    <%= RAILS_APPLICATION_ROOT %>/tmp/searchd.development.pid
