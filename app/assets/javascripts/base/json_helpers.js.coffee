@@ -1,4 +1,4 @@
-@json2data = (str, _default = []) ->
+window.json2data = (str, _default = []) ->
   try
     JSON.parse str
   catch e
@@ -6,7 +6,7 @@
     log "JSON parse error: #{ e }"
     _default
 
-@data2json = (data, _default = '[]') ->
+window.data2json = (data, _default = '[]') ->
   try
     JSON.stringify data
   catch e

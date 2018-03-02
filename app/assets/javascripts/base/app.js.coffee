@@ -1,4 +1,4 @@
-@App = do ->
+window.App = do ->
   env: do ->
     _env: ->
       return env if env = window.APP_ENV
