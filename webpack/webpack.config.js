@@ -17,13 +17,16 @@ const CSS_SOURCE_MAP = globalConfig.CSS_SOURCE_MAP
 
 const rootPath = globalConfig.rootPath
 const xGemsPath = `${rootPath}/X_GEMS`
+
 const appJSPath = `${rootPath}/app/assets/javascripts`
+const appCSSPath = `${rootPath}/app/assets/stylesheets`
 
 module.exports = {
   watch: watch(globalConfig),
 
   entry: {
-    open_cook_application: `${rootPath}/app/assets/javascripts/_open_cook/application.js`
+    open_cook_application: `${rootPath}/app/assets/javascripts/_open_cook/application.js`,
+    open_cook_application_styles: `${rootPath}/app/assets/stylesheets/_open_cook/application.js`
   },
 
   output: {
@@ -34,7 +37,7 @@ module.exports = {
   },
 
   resolve : {
-    extensions: [".js", ".js.coffee", ".json", ".sass", ".scss"],
+    extensions: [".css", ".js", ".js.coffee", ".json", ".sass", ".scss", ".css.sass", ".css.scss"],
 
     alias: {
       '@components':  `${rootPath}/assets/components/`,
@@ -42,11 +45,23 @@ module.exports = {
       '@jquery':      "@vendors/JQuery",
 
       '@appJS': appJSPath,
+      '@appCSS': appCSSPath,
+
       '@opencook-vendorScripts': `${appJSPath}/_open_cook/vendors`,
 
       '@logJS-scripts': `${xGemsPath}/log_js/app/assets/javascripts`,
+
       '@notifications-scripts': `${xGemsPath}/notifications/app/assets/javascripts`,
-      '@the_comments-scripts': `${xGemsPath}/the_comments/app/assets/javascripts`
+      '@notifications-styles': `${xGemsPath}/notifications/app/assets/stylesheets`,
+
+      '@the_comments-scripts': `${xGemsPath}/the_comments/app/assets/javascripts`,
+      '@the_comments-styles': `${xGemsPath}/the_comments/app/assets/stylesheets`,
+
+      '@protozaur-styles': `${xGemsPath}/protozaur/app/assets/stylesheets/ptz`,
+      '@protozaur_theme-styles': `${xGemsPath}/protozaur_theme/app/assets/stylesheets/protozaur_theme`,
+
+      '@user_room-styles': `${xGemsPath}/user_room/app/assets/stylesheets/user_room`,
+      '@table_holy_grail-styles': `${xGemsPath}/table_holy_grail_layout/app/assets/stylesheets`
     }
   },
 
@@ -83,18 +98,7 @@ module.exports = {
       },
 
       {
-        test: /\.sass$/,
-        use: [{
-          loader: "style-loader"
-        }, {
-          loader: "css-loader"
-        }, {
-          loader: "sass-loader"
-        }]
-      },
-
-      {
-        test: /\.scss$/,
+        test: new RegExp('(.sass)|(.scss)|(.css.sass)|(.css.scss)$'),
         use: [{
           loader: "style-loader"
         }, {
