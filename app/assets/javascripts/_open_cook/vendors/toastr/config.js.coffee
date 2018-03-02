@@ -2,7 +2,7 @@ toastr.options =
   'debug':       false
   'onclick':     null
   'closeButton': true
-  
+
   'hideEasing': 'linear'
   'showMethod': 'fadeIn'
   'hideMethod': 'fadeOut'

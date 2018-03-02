@@ -5,6 +5,8 @@
 Thumbs.db
 
 node_modules
+public/bundles
+webpack-assets.json
 
 db/REDIS/
 db/SPHINX/

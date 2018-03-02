@@ -1,35 +1,38 @@
-//= require jquery
-//= require jquery_ujs
-//= require jquery-ui/core
-//= require jquery-ui/sortable
-//= require jquery-ui/autocomplete
+require('jquery')
+require('jquery-ujs')
 
-//= require log_js
+require('jquery-ui/ui/core')
+require('jquery-ui/ui/widget')
+require('jquery-ui/ui/widgets/sortable')
+require('jquery-ui/ui/widgets/autocomplete')
 
-//= require base/app
-//= require base/role
-//= require base/JODY
-//= require base/json_helpers
+require('@logJS-scripts/log_js')
 
-//= require notifications/vendors/toastr
-//= require notifications
+require('@appJS/base/app')
+require('@appJS/base/role')
+require('@appJS/base/JODY')
+require('@appJS/base/json_helpers')
 
-//= require the_comments
-//= require ./vendors/toastr/config
+require('@notifications-scripts/notifications/vendors/toastr')
+require('@notifications-scripts/notifications')
+require('@the_comments-scripts/the_comments')
 
-//= require ./search_line
-//= require ./tag_search
-//= require ./section-switcher
+require('@opencook-vendorScripts/toastr/config')
 
-//= require ./top_menu
-//= require ./top_link
+require('./search_line')
 
-//= require ./vk_widgets
-//= require ./ok_widgets
-//= require ./fb_widgets
-//= require ./pin_widgets
-//= require ./tw_widgets
+require('./tag_search')
+require('./section-switcher')
 
-//= require ./welcome-index-grid
+require('./top_menu')
+require('./top_link')
 
-//= require ./initializer
+require('./vk_widgets')
+require('./ok_widgets')
+require('./fb_widgets')
+require('./pin_widgets')
+require('./tw_widgets')
+
+require('./welcome-index-grid')
+
+require('./initializer')

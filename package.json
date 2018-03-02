@@ -1,11 +1,27 @@
 {
   "dependencies": {
-    "webpack": "=3.10.0"
+    "assets-webpack-plugin": "=3.5.1",
+    "autoprefixer": "=7.2.5",
+    "coffee-loader": "^0.9.0",
+    "coffeescript": "^2.2.2",
+    "css-loader": "=0.28.9",
+    "file-loader": "=1.1.6",
+    "jquery": "=3.3.1",
+    "jquery-ui": "^1.12.1",
+    "jquery-ujs": "^1.2.2",
+    "node-sass": "=4.7.2",
+    "postcss-loader": "^2.0.10",
+    "sass-loader": "=6.0.6",
+    "style-loader": "^0.19.1",
+    "uglifyjs-webpack-plugin": "^1.1.6",
+    "url-loader": "^0.6.2",
+    "webpack": "=3.10.0",
+    "webpack-bundle-analyzer": "^2.9.2"
   },
   "scripts": {
-    "start": "yarn cleanup_assets && NODE_ENV=development node ./node_modules/webpack/bin/webpack.js --version",
-    "cleanup_assets": "echo 'cleanup assets'",
-
-     "build": "yarn cleanup_assets && NODE_ENV=production node ./node_modules/webpack/bin/webpack.js --version"
+    "webpack": "node ./node_modules/webpack/bin/webpack.js --config webpack/webpack.config.js",
+    "start": "yarn cleanup_assets && NODE_ENV=development yarn webpack",
+    "build": "yarn cleanup_assets && NODE_ENV=production yarn webpack",
+    "cleanup_assets": "rm -rf ./public/bundles"
   }
 }

@@ -14,7 +14,9 @@ html(lang='en')
     meta(id='env_token' name='env_token' content=Rails.env.to_s)
 
     = stylesheet_link_tag    :application, media: :all, 'data-turbolinks-track' => true
-    = javascript_include_tag :application, 'data-turbolinks-track' => true
+    = javascript_include_tag webpack_bundle_path('manifest')
+    = javascript_include_tag webpack_bundle_path('open_cook_application')
+    / = javascript_include_tag :application, 'data-turbolinks-track' => true
 
     = csrf_meta_tags
 
