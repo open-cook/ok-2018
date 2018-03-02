@@ -1,4 +1,4 @@
-@TagSearch = do ->
+window.TagSearch = do ->
   init: ->
     # Default random tags to show
     tags = $("@tags-search--tag")

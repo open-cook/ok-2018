@@ -1,4 +1,4 @@
-@SectionSwitcher = do ->
+window.SectionSwitcher = do ->
   init: ->
     $('@section-switcher--block').on 'click', (e) ->
       item = $ e.currentTarget

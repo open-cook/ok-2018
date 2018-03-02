@@ -1,4 +1,4 @@
-@FB_Social_widgets = do ->
+window.FB_Social_widgets = do ->
   init: ->
     !((doc, id, did, st) ->
       id  = 'facebook-jssdk'

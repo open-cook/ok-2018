@@ -1,5 +1,5 @@
 # ERROR MSG BUILDER
-@comments_errors_builder = (errors) ->
+window.comments_errors_builder = (errors) ->
   error_msgs = ''
   for field, errs of errors
     for err in errs
@@ -7,20 +7,20 @@
   error_msgs
 
 # FORM CLEANER
-@clear_comment_form = ->
+window.clear_comment_form = ->
   $('.error_notifier', '#new_comment, .comments_tree').hide()
   $("input[name='comment[title]']").val('')
   $("textarea[name='comment[raw_content]']").val('')
 
 # NOTIFIER
-@comments_error_notifier = (form, text) ->
+window.comments_error_notifier = (form, text) ->
   form.children('.error_notifier').empty().hide().append(text).show()
 
 # TIME HELPER
-@unixsec = (t) -> Math.round(t.getTime() / 1000)
+window.unixsec = (t) -> Math.round(t.getTime() / 1000)
 
 # HIGHTLIGHT ANCHOR
-@highlight_anchor = ->
+window.highlight_anchor = ->
   hash = document.location.hash
   if hash.match('#comment_')
     $(hash).addClass 'highlighted'

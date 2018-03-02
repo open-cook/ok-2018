@@ -1,4 +1,4 @@
-@TopMenu = do ->
+window.TopMenu = do ->
   init: ->
     menu_btns = $('@top_menu--menu-link')
     menus = $('@top_menu--menu_holder @top_menu--ul')
@@ -19,4 +19,3 @@
 
     menus.on 'mouseout', (e) ->
       $('@top_menu--menu_holder @top_menu--ul').hide()
-

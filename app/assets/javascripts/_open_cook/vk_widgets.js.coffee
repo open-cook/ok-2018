@@ -1,4 +1,4 @@
-@VK_Social_widgets = do ->
+window.VK_Social_widgets = do ->
   init: ->
     !((d, id, did, st) ->
 

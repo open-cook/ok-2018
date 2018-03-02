@@ -13,7 +13,9 @@ require('@appJS/base/role')
 require('@appJS/base/JODY')
 require('@appJS/base/json_helpers')
 
-require('@notifications-scripts/notifications/vendors/toastr')
+import * as toastr from '@notifications-scripts/notifications/vendors/toastr'
+window.toastr = toastr
+
 require('@notifications-scripts/notifications')
 require('@the_comments-scripts/the_comments')
 
