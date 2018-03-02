@@ -1,5 +1,5 @@
 require 'uglifier'
-require "#{ Rails.root }/config/initializers/app_config"
+require "#{ Rails.root }/config/initializers/_APP_CONFIG"
 
 TheApp::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.

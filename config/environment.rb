@@ -7,4 +7,4 @@ I18n.config.enforce_available_locales = true
 # Initialize the rails application.
 TheApp::Application.initialize!
 
-require "#{Rails.root}/config/initializers/app_config"
+require "#{Rails.root}/config/initializers/_APP_CONFIG"
