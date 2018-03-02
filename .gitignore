@@ -4,6 +4,8 @@
 .DS_Store?
 Thumbs.db
 
+node_modules
+
 db/REDIS/
 db/SPHINX/
 config/ENV/*
