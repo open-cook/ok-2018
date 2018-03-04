@@ -61,17 +61,17 @@ let WebPackConfig = {
   module: {
     rules: [
       {
-        test: /.js$/,
+        test: new RegExp('.js$'),
         loader: 'babel-loader'
       },
 
       {
-        test: /.js.coffee$/,
+        test: new RegExp('.js.coffee$'),
         loader: 'coffee-loader'
       },
 
       {
-        test: /.css$/,
+        test: new RegExp('.css$'),
         use: [
           {
             loader: 'style-loader',
@@ -144,7 +144,6 @@ let WebPackConfig = {
 WebPackConfig.resolve.alias = addGemWebPackBridge(WebPackConfig)
 
 // HELPERS
-
 function watch (gOptions) {
   return gOptions.isDev ? true : false
 }
