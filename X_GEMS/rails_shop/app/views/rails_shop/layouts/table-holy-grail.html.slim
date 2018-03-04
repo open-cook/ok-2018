@@ -12,8 +12,10 @@ html(lang='en')
 
     = yield :meta_data
 
-    = stylesheet_link_tag    'rails_shop', media: :all, 'data-turbolinks-track' => true
-    = javascript_include_tag 'rails_shop', 'data-turbolinks-track' => true
+    = javascript_include_tag webpack_bundle_path('manifest')
+    = javascript_include_tag webpack_bundle_path('rails_shop')
+    = javascript_include_tag webpack_bundle_path('rails_shop_styles')
+
     = csrf_meta_tags
 
     = yield :js

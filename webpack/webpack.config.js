@@ -30,7 +30,10 @@ let WebPackConfig = {
     open_cook_application_styles: `${rootPath}/app/assets/stylesheets/_open_cook/application`,
 
     'user_room_layout': `@user_room-scripts/user_room/layout/application`,
-    'user_room_layout_styles': `@user_room-styles/user_room/layout/application`
+    'user_room_layout_styles': `@user_room-styles/user_room/layout/application`,
+
+    'rails_shop': `@rails_shop-scripts/rails_shop/application`,
+    'rails_shop_styles': `@rails_shop-styles/rails_shop/application`
   },
 
   output: {
