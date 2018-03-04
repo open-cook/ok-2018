@@ -26,8 +26,11 @@ let WebPackConfig = {
   watch: watch(globalConfig),
 
   entry: {
-    open_cook_application: `${rootPath}/app/assets/javascripts/_open_cook/application.js`,
-    open_cook_application_styles: `${rootPath}/app/assets/stylesheets/_open_cook/application.js`
+    open_cook_application: `${rootPath}/app/assets/javascripts/_open_cook/application`,
+    open_cook_application_styles: `${rootPath}/app/assets/stylesheets/_open_cook/application`,
+
+    'user_room_layout': `@user_room-scripts/user_room/layout/application`,
+    'user_room_layout_styles': `@user_room-styles/user_room/layout/application`
   },
 
   output: {
@@ -55,12 +58,17 @@ let WebPackConfig = {
   module: {
     rules: [
       {
-        test: /\.js\.coffee$/,
+        test: /.js$/,
+        loader: 'babel-loader'
+      },
+
+      {
+        test: /.js.coffee$/,
         loader: 'coffee-loader'
       },
 
       {
-        test: /\.css$/,
+        test: /.css$/,
         use: [
           {
             loader: 'style-loader',

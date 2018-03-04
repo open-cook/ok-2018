@@ -1,4 +1,4 @@
-require('jquery')
+import $ from 'jquery'
 require('jquery-ujs')
 
 require('jquery-ui/ui/core')
