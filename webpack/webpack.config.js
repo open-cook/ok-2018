@@ -1,3 +1,4 @@
+const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -21,7 +22,7 @@ const xGemsPath = `${rootPath}/X_GEMS`
 const appJSPath = `${rootPath}/app/assets/javascripts`
 const appCSSPath = `${rootPath}/app/assets/stylesheets`
 
-module.exports = {
+let WebPackConfig = {
   watch: watch(globalConfig),
 
   entry: {
@@ -47,21 +48,7 @@ module.exports = {
       '@appJS': appJSPath,
       '@appCSS': appCSSPath,
 
-      '@opencook-vendorScripts': `${appJSPath}/_open_cook/vendors`,
-
-      '@logJS-scripts': `${xGemsPath}/log_js/app/assets/javascripts`,
-
-      '@notifications-scripts': `${xGemsPath}/notifications/app/assets/javascripts`,
-      '@notifications-styles': `${xGemsPath}/notifications/app/assets/stylesheets`,
-
-      '@the_comments-scripts': `${xGemsPath}/the_comments/app/assets/javascripts`,
-      '@the_comments-styles': `${xGemsPath}/the_comments/app/assets/stylesheets`,
-
-      '@protozaur-styles': `${xGemsPath}/protozaur/app/assets/stylesheets/ptz`,
-      '@protozaur_theme-styles': `${xGemsPath}/protozaur_theme/app/assets/stylesheets/protozaur_theme`,
-
-      '@user_room-styles': `${xGemsPath}/user_room/app/assets/stylesheets/user_room`,
-      '@table_holy_grail-styles': `${xGemsPath}/table_holy_grail_layout/app/assets/stylesheets`
+      '@opencook-vendorScripts': `${appJSPath}/_open_cook/vendors`
     }
   },
 
@@ -143,6 +130,10 @@ module.exports = {
   ].filter(Boolean)
 }
 
+WebPackConfig.resolve.alias = addGemWebPackBridge(WebPackConfig)
+
+// HELPERS
+
 function watch (gOptions) {
   return gOptions.isDev ? true : false
 }
@@ -163,3 +154,12 @@ function nodeEnv (gOptions) {
   if (gOptions.isDev) return JSON.stringify('development')
   return JSON.stringify('production')
 }
+
+function addGemWebPackBridge (WebPackConfig) {
+  let alias = WebPackConfig.resolve.alias
+  const bridgeFile = `${rootPath}/gems-assets-webpack-bridge.json`
+  var bridgeAlias = JSON.parse(fs.readFileSync(bridgeFile, 'utf8'))
+  return Object.assign(alias, bridgeAlias)
+}
+
+module.exports = WebPackConfig

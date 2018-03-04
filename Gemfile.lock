@@ -338,6 +338,7 @@ GEM
     foreman (0.82.0)
       thor (~> 0.19.1)
     fspath (3.0.3)
+    gems_assets_webpack_bridge (0.9.1)
     gibbon (1.1.5)
       httparty
       multi_json (>= 1.9.0)
@@ -610,6 +611,7 @@ DEPENDENCIES
   font-awesome-sass
   foreman
   friendly_id_pack!
+  gems_assets_webpack_bridge
   gibbon
   haml
   image_optim

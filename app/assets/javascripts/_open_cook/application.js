@@ -6,7 +6,7 @@ require('jquery-ui/ui/widget')
 require('jquery-ui/ui/widgets/sortable')
 require('jquery-ui/ui/widgets/autocomplete')
 
-require('@logJS-scripts/log_js')
+require('@log_js-scripts/log_js')
 
 require('@appJS/base/app')
 require('@appJS/base/role')

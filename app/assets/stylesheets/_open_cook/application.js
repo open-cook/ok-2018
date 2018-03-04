@@ -1,11 +1,11 @@
-require('@protozaur-styles/reset')
-require('@protozaur-styles/base')
-require('@protozaur-styles/framework')
+require('@protozaur-styles/ptz/reset')
+require('@protozaur-styles/ptz/base')
+require('@protozaur-styles/ptz/framework')
 
-require('@protozaur-styles/inputs-buttons/base')
-require('@protozaur-styles/inputs-buttons/sizes')
+require('@protozaur-styles/ptz/inputs-buttons/base')
+require('@protozaur-styles/ptz/inputs-buttons/sizes')
 
-require('@protozaur_theme-styles/theme-0/paginator')
+require('@protozaur_theme-styles/protozaur_theme/theme-0/paginator')
 
 require('../base/layout')
 
@@ -30,10 +30,10 @@ require('./content_typography')
 
 require('jquery-ui/themes/base/autocomplete')
 
-require('@table_holy_grail-styles/layouts/table-holy-grail/styles')
+require('@table_holy_grail_layout-styles/layouts/table-holy-grail/styles')
 
-require('@user_room-styles/layout/user-room')
-require('@user_room-styles/layout/user-room-header')
+require('@user_room-styles/user_room/layout/user-room')
+require('@user_room-styles/user_room/layout/user-room-header')
 
 require('./section-switcher')
 require('./top_menu')

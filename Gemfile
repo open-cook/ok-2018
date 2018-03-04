@@ -8,6 +8,8 @@ gem 'puma', '3.11.2'
 gem 'newrelic_rpm'
 gem 'exception_notification'
 
+gem 'gems_assets_webpack_bridge'
+
 # Datebase
 gem 'pg', '0.19.0'
 gem 'mysql2', '~> 0.3.18'
