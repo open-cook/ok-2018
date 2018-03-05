@@ -3,6 +3,8 @@
 
 %p= link_to t('hubs.new'), url_for([:new, model_name])
 
+%i.fas.fa-eye
+
 %ol.sortable_tree{ data: { max_levels: 5, rebuild_url: url_for([:rebuild, :hubs]), expand_node_url: expand_node_hubs_url, cookie_scope: :Hubs } }
   = expandable_tree @hubs
 

@@ -1,5 +1,6 @@
-import $ from 'jquery'
-require('jquery-ujs')
+require('@jquery')
+require('@jquery-ujs')
+require('@toastr')
 
 require('jquery-ui/ui/core')
 require('jquery-ui/ui/widget')
@@ -8,18 +9,15 @@ require('jquery-ui/ui/widgets/autocomplete')
 
 require('@log_js-scripts/log_js')
 
-require('@appJS/base/app')
-require('@appJS/base/role')
-require('@appJS/base/JODY')
-require('@appJS/base/json_helpers')
-
-import * as toastr from '@notifications-scripts/notifications/vendors/toastr'
-window.toastr = toastr
+require('@app-scripts/base/app')
+require('@app-scripts/base/role')
+require('@app-scripts/base/JODY')
+require('@app-scripts/base/json_helpers')
 
 require('@notifications-scripts/notifications')
 require('@the_comments-scripts/the_comments')
 
-require('@opencook-vendorScripts/toastr/config')
+require('@open_cook-vendor_scripts/toastr/config')
 
 require('./search_line')
 

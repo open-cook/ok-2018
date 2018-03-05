@@ -1,4 +1,4 @@
-@TagSearch =
+window.TagSearch =
   show_basic: ->
     @result.hide()
     @basic.slideDown 250

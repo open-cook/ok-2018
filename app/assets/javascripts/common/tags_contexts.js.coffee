@@ -1,4 +1,4 @@
-@TagsContexts = do ->
+window.TagsContexts = do ->
   init: ->
     if $('[data-contexts]').length
       contexts = $('#tags').data 'contexts'

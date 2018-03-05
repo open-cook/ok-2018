@@ -9,8 +9,11 @@
     %meta(id="env_token" name="env_token" content="#{ Rails.env.to_s }")
 
     = csrf_meta_tags
-    = stylesheet_link_tag    :bootstrap_default
-    = javascript_include_tag :bootstrap_default
+
+    = javascript_include_tag webpack_bundle_path('manifest')
+    = javascript_include_tag webpack_bundle_path('bootstrap_default_styles')
+    = javascript_include_tag webpack_bundle_path('bootstrap_default_scripts')
+
     = yield :editor
 
   %body
@@ -68,6 +71,3 @@
       .row
         .col-md-12
           = render partial: "bootstrap_default/layouts/items/footer"
-
-    =# stylesheet_link_tag "//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"
-    = stylesheet_link_tag "//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css"

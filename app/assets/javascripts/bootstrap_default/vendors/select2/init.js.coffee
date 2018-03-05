@@ -1,6 +1,6 @@
-@Select2 = do ->
+window.Select2 = do ->
   init: ->
-    ts   = $('@tags_input').first()
+    ts = $('@tags_input').first()
 
     if ts.length
       tags = ts.data('tags')
