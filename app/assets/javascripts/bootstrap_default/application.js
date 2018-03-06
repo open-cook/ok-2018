@@ -11,8 +11,7 @@ require('select2/dist/js/select2')
 require('select2/dist/js/i18n/en')
 require('select2/dist/js/i18n/ru')
 
-require('bootstrap')
-
+require('@bootstrap')
 require('@log_js-scripts/log_js')
 
 require('@app-scripts/base/app')

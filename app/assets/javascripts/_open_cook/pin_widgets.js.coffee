@@ -1,4 +1,4 @@
-window.PIN_Social_widgets = do ->
+@PIN_Social_widgets = do ->
   init: ->
     !((doc, id, did, st) ->
       id = 'pin-script'

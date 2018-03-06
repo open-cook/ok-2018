@@ -1,4 +1,4 @@
-window.SearchForm = do ->
+@SearchForm = do ->
   init: ->
     form = by_role 'search'
 

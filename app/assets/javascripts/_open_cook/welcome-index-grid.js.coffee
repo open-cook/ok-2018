@@ -1,4 +1,4 @@
-window.WelcomeIndexGrid = do ->
+@WelcomeIndexGrid = do ->
   init: ->
     if (block = $('@welcome-index-grid')).length
       if $(window).width() > 1350

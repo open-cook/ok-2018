@@ -1,4 +1,4 @@
-class window.HubSelector
+class @HubSelector
   @download_hub_children = (item) ->
     field  = item.parent()
     pub_id = $('#post_id').val()

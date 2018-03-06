@@ -1,4 +1,4 @@
-window.Notifications = do ->
+@Notifications = do ->
   show_error: (error) ->
     toastr.error(error) if error
 

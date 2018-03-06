@@ -1,4 +1,4 @@
-window.SocialLoginButtons = do ->
+@SocialLoginButtons = do ->
   popupCenter: (name, url, width, height) ->
     left = (screen.width  / 2) - (width  / 2)
     top  = (screen.height / 2) - (height / 2) - 50

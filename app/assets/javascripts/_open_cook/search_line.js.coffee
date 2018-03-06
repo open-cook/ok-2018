@@ -1,4 +1,4 @@
-window.SearchLine = do ->
+@SearchLine = do ->
   source: (request, response) ->
     if request.term.length > 1
       $.ajax

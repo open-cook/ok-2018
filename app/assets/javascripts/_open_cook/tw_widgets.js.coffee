@@ -1,4 +1,4 @@
-window.TW_Social_widgets = do ->
+@TW_Social_widgets = do ->
   init: ->
     !((d, id, did, st) ->
       id = 'twitter-script'

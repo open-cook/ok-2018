@@ -1,4 +1,4 @@
-window.RegistrationAccordion = do ->
+@RegistrationAccordion = do ->
   init: ->
     @inited ||= do ->
       doc = $ document

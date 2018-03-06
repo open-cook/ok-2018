@@ -1,4 +1,4 @@
-window.Select2 = do ->
+@Select2 = do ->
   init: ->
     ts = $('@tags_input').first()
 

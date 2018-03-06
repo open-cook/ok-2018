@@ -46,11 +46,6 @@ let WebPackConfig = {
     chunkFilename: "[chunkhash].js"
   },
 
-  externals: {
-    "jquery": "jQuery",
-    'jquery.ui.widget': "jQuery.widget"
-  },
-
   resolve : {
     extensions: [".js", ".js.coffee", ".json", ".css", ".less", ".sass", ".scss", ".css.sass", ".css.scss"],
 
@@ -115,15 +110,22 @@ let WebPackConfig = {
     ]
   },
 
+  externals: {
+    $: "window.JQuery",
+    "jQuery": "window.JQuery",
+    "jquery": "window.JQuery",
+    "jquery.ui.widget": "window.JQuery.widget"
+  },
+
   plugins: [
     null,
     new AssetsPlugin(),
     new webpack.HashedModuleIdsPlugin(),
 
     new webpack.ProvidePlugin({
-      $: 'jquery',
-      jquery: 'jquery',
-      jQuery: 'jquery'
+      $: "@jquery",
+      jQuery: "@jquery",
+      "window.jQuery": "@jquery"
     }),
 
     new webpack.DefinePlugin({
@@ -255,6 +257,7 @@ function sassLoader () {
 
 function coffeeLoader () {
   return [
+    { loader: 'imports-loader?this=>window' },
     { loader: 'coffee-loader' }
   ]
 }

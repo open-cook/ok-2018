@@ -1,4 +1,4 @@
-window.CropTool = do ->
+@CropTool = do ->
   # HELPERS
   dec: (val) -> parseInt val, 10
 

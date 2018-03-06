@@ -1,4 +1,4 @@
-window.TopLink = do ->
+@TopLink = do ->
   init: ->
     base_screen_height = $("body").height()
 

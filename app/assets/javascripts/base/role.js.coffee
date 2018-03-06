@@ -1,4 +1,4 @@
-window.by_role = (name) -> $ """[data-role='#{ name }']"""
+@by_role = (name) -> $ """[data-role='#{ name }']"""
 
 # Add `@data-role` alias to jQuery.
 # Copy from jquery.role by Sasha Koss https://github.com/kossnocorp/role

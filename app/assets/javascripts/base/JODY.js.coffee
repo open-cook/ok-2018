@@ -2,7 +2,7 @@
 # render json: { errors: { x: ["hello"], y: ["world"] } }, status: 422
 # render json: { error: 'Error Message' },                 status: 422
 
-window.JodyNotification = do ->
+@JodyNotification = do ->
   clean: ->
     $('div.toast').remove()
 
@@ -23,7 +23,7 @@ window.JodyNotification = do ->
     JodyNotification.show_flash  data.flash
 
 # Redirect processor
-window.JodyRedirect = do ->
+@JodyRedirect = do ->
   reload:                 -> do location.reload
   to:               (url) -> window.location.href  = url
   location_replace: (url) -> window.location.replace url
@@ -33,7 +33,7 @@ window.JodyRedirect = do ->
     @to rurl               if rurl = data.redirect_to
     @location_replace lurl if lurl = data.location_replace
 
-window.JodyHtml = do ->
+@JodyHtml = do ->
   processor: (data) ->
     @html_content_replace(data)
     @html_content_append(data)
@@ -105,7 +105,7 @@ window.JodyHtml = do ->
 # Миддлвара, которая умеет разбирать приходящий JSON
 # и делать кучу рутинной работы, вроде показа нотификаций
 # и изменения кусков html
-window.JODY = do ->
+@JODY = do ->
   processor: (data) ->
     JodyNotification.processor(data)
     JodyHtml.processor(data)

@@ -1,8 +1,8 @@
-window.LogJS = do ->
+@LogJS = do ->
   init: ->
     @enable ||= $('[data-log-js]').length
 
-window.log = ->
+@log = ->
   try
     if LogJS.enable
       console.log arguments...

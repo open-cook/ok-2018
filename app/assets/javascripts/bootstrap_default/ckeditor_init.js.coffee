@@ -1,4 +1,4 @@
-window.CkeditorOnPage = do ->
+@CkeditorOnPage = do ->
   init: ->
     if $('#redactor_intro').length
       CKEDITOR.replace 'redactor_intro', { height: 200 }

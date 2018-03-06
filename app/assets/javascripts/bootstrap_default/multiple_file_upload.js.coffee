@@ -1,4 +1,4 @@
-window.MultipleFileUpload = do ->
+@MultipleFileUpload = do ->
   init: ->
     $("@multiple_file_upload").fileupload
       type:      'POST'

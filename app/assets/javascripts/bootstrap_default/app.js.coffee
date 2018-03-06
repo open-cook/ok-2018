@@ -1,4 +1,4 @@
-class window.App
+class @App
   @init_post_edit_meta_fields = ->
     block = $('.meta_fields')
     block.on 'click', 'a', ->

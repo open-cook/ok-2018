@@ -1,4 +1,4 @@
-window.OK_Social_widgets = do ->
+@OK_Social_widgets = do ->
   init: ->
     !((d, id, did, st) ->
 

@@ -1,4 +1,4 @@
-window.TopMenu = do ->
+@TopMenu = do ->
   init: ->
     menu_btns = $('@top_menu--menu-link')
     menus = $('@top_menu--menu_holder @top_menu--ul')
