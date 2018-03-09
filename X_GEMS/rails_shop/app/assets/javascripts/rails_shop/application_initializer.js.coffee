@@ -18,7 +18,7 @@ toastr.options =
   "showMethod": "fadeIn"
   "hideMethod": "fadeOut"
 
-$(document).on 'ready page:load', ->
+$ ->
   MainImage.init()
   CropTool.init()
   Notifications.init()

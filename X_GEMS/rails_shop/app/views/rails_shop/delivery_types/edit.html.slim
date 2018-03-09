@@ -17,12 +17,12 @@ h3.mt20.mb20.fs18 Редактировать тип доставки
 
   .mb15
     = f.label :title, 'Название', class: 'block fs13 mb5'
-    = f.text_field :title, class: 'ptz--btn ptz--size-15 w500 '
+    = f.text_field :title, class: 'ptz--input ptz--size-15 w500 '
 
   .mb15.clearfix
     .pull-left.mr30
       = f.label :price, 'Цена', class: 'block fs13 mb5'
-      = f.number_field :price, class: 'ptz--btn ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, placeholder: '1000', autocomplete: :off
+      = f.number_field :price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, placeholder: '1000', autocomplete: :off
 
   .mb15
     = f.label :raw_intro, 'Короткое описание типа доставки', class: 'block fs13 mb5'

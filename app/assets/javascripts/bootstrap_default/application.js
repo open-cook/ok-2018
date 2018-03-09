@@ -7,7 +7,7 @@ require('jquery-ui/ui/widget')
 require('jquery-ui/ui/widgets/sortable')
 require('jquery-ui/ui/widgets/datepicker')
 
-require('select2/dist/js/select2')
+require('select2/dist/js/select2.full')
 require('select2/dist/js/i18n/en')
 require('select2/dist/js/i18n/ru')
 
