@@ -1,6 +1,8 @@
 const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
+
+const HappyPack = require('happypack')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const AssetsPlugin = require('assets-webpack-plugin')
 
@@ -16,6 +18,9 @@ const globalConfig = {
 
 const CSS_SOURCE_MAP = globalConfig.CSS_SOURCE_MAP
 
+const PARALLEL = globalConfig.isDev
+const PARALLEL_THREADS = 3
+
 const rootPath = globalConfig.rootPath
 const xGemsPath = `${rootPath}/X_GEMS`
 
@@ -28,15 +33,15 @@ let WebPackConfig = {
   entry: {
     open_cook_application: `${rootPath}/app/assets/javascripts/_open_cook/application`,
     open_cook_application_styles: `${rootPath}/app/assets/stylesheets/_open_cook/application`,
-
-    'user_room_layout': `@user_room-scripts/user_room/layout/application`,
-    'user_room_layout_styles': `@user_room-styles/user_room/layout/application`,
-
-    'rails_shop': `@rails_shop-scripts/rails_shop/application`,
-    'rails_shop_styles': `@rails_shop-styles/rails_shop/application`,
-
-    'bootstrap_default_styles': '@app-styles/bootstrap_default/application',
-    'bootstrap_default_scripts': '@app-scripts/bootstrap_default/application'
+    //
+    // 'bootstrap_default_styles': '@app-styles/bootstrap_default/application',
+    // 'bootstrap_default_scripts': '@app-scripts/bootstrap_default/application',
+    //
+    // 'user_room_layout': `@user_room-scripts/user_room/layout/application`,
+    // 'user_room_layout_styles': `@user_room-styles/user_room/layout/application`,
+    //
+    // 'rails_shop': `@rails_shop-scripts/rails_shop/application`,
+    // 'rails_shop_styles': `@rails_shop-styles/rails_shop/application`
   },
 
   output: {
@@ -51,7 +56,7 @@ let WebPackConfig = {
 
     alias: {
       '@app-components':  `${rootPath}/app/assets/components/`,
-      '@app-vendors':     `${rootPath}/app/assets/vendors`,
+      '@app-vendors': `${rootPath}/app/assets/vendors`,
 
       '@app-scripts': appJSPath,
       '@app-styles': appCSSPath,
@@ -61,6 +66,7 @@ let WebPackConfig = {
       '@jquery-ujs': "@app-vendors/jquery-ujs",
       '@font-awesome': "@app-vendors/font-awesome",
       '@toastr': "@app-vendors/toastr",
+      '@select2': "@app-vendors/select2",
 
       '@open_cook-vendor_scripts': `${appJSPath}/_open_cook/vendors`
     }
@@ -70,27 +76,27 @@ let WebPackConfig = {
     rules: [
       {
         test: new RegExp('.js$'),
-        use: babelLoader()
+        use: PARALLEL ? [{ loader: 'happypack/loader?id=happy-js' }] : jsLoader()
       },
 
       {
         test: new RegExp('.js.coffee$'),
-        use: coffeeLoader()
+        use: PARALLEL ? [{ loader: 'happypack/loader?id=happy-coffee' }] : coffeeLoader()
+      },
+
+      {
+        test: new RegExp('.css$'),
+        use: PARALLEL ? [{ loader: 'happypack/loader?id=happy-css' }] : cssLoader()
+      },
+
+      {
+        test: new RegExp('(.sass)|(.scss)|(.css.sass)|(.css.scss)$'),
+        use: PARALLEL ? [{ loader: 'happypack/loader?id=happy-sass' }] : sassLoader()
       },
 
       {
         test: new RegExp('.less$'),
         use: lessLoader()
-      },
-
-      {
-        test: new RegExp('.css$'),
-        use: cssLoader()
-      },
-
-      {
-        test: new RegExp('(.sass)|(.scss)|(.css.sass)|(.css.scss)$'),
-        use: sassLoader()
       },
 
       {
@@ -140,11 +146,11 @@ let WebPackConfig = {
     }),
 
     // https://github.com/webpack/webpack/issues/4638
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   async: 'jquery',
-    //   children: true,
-    //   minChunks: (m) => /node_modules\/(?:jquery)/.test(m.context)
-    // }),
+    new webpack.optimize.CommonsChunkPlugin({
+      async: 'jquery',
+      children: true,
+      minChunks: (m) => /node_modules\/(?:jquery)/.test(m.context)
+    }),
 
     addUglifyPlugin(globalConfig),
     addBundleAnalyzerPlugin(globalConfig)
@@ -152,6 +158,40 @@ let WebPackConfig = {
 }
 
 WebPackConfig.resolve.alias = addGemWebPackBridge(WebPackConfig)
+
+if (PARALLEL) {
+  WebPackConfig.plugins.push(
+    new HappyPack({
+      threads: PARALLEL_THREADS,
+      id: 'happy-js',
+      loaders: jsLoader()
+    })
+  )
+
+  WebPackConfig.plugins.push(
+    new HappyPack({
+      threads: PARALLEL_THREADS,
+      id: 'happy-sass',
+      loaders: sassLoader()
+    })
+  )
+
+  WebPackConfig.plugins.push(
+    new HappyPack({
+      threads: PARALLEL_THREADS,
+      id: 'happy-css',
+      loaders: cssLoader()
+    })
+  )
+
+  WebPackConfig.plugins.push(
+    new HappyPack({
+      threads: PARALLEL_THREADS,
+      id: 'happy-coffee',
+      loaders: coffeeLoader()
+    })
+  )
+}
 
 // HELPERS
 function watch (gOptions) {
@@ -262,8 +302,10 @@ function coffeeLoader () {
   ]
 }
 
-function babelLoader () {
-  { loader: 'babel-loader' }
+function jsLoader () {
+  return [
+    { loader: 'babel-loader' }
+  ]
 }
 
 function fileLoader () {
