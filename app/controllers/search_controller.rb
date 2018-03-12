@@ -1,6 +1,18 @@
 class SearchController < ApplicationController
   before_action :define_hub_ids
 
+  SYMBOLS_MAP = { 
+                "f"=>"а", ","=>"б", "d"=>"в", "u"=>"г",
+                "l"=>"д", "t"=>"е", "`"=>"ё", ";"=>"ж", 
+                "p"=>"з", "b"=>"и", "q"=>"й", "r"=>"к",
+                "k"=>"л", "v"=>"м", "y"=>"н", "j"=>"о",
+                "g"=>"п", "h"=>"р", "c"=>"с", "n"=>"т",
+                "e"=>"у", "a"=>"ф", "["=>"х", "w"=>"ц",
+                "x"=>"ч", "i"=>"ш", "o"=>"щ", "]"=>"ъ",
+                "s"=>"ы", "m"=>"ь", "'"=>"э", "."=>"ю", 
+                "z"=>"я"
+              }
+
   def pub_types
     [ Recipe, Post, Blog, Page, Interview ]
   end
@@ -8,9 +20,10 @@ class SearchController < ApplicationController
   def autocomplete
     @squery   = params[:term].to_s.strip
     to_search = Riddle::Query.escape @squery
+    to_search_2 = misprints_to_word(to_search)
 
     res = ThinkingSphinx.search(
-      to_search,
+      to_search + to_search_2,
       star: true,
       classes: pub_types,
       field_weights: {
@@ -21,6 +34,14 @@ class SearchController < ApplicationController
     )
 
     render json: res.map(&:title)
+  end
+
+  def misprints_to_word(str)
+  arr = str.split("")
+  new_str = arr.map {|c| SYMBOLS_MAP.select { |k, _| c == k }.values}
+               .flatten
+               .join
+               .to_s
   end
 
   def search
