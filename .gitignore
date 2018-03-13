@@ -8,7 +8,9 @@ db/REDIS/
 db/SPHINX/
 config/ENV/*
 config/database.yml
+config/SPHINX.config
 
+binlog/*
 log/*
 tmp/*
 OLD/Compare/*
