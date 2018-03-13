@@ -41,7 +41,6 @@ class SearchController < ApplicationController
   new_str = arr.map {|c| SYMBOLS_MAP.select { |k, _| c == k }.values}
                .flatten
                .join
-               .to_s
   end
 
   def search
