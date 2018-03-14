@@ -11,7 +11,7 @@ class SearchController < ApplicationController
     to_search_2 = SphinxHelper.misprints_to_word(to_search)
 
     res = ThinkingSphinx.search(
-      to_search + to_search_2,
+      to_search_2,
       star: true,
       classes: pub_types,
       field_weights: {
