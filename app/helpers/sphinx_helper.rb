@@ -8,10 +8,14 @@ module SphinxHelper
                   "э"=>"'", "ю"=>".", "я"=>"z"
                 }
 
-  def misprints_to_word(str)
+  def self.misprints_to_word(str)
     arr = str.split("")
     new_str = arr.map {|c| SYMBOLS_MAP.select { |k, _| c == k }.values}
                  .flatten
                  .join
+  end
+
+  def misprints_to_word(str)
+    SphinxHelper.misprints_to_word(str)
   end
 end

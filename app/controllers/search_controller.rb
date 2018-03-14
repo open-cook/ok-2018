@@ -1,5 +1,4 @@
 class SearchController < ApplicationController
-  include SphinxHelper
   before_action :define_hub_ids
 
   def pub_types
