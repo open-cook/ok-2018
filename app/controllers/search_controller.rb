@@ -10,8 +10,18 @@ class SearchController < ApplicationController
     to_search = Riddle::Query.escape @squery
     to_search_2 = SphinxHelper.misprints_to_word(to_search)
 
+    res1 = ThinkingSphinx.search(
+      to_search
+    )
+
+    res2 = ThinkingSphinx.search(
+      to_search_2
+    )
+
+    res_search = res1.total_entries >= res2.total_entries ? to_search : to_search_2
+
     res = ThinkingSphinx.search(
-      to_search_2,
+      res_search,
       star: true,
       classes: pub_types,
       field_weights: {
@@ -20,18 +30,29 @@ class SearchController < ApplicationController
       },
       per_page: 10
     )
-
+    
     render json: res.map(&:title)
   end
 
   def search
     @squery   = params[:squery].to_s.strip
     to_search = Riddle::Query.escape @squery
+    to_search_2 = SphinxHelper.misprints_to_word(to_search)
+
+    res1 = ThinkingSphinx.search(
+      to_search
+    )
+
+    res2 = ThinkingSphinx.search(
+      to_search_2
+    )
+
+    res_search = res1.total_entries >= res2.total_entries ? to_search : to_search_2
 
     @pubs = if @hub_ids.blank?
-      ThinkingSphinx.search(to_search, star: true, classes: pub_types, sql: { include: :hub }).pagination(params)
+      ThinkingSphinx.search(res_search, star: true, classes: pub_types, sql: { include: :hub }).pagination(params)
     else
-      ThinkingSphinx.search(to_search, star: true, classes: pub_types, sql: { include: :hub }, with: { hub_id: @hub_ids }).pagination(params)
+      ThinkingSphinx.search(res_search, star: true, classes: pub_types, sql: { include: :hub }, with: { hub_id: @hub_ids }).pagination(params)
     end
 
     @search_results_size  = @pubs.size
