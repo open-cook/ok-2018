@@ -22,8 +22,6 @@
 
   = render partial: 'subscribers/subscribe_form'
 
-  noindex= render template: 'promos/left_sidebar_shop_banner'
-
 -# RIGHT SIDEBAR
 - content_for :right_sidebar do
   noindex
@@ -77,8 +75,6 @@ article.ofh(itemscope=true itemtype='http://schema.org/Article')
         = image_tag @pub.main_image(:base), alt: @pub.title, class: 'preview db fl'
       = raw @pub.intro
 
-    noindex= render template: 'promos/top_banner'
-
     = raw @pub.content
 
   - cache("pub_tags_#{ @pub.id }", expires_in: 15.minutes) do
@@ -87,8 +83,6 @@ article.ofh(itemscope=true itemtype='http://schema.org/Article')
       .mt10.mb10= tags
 
   .mt10.mb5= render partial: 'ok2/publications/informer', locals: { pub: @pub }
-
-noindex.mt20.mb30= render template: 'promos/bottom_shop_banner'
 
 -# COMMENTS
 - if @pub.comments_on?
