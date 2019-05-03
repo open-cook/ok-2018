@@ -1,27 +1,4 @@
 .section-switcher--block@section-switcher--block
   .section-switcher--current-item
-    - if current_section.to_s == 'shop'
-      = image_tag '/logos/ok_shop_w350_h100.png'
-    - else
+    = link_to "/" do
       = image_tag '/logos/ok_w350_h100.png'
-
-  .section-switcher--hide-canvas@section-switcher--hide-canvas(style='display:none')
-
-  .section-switcher--list@section-switcher--list(style='display:none')
-
-    - if current_section.to_s == 'shop'
-      .section-switcher--item
-        = link_to shop_path, title: 'Магазинчик Ани Нечаевой' do
-          = image_tag '/logos/ok_shop_w350_h100.png'
-
-      .section-switcher--item
-        = link_to root_path, title: 'Открытая Кухня Анны Нечаевой' do
-          = image_tag '/logos/ok_w350_h100.png'
-    - else
-      .section-switcher--item
-        = link_to root_path, title: 'Открытая Кухня Анны Нечаевой' do
-          = image_tag '/logos/ok_w350_h100.png'
-
-      .section-switcher--item
-        = link_to shop_path, title: 'Магазинчик Ани Нечаевой' do
-          = image_tag '/logos/ok_shop_w350_h100.png'
