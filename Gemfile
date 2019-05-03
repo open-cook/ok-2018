@@ -5,12 +5,12 @@ gem 'rails', '4.2.7.1'
 gem 'puma', '3.11.2'
 
 # Just NewRelic
-gem 'newrelic_rpm'
+# gem 'newrelic_rpm'
 gem 'exception_notification'
 
 # Datebase
 gem 'pg', '0.19.0'
-gem 'mysql2', '~> 0.3.18'
+gem 'mysql2', '0.5.2'
 
 # App level
 gem 'devise', '3.5.2'

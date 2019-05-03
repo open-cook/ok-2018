@@ -409,9 +409,8 @@ GEM
     multi_json (1.13.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    mysql2 (0.3.20)
+    mysql2 (0.5.2)
     nenv (0.2.0)
-    newrelic_rpm (3.9.3.241)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
     nokogumbo (1.1.9)
@@ -625,8 +624,7 @@ DEPENDENCIES
   mini_magick
   minitest-rails
   minitest-reporters
-  mysql2 (~> 0.3.18)
-  newrelic_rpm
+  mysql2 (= 0.5.2)
   nokogiri (= 1.8.1)
   notifications!
   omniauth-facebook (= 2.0.0)
