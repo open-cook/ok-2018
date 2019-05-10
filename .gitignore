@@ -9,9 +9,11 @@ db/SPHINX/
 config/ENV/*
 config/database.yml
 
+binlog
 log/*
 tmp/*
 OLD/Compare/*
+config/SPHINX.config
 
 public/assets
 public/system
