@@ -1,4 +1,4 @@
-<% RAILS_APPLICATION_ROOT = "your app root path" %>
+<% RAILS_APPLICATION_ROOT = Rails.root.to_s %>
 
 development:
   mysql41: 9156
