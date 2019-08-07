@@ -8,7 +8,10 @@
     h1.tac.fs30.fwn.i.pt20.pb15.ffg(style='color:#024e9f')
       | Поиск:
       '
-      = @squery
+      - if multiple_keyboard_layouts? && @pubs.present?
+        = SearchService.convert_to_another_keyboard_layout(params[:squery].to_s.strip)
+      - else
+        = params[:squery]
 
 -# MAIN CONTENT
 - if @pubs.blank?
