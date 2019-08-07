@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
 class SearchController < ApplicationController
   before_action :define_hub_ids
 
   def pub_types
-    [ Recipe, Post, Blog, Page, Interview ]
+    [Recipe, Post, Blog, Page, Interview]
   end
 
   def autocomplete
-    @squery   = params[:term].to_s.strip
-    to_search = Riddle::Query.escape @squery
+    @squery = params[:term].to_s.strip
+    riddle_query = Riddle::Query.escape @squery
 
-    res = ThinkingSphinx.search(
-      to_search,
+    search_result = ThinkingSphinx.search(
+      riddle_query,
       star: true,
       classes: pub_types,
       field_weights: {
@@ -20,7 +22,14 @@ class SearchController < ApplicationController
       per_page: 10
     )
 
-    render json: res.map(&:title)
+    attributes = search_result.map do |resource|
+      {
+        label: resource.title,
+        image: resource.main_image(:base)
+      }
+    end
+
+    render json: attributes
   end
 
   def search
@@ -28,9 +37,9 @@ class SearchController < ApplicationController
     to_search = Riddle::Query.escape @squery
 
     @pubs = if @hub_ids.blank?
-      ThinkingSphinx.search(to_search, star: true, classes: pub_types, sql: { include: :hub }).pagination(params)
-    else
-      ThinkingSphinx.search(to_search, star: true, classes: pub_types, sql: { include: :hub }, with: { hub_id: @hub_ids }).pagination(params)
+              ThinkingSphinx.search(to_search, star: true, classes: pub_types, sql: { include: :hub }).pagination(params)
+            else
+              ThinkingSphinx.search(to_search, star: true, classes: pub_types, sql: { include: :hub }, with: { hub_id: @hub_ids }).pagination(params)
     end
 
     @search_results_size  = @pubs.size
@@ -54,5 +63,4 @@ class SearchController < ApplicationController
       @hub_ids << post_hub.self_and_descendants.select(:id).map(&:id).uniq
     end
   end
-
 end
