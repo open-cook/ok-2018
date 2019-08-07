@@ -1,9 +1,7 @@
+# frozen_string_literal: true
+
 class SearchController < ApplicationController
   before_action :define_hub_ids
-
-  def pub_types
-    [ Recipe, Post, Blog, Page, Interview ]
-  end
 
   def autocomplete
     @squery   = params[:term].to_s.strip
@@ -12,7 +10,7 @@ class SearchController < ApplicationController
     res = ThinkingSphinx.search(
       to_search,
       star: true,
-      classes: pub_types,
+      classes: SearchService::PUBLICATION_TYPES,
       field_weights: {
         title: 10,
         content: 5
@@ -24,20 +22,22 @@ class SearchController < ApplicationController
   end
 
   def search
-    @squery   = params[:squery].to_s.strip
-    to_search = Riddle::Query.escape @squery
+    search_service = SearchService.call(params[:squery], @hub_ids, params)
 
-    @pubs = if @hub_ids.blank?
-      ThinkingSphinx.search(to_search, star: true, classes: pub_types, sql: { include: :hub }).pagination(params)
-    else
-      ThinkingSphinx.search(to_search, star: true, classes: pub_types, sql: { include: :hub }, with: { hub_id: @hub_ids }).pagination(params)
-    end
+    @pubs = search_service.search_result
+    @multiple_keyboard_layouts = search_service.multiple_keyboard_layouts
 
     @search_results_size  = @pubs.size
     @search_results_count = @pubs.count
 
     render layout: 'ok2/layouts/application', template: 'ok2/search/index'
   end
+
+  def multiple_keyboard_layouts?
+    @multiple_keyboard_layouts
+  end
+
+  helper_method :multiple_keyboard_layouts?
 
   private
 
@@ -54,5 +54,4 @@ class SearchController < ApplicationController
       @hub_ids << post_hub.self_and_descendants.select(:id).map(&:id).uniq
     end
   end
-
 end
