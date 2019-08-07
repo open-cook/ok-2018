@@ -4,11 +4,11 @@ class SearchController < ApplicationController
   before_action :define_hub_ids
 
   def autocomplete
-    @squery   = params[:term].to_s.strip
-    to_search = Riddle::Query.escape @squery
+    @squery = params[:term].to_s.strip
+    riddle_query = Riddle::Query.escape @squery
 
-    res = ThinkingSphinx.search(
-      to_search,
+    search_result = ThinkingSphinx.search(
+      riddle_query,
       star: true,
       classes: SearchService::PUBLICATION_TYPES,
       field_weights: {
@@ -18,14 +18,22 @@ class SearchController < ApplicationController
       per_page: 10
     )
 
-    render json: res.map(&:title)
+    attributes = search_result.map do |resource|
+      {
+        label: resource.title,
+        image: resource.main_image(:base)
+      }
+    end
+
+    render json: attributes
   end
 
   def search
-    search_service = SearchService.call(params[:squery], @hub_ids, params)
-
-    @pubs = search_service.search_result
-    @multiple_keyboard_layouts = search_service.multiple_keyboard_layouts
+    @pubs = if @hub_ids.blank?
+              ThinkingSphinx.search(to_search, star: true, classes: pub_types, sql: { include: :hub }).pagination(params)
+            else
+              ThinkingSphinx.search(to_search, star: true, classes: pub_types, sql: { include: :hub }, with: { hub_id: @hub_ids }).pagination(params)
+    end
 
     @search_results_size  = @pubs.size
     @search_results_count = @pubs.count

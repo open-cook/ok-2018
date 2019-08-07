@@ -22,5 +22,5 @@
       form[0].submit()
       false
 
-    $('@search_line').autocomplete
-      source: @source
+    $('@search_line').autocomplete(source: @source).data('ui-autocomplete')._renderItem = (ul, item) ->
+      $('<li class="ul-menu-item"></li>').data('item.autocomplete', item).append('<img width="80" src=' + item.image + '>' + item.label).appendTo(ul)
