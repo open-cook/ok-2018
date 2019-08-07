@@ -13,7 +13,13 @@
   border-bottom: 1px solid #d3d3d3 !important;
 }
 
-.ui-menu-item{
+.ui-menu .ui-menu-item img {
+  margin-right: 10px;
+  border-radius: 10px;
+}
+
+.ui-menu-item {
+  font-size: 1.199em;
   background: #fdfff5;
 }
 
