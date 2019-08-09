@@ -1,10 +1,16 @@
-## Что делает data_obfuscation.rake
+## Что делает `data_obfuscation:run`
 
-Скрипт предназначен для обфускации базы данных текущего окружения, чтобы можно было передать приближенный слепок production'а для локальной разработки. 
+Скрипт предназначен для обфускации базы данных текущего окружения, чтобы можно было передать приближенный слепок production'а для локальной разработки.
 
 ## Что нужно для выполнения скрипта
 
-Скопируйте директорию `config/config.examples/ENV/temporarily` и переместите ее в `config/ENV/temporarily`. В `config/database.yml` добавьте окружение `temporarily`:
+**1.** Скопировать `config/config.examples/ENV/temporarily` в `config/ENV/temporarily`.
+
+```
+cp -R config/config.examples/ENV/temporarily config/ENV/temporarily
+```
+
+**2.** В `config/database.yml` добавьте окружение `temporarily`
 
 ```ruby
 temporarily:
@@ -14,18 +20,28 @@ temporarily:
   pool: 5
 ```
 
-После этого запустите `rake data_obfuscation:run`, скрипт отключит на время выполнения колбеки Sphinx, создаст дамп базы данных текущего окружения и переместит их в `open_cook_temporarily`, удалит персональные данные пользователей, заказы и т.д. После успешного выполнения база данных `open_cook_temporarily` будет удалена и в`tmp` будет создан архив `the_app_obfuscated_data.tar.gz` внутри которого будет копия public с картинками и дамп с обфусцированными данными.
+**3.** Запустить `rake data_obfuscation:run`
+
+Скрипт сделает следующее:
+
+- отключит на время выполнения колбеки Sphinx
+- создаст дамп базы данных текущего окружения и переместит их в `open_cook_temporarily`
+- удалит персональные данные пользователей, заказы и т.д.
+
+После успешного выполнения:
+
+- удалит базу данных `open_cook_temporarily`
+- в`tmp` будет создан архив `obfuscated_data.tar.gz`
+
+`obfuscated_data.tar.gz` содержит копию `public` и дамп с обфусцированными данными.
 
 ## Как использовать архив
 
-Для загрузки дампа выполните 
+Предполагаем, что:
 
-```ruby
-rake db:create
+- Пользователь находится в корне репозитория
+- `obfuscated_data.tar.gz` находится в каталоге `./tmp`
 
-pg_restore --verbose --clean --no-owner --no-acl --dbname open_cook_dev PATH_TO_DUMP_FILE # заменить на путь к дампу
+Для загрузки дампа выполните:
 
-rake db:migrate
-```
-
-Директорию public переместите в корень проекта.
+- `rake data_obfuscation:setup`

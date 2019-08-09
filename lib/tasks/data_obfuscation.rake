@@ -3,9 +3,25 @@
 require 'bcrypt'
 require 'faker'
 
-namespace :data_obfuscation do
-  TEMP_FILES_PATH = "#{Rails.root}/tmp"
+def script_message message
+  puts ('*'*50).red
+  puts message
+  puts ('*'*50).red
+  sleep 1
+end
 
+TEMP_FILES_PATH = "#{Rails.root}/tmp"
+OBFUSCATED_DUMP_NAME = "open_cook-obfuscated.dump"
+
+DEV_DB_DUMP = "#{TEMP_FILES_PATH}/ok_dev.dump"
+OBFUSCATION_DIR = "#{TEMP_FILES_PATH}/obfuscation"
+OBFUSCATED_DUMP = "#{TEMP_FILES_PATH}/#{OBFUSCATED_DUMP_NAME}"
+OBFUSCATED_ARCHIVE = "#{TEMP_FILES_PATH}/obfuscated_data.tar.gz"
+
+UNTAR_DIR = "#{TEMP_FILES_PATH}/untar"
+DB_TO_RESTORE = "#{UNTAR_DIR}/#{OBFUSCATED_DUMP_NAME}"
+
+namespace :data_obfuscation do
   task run: :environment do
     Rake::Task['data_obfuscation:db_dump'].invoke
 
@@ -14,28 +30,55 @@ namespace :data_obfuscation do
     Rake::Task['data_obfuscation:run_obfuscation'].invoke
 
     ThinkingSphinx::Callbacks.resume!
+
+    script_message('Obfuscation sucessufully done')
   end
 
   task run_obfuscation: :environment do
     system('RAILS_ENV=temporarily rake db:drop')
     system('RAILS_ENV=temporarily rake db:create')
-
     system('RAILS_ENV=temporarily rake data_obfuscation:restore')
 
     Rake::Task['data_obfuscation:obfuscation'].invoke
 
     system('RAILS_ENV=temporarily rake data_obfuscation:db_obfuscated_dump')
     system('RAILS_ENV=temporarily rake data_obfuscation:archive_uploads')
-    system('RAILS_ENV=temporarily rake data_obfuscation:delete_full_dump')
+    system('rake data_obfuscation:cleanup_tmp_files')
+  end
+
+  task setup: :environment do
+    db = Rails.configuration.database_configuration['development']
+    db_name = db['database']
+
+    script_message('Cleaning development database')
+    system('RAILS_ENV=development rake db:drop')
+    system('RAILS_ENV=development rake db:create')
+
+    script_message('Preparing to restore')
+    system("mkdir #{UNTAR_DIR}")
+    system("tar xvzf #{OBFUSCATED_ARCHIVE} -C #{UNTAR_DIR}")
+
+    script_message('Restore Obfuscated DB')
+    system("pg_restore --verbose --clean --no-owner --no-acl --dbname #{db_name} #{DB_TO_RESTORE}")
+    system('RAILS_ENV=development rake db:migrate')
+    script_message('Obfuscated DB is restored')
+
+    script_message('Restore Uploaded files')
+    system("cp -R #{UNTAR_DIR}/public/uploads public")
+    script_message('Uploaded filed are restored')
+
+    system('rake data_obfuscation:cleanup_tmp_files')
   end
 
   task db_dump: :environment do
+    script_message("Path to save obfuscated data: " + TEMP_FILES_PATH.yellow)
+
     with_config do |app, host, db, user|
       user.present? ? user = '--username ' + user : nil
       host.present? ? host = '--host ' + host : nil
 
-      system "pg_dump #{host} #{user} --clean --no-owner --no-acl --format=c #{db} > #{TEMP_FILES_PATH}/#{app}.dump"
-      puts "database dump created at #{TEMP_FILES_PATH}/#{app}.dump"
+      system "pg_dump #{host} #{user} --clean --no-owner --no-acl --format=c #{db} > #{DEV_DB_DUMP}"
+      puts "database dump created at #{DEV_DB_DUMP}"
     end
   end
 
@@ -44,8 +87,9 @@ namespace :data_obfuscation do
       user.present? ? user = '--username ' + user : nil
       host.present? ? host = '--host ' + host : nil
 
-      system "pg_dump #{host} #{user} --clean --no-owner --no-acl --format=c #{db} > #{TEMP_FILES_PATH}/#{app}_obfuscated.dump"
-      puts "obfuscated database dump created at #{TEMP_FILES_PATH}/#{app}_obfuscated.dump"
+      system "pg_dump #{host} #{user} --clean --no-owner --no-acl --format=c #{db} > #{OBFUSCATED_DUMP}"
+
+      script_message("obfuscated database dump created at #{OBFUSCATED_DUMP}")
     end
   end
 
@@ -53,17 +97,19 @@ namespace :data_obfuscation do
     cmd = nil
 
     with_config do |app, _host, db, _user|
-      cmd = "pg_restore --verbose --clean --no-owner --no-acl --dbname #{db} #{TEMP_FILES_PATH}/#{app}.dump"
+      cmd = "pg_restore --verbose --clean --no-owner --no-acl --dbname #{db} #{DEV_DB_DUMP}"
     end
 
     puts cmd
     system cmd
   end
 
-  task delete_full_dump: :environment do
-    with_config do |app, _host, _db, _user|
-      system "rm #{TEMP_FILES_PATH}/#{app}.dump" if File.exist?("#{TEMP_FILES_PATH}/#{app}_obfuscated.dump")
-    end
+  task cleanup_tmp_files: :environment do
+    script_message("Cleaning up TMP files and DIRs: #{DEV_DB_DUMP}, #{OBFUSCATED_DUMP}, #{OBFUSCATION_DIR}, #{UNTAR_DIR}")
+    system "rm #{DEV_DB_DUMP}"
+    system "rm #{OBFUSCATED_DUMP}"
+    system "rm -rf #{OBFUSCATION_DIR}"
+    system "rm -rf #{UNTAR_DIR}"
   end
 
   task obfuscation: :environment do
@@ -71,11 +117,14 @@ namespace :data_obfuscation do
 
     i = 1
 
+    def user_email user
+      user.id == 1 ? user.email : "user_#{user.id}@open-cook.dev"
+    end
+
     User.find_each do |user|
       user.update_columns(
-        username: Faker::Name.name,
         encrypted_password: BCrypt::Password.create('password'),
-        email: "user_#{i}@example.com",
+        email: user_email(user),
         vk_addr: '',
         ok_addr: '',
         tw_addr: '',
@@ -87,10 +136,9 @@ namespace :data_obfuscation do
         vm_addr: '',
         sh_addr: ''
       )
-      i += 1
     end
 
-    puts 'Passwords and social networks obfuscated!'
+    script_message('Passwords and social networks obfuscated!')
 
     Order.find_each do |order|
       order.update_columns(
@@ -120,11 +168,11 @@ namespace :data_obfuscation do
 
     SystemMessage.destroy_all
 
-    puts 'Orders obfuscated!'
+    script_message('Orders obfuscated!')
 
     Credential.update_all(access_token: nil, access_token_secret: nil, uid: '1')
 
-    puts 'Credentials obfuscated!'
+    script_message('Credentials obfuscated!')
 
     Obfuscation.delete_half(Recipe)
     Obfuscation.delete_half(Post)
@@ -132,13 +180,15 @@ namespace :data_obfuscation do
     Obfuscation.delete_half(Hot)
     Obfuscation.delete_half(Interview)
 
-    puts '50% of data deleted'
+    # Update basic counters
+    Hub.all.map{ |hub| hub.recalculate_pubs_counters! }
+
+    script_message('50% of data deleted')
   end
 
   task archive_uploads: :environment do
     with_config do |app|
       paths = ''
-      path_to_obfuscated_dump = " #{TEMP_FILES_PATH}/#{app}_obfuscated.dump"
 
       paths = Obfuscation.create_links(Post, paths)
       paths = Obfuscation.create_links(Product, paths)
@@ -148,10 +198,25 @@ namespace :data_obfuscation do
       paths = Obfuscation.create_links(Recipe, paths)
       paths = Obfuscation.create_links(Page, paths)
 
-      system "tar -czf obfuscated_data.tar.gz #{paths} #{path_to_obfuscated_dump}"
+      system "mkdir -p #{OBFUSCATION_DIR}"
+
+      paths.split(' ').map do |path|
+        system "mkdir -p #{OBFUSCATION_DIR}/#{path}"
+        system "cp -R #{path} #{OBFUSCATION_DIR}/#{path}"
+      end
+
+      # Store some additional folders
+      %w[banners default root users watermarks].each do |path|
+        system "cp -R public/uploads/#{path} #{OBFUSCATION_DIR}/public/uploads/#{path}"
+      end
+
+      script_message('Files are copied')
+
+      system "cp #{OBFUSCATED_DUMP} #{OBFUSCATION_DIR}"
+      system "tar -czf #{OBFUSCATED_ARCHIVE} -C #{OBFUSCATION_DIR} ."
     end
 
-    puts 'obfuscated_data.tar.gz created!'
+    script_message("#{OBFUSCATED_ARCHIVE} created!")
   end
 
   module Obfuscation
