@@ -54,35 +54,35 @@
         .shop-cart--header.w5p
 
       - @order.order_items.products.each do |cart_item|
-        - product = cart_item.item
-        li.shop-cart--position
-          .shop-cart--position-cell
-            - img = product.main_image.url(:v100x100)
-            .shop-cart--image(style="background-image:url(#{ img })")
+        - if product = cart_item.item
+          li.shop-cart--position
+            .shop-cart--position-cell
+              - img = product.main_image.url(:v100x100)
+              .shop-cart--image(style="background-image:url(#{ img })")
 
-            .shop-cart--product-name= product.title
-            .shop-cart--product-info
-              = product.equipment
-            .shop-cart--product-info
-              = product.sku
+              .shop-cart--product-name= product.title
+              .shop-cart--product-info
+                = product.equipment
+              .shop-cart--product-info
+                = product.sku
 
-          .shop-cart--position-cell.w20p
+            .shop-cart--position-cell.w20p
 
-            .mt10.fs24
-              |x
-              = cart_item.amount
+              .mt10.fs24
+                |x
+                = cart_item.amount
 
-            .mt10.fs13
-              | На складе:
-              '
-              = product.amount
+              .mt10.fs13
+                | На складе:
+                '
+                = product.amount
 
-          .shop-cart--position-cell.w15p
-             .shop-cart--position-price
-              - cart_item_total_price = cart_item.amount * product.price
-              = money_to_text(cart_item_total_price)
+            .shop-cart--position-cell.w15p
+               .shop-cart--position-price
+                - cart_item_total_price = cart_item.amount * product.price
+                = money_to_text(cart_item_total_price)
 
-          .shop-cart--position-cell.w5p
+            .shop-cart--position-cell.w5p
 
       li.shop-cart--total.table.pb0
         .row

@@ -58,7 +58,7 @@ gem 'premailer-rails'
 gem 'actionview-encoded_mail_to'
 
 # Search
-gem 'thinking-sphinx', '3.2.0'
+gem 'thinking-sphinx', '4.2'
 
 # Models
 gem 'gibbon'

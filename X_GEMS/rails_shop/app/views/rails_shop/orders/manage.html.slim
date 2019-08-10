@@ -35,8 +35,8 @@ table.table-light--table.w100p
       td.table-light--td.vam.w100p
         .fs15
           - order.products.each do |product|
-            - product = product.item
-            = image_tag product.main_image.url(:v100x100), width: '30', title: product.title
+            - if product = product.item
+              = image_tag product.main_image.url(:v100x100), width: '30', title: product.title
       td.table-light--td.vam
         .fs15.nobr= t order.state, scope: %w[ rails_shop orders state ]
       td.table-light--td.vam
