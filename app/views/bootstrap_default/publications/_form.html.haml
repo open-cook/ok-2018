@@ -27,7 +27,7 @@
 
   - selector_hubs = current_user.editable_hubs_for(controller_name)
   = render partial: 'hubs/hub_select', locals: { object: @pub, selector_hubs: selector_hubs }
-  / = render partial: "shared/top_fields", locals: { f: f, object: @pub, selector_hubs: @selector_hubs }
+  -# = render partial: "shared/top_fields", locals: { f: f, object: @pub, selector_hubs: @selector_hubs }
 
   .form-group
     = f.label :raw_intro, t('pubs.intro')

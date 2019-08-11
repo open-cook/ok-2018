@@ -13,7 +13,7 @@
       b = blogs.is(':checked')
 
       url = [url, query].join '/'
-      
+
       params = []
       params.push "sp=✓" if p
       params.push "sb=✓" if b

@@ -9,8 +9,10 @@ html*{'lang' => 'ru', 'xmlns:fb' => "http://ogp.me/ns/fb#" }
     = yield(:meta_data)
     = raw render(template: 'layouts/items/on_load_event').noendl
 
-    = javascript_include_tag :application
-    = stylesheet_link_tag    :application
+    = javascript_include_tag webpack_bundle_path('manifest')
+    = javascript_include_tag webpack_bundle_path('open_cook_application')
+    = javascript_include_tag webpack_bundle_path('open_cook_application_styles')
+
     = yield :js
 
     link(href="//open-cook.ru/favicon.ico" rel="shortcut icon")

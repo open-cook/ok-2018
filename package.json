@@ -1,0 +1,42 @@
+{
+  "dependencies": {
+    "assets-webpack-plugin": "=3.5.1",
+    "autoprefixer": "=7.2.5",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "bootstrap": "=3.3.7",
+    "coffee-loader": "^0.9.0",
+    "coffeescript": "^2.2.2",
+    "css-loader": "=0.28.9",
+    "decaffeinate": "^4.1.1",
+    "file-loader": "=1.1.6",
+    "font-awesome": "=4.7.0",
+    "happypack": "^4.0.1",
+    "image-webpack-loader": "^4.1.0",
+    "imports-loader": "^0.8.0",
+    "jquery": "=3.3.1",
+    "jquery-ui": "^1.12.1",
+    "jquery-ujs": "^1.2.2",
+    "less": "^3.0.1",
+    "less-loader": "^4.0.6",
+    "node-sass": "=4.7.2",
+    "postcss-loader": "^2.0.10",
+    "sass-loader": "=6.0.6",
+    "select2": "=4.0.5",
+    "style-loader": "^0.19.1",
+    "svgo": "^1.0.5",
+    "svgo-loader": "^2.1.0",
+    "uglifyjs-webpack-plugin": "^1.1.6",
+    "url-loader": "^0.6.2",
+    "webpack": "=3.10.0",
+    "webpack-bundle-analyzer": "^2.9.2"
+  },
+  "scripts": {
+    "webpack": "node ./node_modules/webpack/bin/webpack.js --config app/webpack/webpack.config.js",
+    "start": "yarn cleanup_assets && NODE_ENV=development yarn webpack",
+    "build": "yarn cleanup_assets && NODE_ENV=production yarn webpack",
+    "cleanup_assets": "rm -rf ./public/bundles"
+  }
+}

@@ -10,8 +10,9 @@ html(lang='en')
     link(href='https://open-cook.ru/favicon.ico' rel='shortcut icon')
     meta(id='env_token' name='env_token' content=Rails.env.to_s)
 
-    = stylesheet_link_tag    'user_room_layout', media: :all, 'data-turbolinks-track' => true
-    = javascript_include_tag 'user_room_layout', 'data-turbolinks-track' => true
+    = javascript_include_tag webpack_bundle_path('manifest')
+    = javascript_include_tag webpack_bundle_path('user_room_layout')
+    = javascript_include_tag webpack_bundle_path('user_room_layout_styles')
 
     = csrf_meta_tags
 

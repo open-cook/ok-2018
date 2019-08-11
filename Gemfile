@@ -8,6 +8,8 @@ gem 'puma', '3.11.2'
 # gem 'newrelic_rpm'
 gem 'exception_notification'
 
+gem 'gems_assets_webpack_bridge'
+
 # Datebase
 gem 'pg', '0.19.0'
 gem 'mysql2', '0.5.2'
@@ -47,9 +49,10 @@ gem 'role_block_haml'
 gem 'kaminari'
 
 gem 'sass', '~> 3.4.1'
-gem 'font-awesome-sass'
+# gem 'font-awesome-sass' 4.1.0
+# gem 'bootstrap-sass', github: 'twbs/bootstrap-sass', 3.2.0.1
 gem 'sass-rails',     github: 'rails/sass-rails'
-gem 'bootstrap-sass', github: 'twbs/bootstrap-sass'
+
 gem 'compass-rails',  github: 'Compass/compass-rails'
 
 gem 'autoprefixer-rails'

@@ -19,4 +19,3 @@
 
     menus.on 'mouseout', (e) ->
       $('@top_menu--menu_holder @top_menu--ul').hide()
-

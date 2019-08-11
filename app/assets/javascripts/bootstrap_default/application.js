@@ -1,55 +1,52 @@
-//= require jquery
-//= require jquery_ujs
+import '@jquery'
+import '@jquery-ujs'
+import '@toastr'
 
-//= require jquery-ui/core
-//= require jquery-ui/widget
-//= require jquery-ui/sortable
-//= require jquery-ui/datepicker
+import '@select2'
+import '@bootstrap'
 
-//= require bootstrap
+import 'jquery-ui/ui/core'
+import 'jquery-ui/ui/widget'
+import 'jquery-ui/ui/widgets/sortable'
+import 'jquery-ui/ui/widgets/datepicker'
 
-//= require log_js
+import '@log_js-scripts/log_js'
 
-//= require base/app
-//= require base/role
-//= require base/JODY
+import '@app-scripts/base/app'
+import '@app-scripts/base/role'
+import '@app-scripts/base/JODY'
 
-//= require the_audit
+import '@the_audit-scripts/the_audit'
+import '@notifications-scripts/notifications'
 
-//= require notifications/vendors/toastr
-//= require notifications
+import '@open_cook-vendor_scripts/toastr/config'
 
-//= require ./vendors/toastr/config
+import '@the_sortable_tree-scripts/jquery.ui.nestedSortable'
+import '@the_sortable_tree-scripts/sortable_tree/initializer'
+import '@the_sortable_tree-scripts/expandable_tree/restorable'
+import '@the_sortable_tree-scripts/expandable_tree/initializer'
 
-//= require jquery.ui.nestedSortable
-//= require sortable_tree/initializer
-//= require expandable_tree/restorable
-//= require expandable_tree/initializer
+import '@the_comments-scripts/the_comments'
+import '@the_comments-scripts/the_comments_manage'
 
-//= require the_comments
-//= require the_comments_manage
+import '@app-scripts/bootstrap_default/vendors/select2/init'
 
-//= require vendors/select2/select2.js
-//= require vendors/select2/select2_locale_ru.js
-//= require ./vendors/select2/init
+import '@app-scripts/bootstrap_default/vendors/jq_file_upload/jquery.iframe-transport.js'
+import '@app-scripts/bootstrap_default/vendors/jq_file_upload/jquery.fileupload.js'
+import '@app-scripts/bootstrap_default/multiple_file_upload'
 
-//= require ./vendors/jq_file_upload/jquery.iframe-transport.js
-//= require ./vendors/jq_file_upload/jquery.fileupload.js
-//= require ./multiple_file_upload
+import './ckeditor_init'
+import './user_cabinet_anchors'
 
-//= require ./ckeditor_init
-//= require ./user_cabinet_anchors
+import './initializer'
 
-//= require ./initializer
+import './search_form'
 
-//= require ./search_form
+import '@app-scripts/vendors/swf_player/swfobject.js'
+import '../common/tags_contexts'
 
-//= require vendors/swf_player/swfobject.js
-//= require ../common/tags_contexts
+import '@crop_tool-scripts/crop_tool/crop_tool'
+import '@crop_tool-scripts/crop_tool/jcrop/jquery.Jcrop'
 
-//= require crop_tool/crop_tool
-//= require crop_tool/jcrop/jquery.Jcrop
-
-//= require ./the_crop_callbacks
-
-//= require ../base/json_helpers
+import './the_crop_callbacks'
+import '../base/json_helpers'

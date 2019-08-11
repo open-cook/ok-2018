@@ -1,35 +1,38 @@
-//= require jquery
-//= require jquery_ujs
-//= require jquery-ui/core
-//= require jquery-ui/sortable
-//= require jquery-ui/autocomplete
+import '@jquery'
+import '@jquery-ujs'
+import '@toastr'
 
-//= require log_js
+import 'jquery-ui/ui/core'
+import 'jquery-ui/ui/widget'
+import 'jquery-ui/ui/widgets/sortable'
+import 'jquery-ui/ui/widgets/autocomplete'
 
-//= require base/app
-//= require base/role
-//= require base/JODY
-//= require base/json_helpers
+import '@log_js-scripts/log_js'
 
-//= require notifications/vendors/toastr
-//= require notifications
+import '@app-scripts/base/app'
+import '@app-scripts/base/role'
+import '@app-scripts/base/JODY'
+import '@app-scripts/base/json_helpers'
 
-//= require the_comments
-//= require ./vendors/toastr/config
+import '@notifications-scripts/notifications'
+import '@the_comments-scripts/the_comments'
 
-//= require ./search_line
-//= require ./tag_search
-//= require ./section-switcher
+import '@open_cook-vendor_scripts/toastr/config'
 
-//= require ./top_menu
-//= require ./top_link
+import './search_line'
 
-//= require ./vk_widgets
-//= require ./ok_widgets
-//= require ./fb_widgets
-//= require ./pin_widgets
-//= require ./tw_widgets
+import './tag_search'
+import './section-switcher'
 
-//= require ./welcome-index-grid
+import './top_menu'
+import './top_link'
 
-//= require ./initializer
+import './vk_widgets'
+import './ok_widgets'
+import './fb_widgets'
+import './pin_widgets'
+import './tw_widgets'
+
+import './welcome-index-grid'
+
+import './initializer'

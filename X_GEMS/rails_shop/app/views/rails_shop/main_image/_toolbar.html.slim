@@ -5,7 +5,7 @@
   = render partial: 'notifications/form', locals: { object: object, format: :json }
   .clearfix@main-image-manage-intro
     .pull-left
-      .mb10.block fs13 mb5
+      .mb10.block.fs13.mb5
         | Главное изображение
 
       .pull-left.mr10
@@ -58,7 +58,7 @@
 
   @main-image-manage(style='display:none')
     .mb15
-      .block fs13 mb5
+      .block.fs13.mb5
         | Главное изображение
         .pull-right
           = link_to 'Свернуть', '#', class: 'fs12', data: { role: 'main-image-manage-switcher' }

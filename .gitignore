@@ -4,6 +4,11 @@
 .DS_Store?
 Thumbs.db
 
+node_modules
+public/bundles
+webpack-assets.json
+gems-assets-webpack-bridge.json
+
 db/REDIS/
 db/SPHINX/
 config/ENV/*
