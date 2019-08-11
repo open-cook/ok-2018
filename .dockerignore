@@ -1,0 +1,6 @@
+/public/uploads
+/tmp
+/log
+
+.DS_Store
+.Trashes
