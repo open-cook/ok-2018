@@ -24,15 +24,41 @@ $ docker-compose -v
 
 - `docker-compose --verbose build`
 
-Если все прошло без ошибок, то можно смело запускать проект командой
+**4. Архив данных для разработки**
 
-- `docker-compose up`
+- Получите архив данных для разработки `obfuscated_data.tar.gz` (Смотри: [data_obfuscation.rake](lib/tasks/README.md))
+- Поместите архив к каталог `./tmp`
+- Распакуйте архив
+    ```
+    mkdir /Volumes/Data/my/OPEN-COOK/open-cook.ru/tmp/untar
 
-Чтобы восстановить дамп бд, необходимо будет выполнить команды:
+    tar xvzf ./tmp/obfuscated_data.tar.gz -C ./tmp/untar
+    ```
+
+**5. Скопируйте фалйы в каталог ./public**
+
+**6. Загрузите Базу Данных**
+
+`Не проверено`
+
 - `docker cp Developer/open-cook.ru.rails_app_db.dump ok-2018_postgres_1:/`
 - `docker exec ok-2018_postgres_1 pg_restore -U postgres -d open_cook_dev backups/open-cook.ru.rails_app_db.dump`
 
-Также надо не забыть настроить sphinxsearch для поиска! Для этого необходимо выполнить следующие команды:
+**7. Проиндексируйте данные для Поиска**
+
+`Не проверено`
 
 - `docker exec ok-2018_web_1 rake ts:configure ts:restart`
 - `docker exec ok-2018_web_1 rake ts:index`
+
+**8. Запустите проект**
+
+- `docker-compose up`
+
+**9. Доступ в Rails console**
+
+`Не проверено`
+
+**10. Выполение rake tasks и других команд в контейнере**
+
+`Не проверено`
