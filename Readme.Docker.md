@@ -20,10 +20,13 @@ $ docker-compose -v
 - `cp -R config/config.examples/ENV/ config/ENV`
 - `cp config/config.examples/database.yml config/database.yml`
 
-Как только они будут установленны, то необходимо будет настороить бд в database.yml, для работы с docker compose, a именно добавить строчку `host: postgres`
+**3. Запустить команду для поднятия окружения**
 
-Теперь необходимо выполнить команду: `docker-compose build`
-Если все прошло без ошибок, то можно смело запускать проект командой: `docker-compose up`
+- `docker-compose --verbose build`
+
+Если все прошло без ошибок, то можно смело запускать проект командой
+
+- `docker-compose up`
 
 Чтобы восстановить дамп бд, необходимо будет выполнить команды:
 - `docker cp Developer/open-cook.ru.rails_app_db.dump ok-2018_postgres_1:/`
