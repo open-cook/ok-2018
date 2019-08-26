@@ -30,7 +30,7 @@ $ docker-compose -v
 - Поместите архив к каталог `./tmp`
 - Распакуйте архив
     ```
-    mkdir /Volumes/Data/my/OPEN-COOK/open-cook.ru/tmp/untar
+    mkdir -p ./tmp/untar
 
     tar xvzf ./tmp/obfuscated_data.tar.gz -C ./tmp/untar
     ```
