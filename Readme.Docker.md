@@ -1,11 +1,11 @@
 ## Установка с помощью docker и docker-compose
 
-**Потребуются**
+**1. Необходимое ПО**
 
 - [Docker](https://docs.docker.com/get-started/)
 - [Docker Compose](https://docs.docker.com/compose/)
 
-**Проверить наличие**
+*Проверить наличие*
 
 ```bash
 $ docker -v
@@ -14,6 +14,11 @@ $ docker -v
 $ docker-compose -v
 > docker-compose version 1.24.1
 ```
+
+**2. Скопируйте конфигурационные файлы**
+
+- `cp -R config/config.examples/ENV/ config/ENV`
+- `cp config/config.examples/database.yml config/database.yml`
 
 Как только они будут установленны, то необходимо будет настороить бд в database.yml, для работы с docker compose, a именно добавить строчку `host: postgres`
 
