@@ -46,6 +46,13 @@ namespace :data_obfuscation do
     system('rake data_obfuscation:cleanup_tmp_files')
   end
 
+
+  task unzip: :environment do
+    script_message('Unzipping the archive')
+    system("mkdir #{UNTAR_DIR}")
+    system("tar xvzf #{OBFUSCATED_ARCHIVE} -C #{UNTAR_DIR}")
+  end
+
   task setup: :environment do
     db = Rails.configuration.database_configuration['development']
     db_name = db['database']
@@ -55,8 +62,8 @@ namespace :data_obfuscation do
     system('RAILS_ENV=development rake db:create')
 
     script_message('Preparing to restore')
-    system("mkdir #{UNTAR_DIR}")
-    system("tar xvzf #{OBFUSCATED_ARCHIVE} -C #{UNTAR_DIR}")
+
+    system('RAILS_ENV=development rake data_obfuscation:unzip')
 
     script_message('Restore Obfuscated DB')
     system("pg_restore --verbose --clean --no-owner --no-acl --dbname #{db_name} #{DB_TO_RESTORE}")
