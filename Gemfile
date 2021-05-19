@@ -18,7 +18,7 @@ gem 'devise', '3.5.2'
 gem 'colorize'
 gem 'letter_opener'
 
-gem 'nokogiri', '1.8.1'
+gem 'nokogiri', '1.8.5'
 
 gem 'omniauth-twitter', '1.0.1'
 gem 'omniauth-facebook', '2.0.0'
