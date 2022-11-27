@@ -2,12 +2,11 @@ source 'https://rubygems.org'
 # source 'http://gems.github.com'
 
 gem 'rails', '4.2.7.1'
-# ! gem 'puma', '3.11.2'
+gem 'puma', '3.11.2'
 
 # Just NewRelic
 # gem 'newrelic_rpm'
-
-gem 'exception_notification', '4.0.1'
+gem 'exception_notification'
 
 # Datebase
 gem 'pg', '0.19.0'
@@ -16,8 +15,8 @@ gem 'mysql2', '0.5.2'
 # App level
 gem 'devise', '3.5.2'
 
-gem 'colorize', '0.8.1'
-gem 'letter_opener', '1.4.1'
+gem 'colorize'
+gem 'letter_opener'
 
 gem 'nokogiri', '1.8.1'
 
@@ -27,59 +26,59 @@ gem 'omniauth-vkontakte', '1.3.2'
 gem 'omniauth-google-oauth2', '0.2.5'
 gem 'omniauth-odnoklassniki', '0.0.4'
 
-gem 'rails_config', '0.4.2'
-gem 'whenever', '0.9.2'
+gem 'rails_config'
+gem 'whenever'
 
-gem 'sinatra', '1.4.6', require: nil
-gem 'sidekiq', '3.5.0'
+gem 'sinatra', require: nil
+gem 'sidekiq'
 
 # views
-gem 'browser', '0.6.0'
-gem 'truncato', '0.7.10'
-gem 'jquery-rails', '4.0.4'
-gem 'jquery-ui-rails', '5.0.0'
-gem 'jbuilder', '1.0.2'
+gem 'browser'
+gem 'truncato'
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
+gem 'jbuilder', '~> 1.0.1'
 
-gem 'haml', '4.0.5'
-gem 'slim', '3.0.6'
-gem 'slim-rails', '0.2.1'
-gem 'role_block_haml', '0.2.4'
+gem 'haml'
+gem 'slim'
+gem 'slim-rails'
+gem 'role_block_haml'
 
-gem 'kaminari', '0.16.1'
+gem 'kaminari'
 
-gem 'sass', '3.4.1'
-gem 'font-awesome-sass', '4.1.0'
-gem 'sass-rails', github: 'rails/sass-rails', tag: '423178729'
-gem 'bootstrap-sass',  github: 'twbs/bootstrap-sass', tag: '54317e5c'
-gem 'compass-rails', github: 'Compass/compass-rails', tag: '36eebc69'
+gem 'sass', '~> 3.4.1'
+gem 'font-awesome-sass'
+gem 'sass-rails',     github: 'rails/sass-rails'
+gem 'bootstrap-sass', github: 'twbs/bootstrap-sass'
+gem 'compass-rails',  github: 'Compass/compass-rails'
 
-gem 'autoprefixer-rails', '3.0.0.20140821'
+gem 'autoprefixer-rails'
 
-gem 'premailer-rails', '1.8.2'
-gem 'actionview-encoded_mail_to', '1.0.4'
+gem 'premailer-rails'
+gem 'actionview-encoded_mail_to'
 
 # Search
-# !gem 'thinking-sphinx', '3.2.0'
+gem 'thinking-sphinx', '4.2'
 
 # Models
-gem 'gibbon', '1.1.5'
-gem 'sanitize', '3.0.0'
-gem 'rails_autolink', '1.1.6'
+gem 'gibbon'
+gem 'sanitize'
+gem 'rails_autolink'
 gem 'state_machine', '~> 1.2.0'
-gem 'RedCloth', '4.2.9', require: 'redcloth'
-gem 'acts-as-taggable-on', '3.5.0'
+gem 'RedCloth', require: 'redcloth'
+gem 'acts-as-taggable-on', '~> 3.4'
 
 gem 'awesome_nested_set',
   github: "collectiveidea/awesome_nested_set",
-  tag: 'a4c1ec42d'
+  branch: "master"
 
 # Images and files
-gem 'mini_magick', '4.2.7'
-gem 'paperclip', '4.2.0'
-gem 'route_downcaser', '1.1.4'
+gem 'mini_magick'
+gem 'paperclip'
+gem 'route_downcaser'
 
 # SHOP
-gem 'turbolinks', '2.5.3'
+gem 'turbolinks'
 gem 'table_holy_grail_layout', path: './X_GEMS/table_holy_grail_layout'
 
 gem 'friendly_id_pack', path: 'plugins/friendly_id_pack'
@@ -112,7 +111,7 @@ gem "the_comments", path: './X_GEMS/the_comments'
 
 # ~ SHOP
 
-gem 'image_optim', '0.24.2'
+gem 'image_optim'
 
 # Open Cook components
 
@@ -122,32 +121,32 @@ gem 'the_sortable_tree',
   branch: 'master'
 
 group :development, :test do
-  gem "minitest-rails", '2.2.0'
-  gem 'faker', '1.4.3'
-  gem 'seedbank', '0.3.0'
-  gem 'minitest-reporters', '1.0.19'
-  gem 'm', '1.3.4'
+  gem "minitest-rails"
+  gem 'faker'
+  gem 'seedbank', github: 'james2m/seedbank'
+  gem 'minitest-reporters'
+  gem 'm', '~> 1.3.1'
 
-  gem "better_errors", '2.0.0'
-  gem "binding_of_caller", '0.7.2'
+  gem "better_errors"
+  gem "binding_of_caller"
 end
 
 group :development do
-  gem 'foreman', '0.82.0'
-  gem 'pry', '0.10.1'
-  gem 'pry-byebug', '1.3.3'
-  gem 'quiet_assets', '1.0.3'
+  gem 'foreman'
+  gem 'pry'
+  gem 'pry-byebug'
+  gem 'quiet_assets'
 
   # gem 'asset-image-opt'
   # brew install https://raw.github.com/cbguder/homebrew/53ea33bab5372ea74117ace8c44aa7ea988e93c2/Library/Formula/pngout.rb
 end
 
 group :assets do
-  gem 'coffee-rails', '4.0.1'
-  gem 'uglifier', '2.5.3'
+  gem 'coffee-rails'
+  gem 'uglifier', '>= 1.0.3'
 end
 
 group :test do
-  gem 'factory_girl', '4.4.0'
-  gem 'database_cleaner', '1.3.0'
+  gem 'factory_girl'
+  gem 'database_cleaner'
 end
