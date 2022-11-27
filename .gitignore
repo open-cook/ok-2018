@@ -4,8 +4,10 @@
 .DS_Store?
 Thumbs.db
 
+db/mysql
 db/REDIS/
 db/SPHINX/
+
 config/ENV/*
 config/database.yml
 config/SPHINX.config
