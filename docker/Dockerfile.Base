@@ -1,0 +1,12 @@
+# docker build -t open_cook/base:latest -f Dockerfile.Base .
+# docker run -ti open_cook/base:latest
+FROM debian:8.1
+
+RUN apt-get update
+
+RUN apt-get install --force-yes -y build-essential
+RUN apt-get install --force-yes -y wget curl
+RUN apt-get install --force-yes -y git
+
+RUN apt-get install --force-yes -y python-pip
+RUN pip install --upgrade Pygments

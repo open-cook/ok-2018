@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  # base:
+  #   build:
+  #     context: ./
+  #     dockerfile: Dockerfile.Base
+
+  # image_processing:
+  #   build:
+  #     context: ./
+  #     dockerfile: Dockerfile.ImageProcessing
+
+  rails:
+    tty: true
+    build:
+      context: ./
+      dockerfile: Dockerfile.Rails
+    volumes:
+      - $PWD:/home
+
+volumes:
+  shared-volume:

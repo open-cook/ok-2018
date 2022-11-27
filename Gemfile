@@ -119,7 +119,7 @@ gem 'image_optim', '0.24.2'
 gem 'the_sortable_tree',
   # path: '../the_sortable_tree'
   github: 'the-teacher/the_sortable_tree',
-  branch: 'master'
+  tag: 'fa1ceac3ca'
 
 group :development, :test do
   gem "minitest-rails", '2.2.0'

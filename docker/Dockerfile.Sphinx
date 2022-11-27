@@ -1,0 +1,24 @@
+# docker build -t opencook/sphinx -f Dockerfile.Sphinx .
+# docker run -ti opencook/sphinx:latest
+FROM debian:8.1
+
+RUN apt-get update && apt-get install --force-yes -y wget
+
+WORKDIR /tmp
+ENV SPHINX_VERSION=2.2.11-release-1
+RUN wget http://sphinxsearch.com/files/sphinxsearch_$SPHINX_VERSION~jessie_amd64.deb
+
+RUN apt-get install --force-yes -y mysql-common libmysqlclient18
+RUN apt-get install --force-yes -y libexpat1 libodbc1 libpq5
+RUN dpkg -i sphinxsearch_$SPHINX_VERSION~jessie_amd64.deb
+RUN rm -rf ./sphinxsearch*
+
+WORKDIR /
+
+# USER sphinxsearch
+
+# Adding system user `sphinxsearch' (UID 104) ...
+# Adding new user `sphinxsearch' (UID 104) with group `sphinxsearch'
+# /usr/bin/searchd
+
+ENTRYPOINT [ "/usr/bin/searchd" ]

@@ -1,0 +1,56 @@
+# docker build -t opencook/image_processing:latest -f Dockerfile.ImageProcessing .
+# docker run -ti opencook/image_processing:latest /bin/bash
+FROM --platform=linux/amd64 open_cook/base
+
+RUN apt-get install --force-yes -y imagemagick libmagickwand-dev
+RUN apt-get install --force-yes -y advancecomp
+RUN apt-get install --force-yes -y gifsicle
+RUN apt-get install --force-yes -y jhead
+RUN apt-get install --force-yes -y jpegoptim
+RUN apt-get install --force-yes -y libjpeg-progs
+RUN apt-get install --force-yes -y optipng
+RUN apt-get install --force-yes -y pngquant
+
+# PNGCRUSH. SEE FAILED BINS LIST
+# http://www.rubydoc.info/gems/image_optim/ImageOptim/BinResolver/Bin
+WORKDIR /tmp/
+
+RUN wget --no-check-certificate https://netcologne.dl.sourceforge.net/project/pmt/pngcrush/1.8.11/pngcrush-1.8.11.tar.gz
+RUN tar -xvf pngcrush-1.8.11.tar.gz
+WORKDIR /tmp/pngcrush-1.8.11
+RUN make pngcrush
+RUN cp /tmp/pngcrush-1.8.11/pngcrush /usr/bin/pngcrush
+RUN rm -rf /tmp/pngcrush*
+
+WORKDIR /
+
+# PNGOUT
+WORKDIR /tmp/
+
+RUN wget http://static.jonof.id.au/dl/kenutils/pngout-20150319-linux.tar.gz
+RUN tar -xvf pngout-20150319-linux.tar.gz
+RUN cp /tmp/pngout-20150319-linux/x86_64/pngout /usr/bin/pngout
+RUN rm -rf ./pngout-20150319*
+
+WORKDIR /
+
+# which gifsicle
+# which jhead
+# which jpegoptim
+# which jpegtran
+# which optipng
+# which pngcrush
+# which pngout
+# which pngquant
+# which advpng
+# which svgo
+
+# /usr/bin/gifsicle
+# /usr/bin/jhead
+# /usr/bin/jpegoptim
+# /usr/bin/jpegtran
+# /usr/bin/optipng
+# /usr/bin/pngcrush
+# /usr/bin/pngout
+# /usr/bin/pngquant
+# /usr/bin/advpng
