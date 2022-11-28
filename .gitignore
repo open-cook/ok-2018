@@ -12,6 +12,8 @@ config/ENV/*
 config/database.yml
 config/SPHINX.config
 
+shared/*
+
 binlog
 log/*
 tmp/*

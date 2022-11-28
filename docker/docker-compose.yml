@@ -11,8 +11,14 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: qwerty
+      MYSQL_USER: rails
+      MYSQL_PASSWORD: qwerty
+      MYSQL_DATABASE: opencook
     volumes:
       - ../db/MYSQL:/var/lib/mysql
+      - ../shared:/shared
+    ports:
+      - 3306:33060
 
 volumes:
   shared-volume:
