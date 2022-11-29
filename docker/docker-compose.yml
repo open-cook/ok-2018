@@ -1,24 +1,35 @@
-# docker pull mysql
 # docker-compose -f docker-compose.yml up
 version: '3.8'
 
 services:
-  mysql:
-    image: mysql
-    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
-    # (this is just an example, not intended to be a production configuration)
-    command: --default-authentication-plugin=mysql_native_password
+  psql:
+    image: postgres:15.1-bullseye
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: qwerty
-      MYSQL_USER: rails
-      MYSQL_PASSWORD: qwerty
-      MYSQL_DATABASE: opencook
+      POSTGRES_PASSWORD: qwerty
+      PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
-      - ../db/MYSQL:/var/lib/mysql
+      - ../db/PGSQL:/var/lib/postgresql/data/pgdata
       - ../shared:/shared
     ports:
-      - 3306:33060
+      - 5432:5432
 
-volumes:
-  shared-volume:
+  # mysql:
+  #   image: mysql
+  #   # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+  #   # (this is just an example, not intended to be a production configuration)
+  #   command: --default-authentication-plugin=mysql_native_password
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: qwerty
+  #     MYSQL_USER: rails
+  #     MYSQL_PASSWORD: qwerty
+  #     MYSQL_DATABASE: opencook
+  #   volumes:
+  #     - ../db/MYSQL:/var/lib/mysql
+  #     - ../shared:/shared
+  #   ports:
+  #     - 3306:33060
+
+# volumes:
+#   shared-volume:
