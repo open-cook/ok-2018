@@ -1,0 +1,99 @@
+#
+# ARM: docker build -t iamteacher/opencook.ru:webapp.arm64 -f Dockerfile.OpenCook --build-arg BUILDPLATFORM="linux/arm64" ../
+# AMD: docker build -t iamteacher/opencook.ru:webapp.amd64 -f Dockerfile.OpenCook --build-arg BUILDPLATFORM="linux/amd64" ../
+#
+# docker run -ti iamteacher/opencook.ru:webapp.arm64
+# docker run -ti iamteacher/opencook.ru:webapp.amd64
+FROM ghcr.io/toy/image_optim:20221127 as image_optim
+
+FROM --platform=$BUILDPLATFORM debian:10.13
+ARG BUILDPLATFORM
+RUN echo "$BUILDPLATFORM" > /BUILDPLATFORM
+
+RUN apt-get update && \
+    apt-get install --force-yes -y \
+    curl wget libreadline-dev libz-dev
+
+# For ruby 2.3.3
+# https://unix.stackexchange.com/questions/688268/package-libssl1-0-0-has-no-installation-candidate
+# http://snapshot.debian.org/binary/libssl1.0.0/
+# https://launchpad.net/ubuntu/bionic/arm64/libssl1.0.0/1.0.2n-1ubuntu5.10
+
+COPY docker/libssl.install.sh /tmp/libssl.install.sh
+RUN chmod +x /tmp/libssl.install.sh && /tmp/libssl.install.sh
+
+RUN apt-get update && \
+    apt-get install --force-yes -y \
+    build-essential \
+    git
+
+# RUBY
+RUN apt-get install --force-yes -y libreadline-dev libz-dev
+
+RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv && \
+    git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+
+ENV PATH=$PATH:~/.rbenv/bin
+
+RUN ~/.rbenv/bin/rbenv install 2.3.3 && \
+    ~/.rbenv/bin/rbenv global 2.3.3
+
+RUN echo 'eval "$(rbenv init - qemu)"' > ~/.bashrc
+
+# PYGMENTS
+RUN apt-get install --force-yes -y python-pip && \
+    pip install --upgrade Pygments
+
+# IMAGE PROCESSORS
+RUN apt-get install --force-yes -y imagemagick libmagickwand-dev
+
+COPY --from=image_optim /usr/local/bin/advpng          /usr/local/bin/
+COPY --from=image_optim /usr/local/bin/gifsicle        /usr/local/bin/
+COPY --from=image_optim /usr/local/bin/jhead           /usr/local/bin/
+COPY --from=image_optim /usr/local/bin/jpeg-recompress /usr/local/bin/
+COPY --from=image_optim /usr/local/bin/jpegoptim       /usr/local/bin/
+COPY --from=image_optim /usr/local/bin/jpegtran        /usr/local/bin/
+COPY --from=image_optim /usr/local/bin/optipng         /usr/local/bin/
+COPY --from=image_optim /usr/local/bin/oxipng          /usr/local/bin/
+COPY --from=image_optim /usr/local/bin/pngcrush        /usr/local/bin/
+COPY --from=image_optim /usr/local/bin/pngout          /usr/local/bin/
+COPY --from=image_optim /usr/local/bin/pngquant        /usr/local/bin/
+
+COPY --from=image_optim /usr/local/lib/libjpeg.so.9    /usr/local/lib/
+COPY --from=image_optim /usr/local/lib/libpng16.so.16  /usr/local/lib/
+COPY --from=image_optim /usr/local/lib/libz.so.1       /usr/local/lib/
+COPY --from=image_optim /usr/local/lib/liblcms2.so.2   /usr/local/lib/
+
+COPY --from=image_optim /lib/ld-musl-x86_64.so.1   /lib/
+COPY --from=image_optim /usr/lib/libstdc++.so.6    /usr/lib/
+COPY --from=image_optim /usr/lib/libgcc_s.so.1     /usr/lib/
+
+# RAILS
+RUN /root/.rbenv/shims/gem install bundler -v 1.16.1
+RUN /root/.rbenv/shims/bundle config --global github.https true
+
+# NODE
+# [BUILDPLATFORM="linux/amd64"] has to be before Mysql/PGSQL
+# or will produce `qemu: uncaught target signal 11`
+SHELL ["/bin/bash", "--login", "-c"]
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+RUN nvm install 18.12.1
+
+# Old mysql: libmysqlclient-dev
+RUN apt-get install --force-yes -y \
+    default-libmysqlclient-dev \
+    libpq-dev
+
+# /root/.rbenv/shims/ruby
+# /root/.rbenv/shims/gem
+# /root/.rbenv/shims/bundler
+
+COPY Gemfile /home/Gemfile
+COPY Gemfile.lock /home/Gemfile.lock
+COPY X_GEMS /home/X_GEMS
+COPY plugins /home/plugins
+
+EXPOSE 3000/tcp
+# RUN cd /home && /root/.rbenv/shims/gem install mysql2 -v 0.5.2
+# RUN cd /home && /root/.rbenv/shims/gem install pg -v 0.19.0
+RUN cd /home && /root/.rbenv/shims/bundle

@@ -59,7 +59,7 @@ gem 'premailer-rails', '1.8.2'
 gem 'actionview-encoded_mail_to', '1.0.4'
 
 # Search
-# !gem 'thinking-sphinx', '3.2.0'
+gem 'thinking-sphinx', '3.2.0'
 
 # Models
 gem 'gibbon', '1.1.5'

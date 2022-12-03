@@ -1,4 +1,8 @@
 # docker-compose -f docker-compose.yml up
+# docker-compose -f docker-compose.yml down
+#
+# docker exec -ti docker-rails-1 /bin/bash
+# docker exec -ti docker-psql-1 /bin/bash
 version: '3.8'
 
 services:
@@ -13,6 +17,17 @@ services:
       - ../shared:/shared
     ports:
       - 5432:5432
+
+  # rails s -p 3000 -b 0.0.0.0
+  rails:
+    tty: true
+    image: iamteacher/opencook.ru:webapp.arm64
+    volumes:
+      - ../:/home
+    ports:
+      - 3000:3000
+    depends_on:
+      - psql
 
   # mysql:
   #   image: mysql
