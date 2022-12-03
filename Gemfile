@@ -31,7 +31,7 @@ gem 'rails_config', '0.4.2'
 gem 'whenever', '0.9.2'
 
 gem 'sinatra', '1.4.6', require: nil
-gem 'sidekiq', '3.5.0'
+gem 'sidekiq', '5.2.8'
 
 # views
 gem 'browser', '0.6.0'
