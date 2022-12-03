@@ -1,11 +1,11 @@
-require 'sidekiq/web'
+# require 'sidekiq/web'
 
-Sidekiq::Web.use Rack::Auth::Basic do |username, password|
-  username == 'admin' && password == 'qwerty'
-end
+# Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+#   username == 'admin' && password == 'qwerty'
+# end
 
 TheApp::Application.routes.draw do
-  mount Sidekiq::Web => '/async/tasks'
+  # mount Sidekiq::Web => '/async/tasks'
 
   # SPECIAL PROJECTS
   get 'tag/новогодние рецепты',  to: redirect('/novogodnie-recepty-2016', status: 301)

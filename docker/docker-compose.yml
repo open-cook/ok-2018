@@ -17,6 +17,15 @@ services:
       - ../shared:/shared
     ports:
       - 5432:5432
+  redis:
+    image: redis:7.0.5-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - ../db/REDIS:/data
+      - ../shared:/shared
+    # entrypoint: docker-entrypoint.sh
+    # command: redis-server --save 60 1 --loglevel warning
 
   # rails s -p 3000 -b 0.0.0.0
   rails:
@@ -28,6 +37,7 @@ services:
       - 3000:3000
     depends_on:
       - psql
+      - redis
 
   # mysql:
   #   image: mysql

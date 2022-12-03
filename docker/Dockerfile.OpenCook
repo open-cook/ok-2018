@@ -88,12 +88,15 @@ RUN apt-get install --force-yes -y \
 # /root/.rbenv/shims/gem
 # /root/.rbenv/shims/bundler
 
+# RUN cd /home && /root/.rbenv/shims/gem install nokogiri -v 1.8.1
+# RUN cd /home && /root/.rbenv/shims/gem install nokogumbo -v 1.1.9
+# RUN cd /home && /root/.rbenv/shims/gem install mysql2 -v 0.5.2
+# RUN cd /home && /root/.rbenv/shims/gem install pg -v 0.19.0
+
 COPY Gemfile /home/Gemfile
 COPY Gemfile.lock /home/Gemfile.lock
 COPY X_GEMS /home/X_GEMS
 COPY plugins /home/plugins
 
 EXPOSE 3000/tcp
-# RUN cd /home && /root/.rbenv/shims/gem install mysql2 -v 0.5.2
-# RUN cd /home && /root/.rbenv/shims/gem install pg -v 0.19.0
 RUN cd /home && /root/.rbenv/shims/bundle
