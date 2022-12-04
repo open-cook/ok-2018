@@ -63,7 +63,7 @@ gem 'actionview-encoded_mail_to', '1.0.4'
 gem 'thinking-sphinx', '5.4.0'
 
 # Models
-gem 'gibbon', '1.1.5'
+gem 'gibbon', '3.4.4'
 gem 'sanitize', '3.0.0'
 gem 'rails_autolink', '1.1.6'
 gem 'state_machine', '~> 1.2.0'
