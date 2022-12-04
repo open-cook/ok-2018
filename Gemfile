@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 # source 'http://gems.github.com'
 
 gem 'rails', '4.2.7.1'
-# ! gem 'puma', '3.11.2'
+gem 'puma', '3.11.2'
 
 # Just NewRelic
 # gem 'newrelic_rpm'
@@ -32,7 +32,7 @@ gem 'whenever', '0.9.2'
 
 gem 'redis', '3.2.1'
 # gem 'sinatra', '1.4.6', require: nil
-# gem 'sidekiq', '3.5.0'
+gem 'sidekiq', '3.5.0'
 
 # views
 gem 'browser', '0.6.0'
@@ -60,7 +60,7 @@ gem 'premailer-rails', '1.8.2'
 gem 'actionview-encoded_mail_to', '1.0.4'
 
 # Search
-gem 'thinking-sphinx', '3.2.0'
+gem 'thinking-sphinx', '5.4.0'
 
 # Models
 gem 'gibbon', '1.1.5'

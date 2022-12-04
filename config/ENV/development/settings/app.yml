@@ -1,0 +1,70 @@
+app:
+  default_locale: ru
+  time_zone: Moscow
+  secret_key_base: '00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001'
+  secret_token: '00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002'
+
+  mailer:
+    service: smtp
+    host: http://localhost
+    smtp:
+
+      default:
+        address: smtp.yandex.ru
+        domain: yandex.ru
+        port: 25
+        user_name: unknown
+        password: undefined
+        authentication: plain
+
+      rails_shop:
+        address: smtp.yandex.ru
+        domain: yandex.ru
+        port: 25
+        user_name: unknown
+        password: undefined
+        authentication: plain
+
+oauth:
+  vkontakte:
+    app_id: '00000000000000'
+    app_secret: ab00000000000000
+
+  facebook:
+    app_id: '00000000000000'
+    app_secret: ab00000000000000
+
+  twitter:
+    app_id: '00000000000000'
+    app_secret: ab00000000000000
+
+  google_oauth2:
+    app_id: ab00000000000000.apps.googleusercontent.com
+    app_secret: unknown
+
+  odnoklassniki:
+    app_id: '00000000000000'
+    app_secret: unknown
+    app_public: unknown
+
+action_cable:
+  adapter_params:
+    adapter: redis
+    url: redis://redis:6379
+
+  worker_pool_size: 4
+
+  mount_path: ws://localhost/app-cable
+  disable_request_forgery_protection: false
+  allowed_request_origins: http://localhost
+
+redis:
+  port: 6379
+  host: redis
+
+rails_shop:
+  currancy: RU
+  shop_id: undefined
+  scid: undefined
+  shop_password: undefined
+  payment_url: https://money.yandex.ru/eshop.xml
