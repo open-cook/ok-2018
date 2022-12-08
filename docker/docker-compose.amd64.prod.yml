@@ -1,0 +1,66 @@
+#
+# docker-compose -f docker-compose.yml up
+# docker-compose -f docker-compose.yml down
+#
+# docker exec -ti docker-rails-1 /bin/bash
+# docker exec -ti docker-psql-1 /bin/bash
+version: '3.8'
+
+services:
+  psql:
+    image: postgres:15.1-bullseye
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: qwerty
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ../db/PGSQL:/var/lib/postgresql/data/pgdata
+      - ../shared:/shared
+    ports:
+      - 5000:5432
+
+  redis:
+    image: redis:7.0.5-alpine
+    ports:
+      - 5001:6379
+    volumes:
+      - ../db/REDIS:/data
+      - ../shared:/shared
+
+  sidekiq_web:
+    image: iamteacher/sidekiq:web.arm64
+    environment:
+      REDIS_URL: redis://redis:5001
+      SIDEKIQ_USER: admin
+      SIDEKIQ_PASSWORD: qwerty
+    ports:
+      - 5002:3030
+    depends_on:
+      - redis
+
+  # docker exec -ti docker-sphinx-1 ash
+  # docker-compose run docker-sphinx-1 indexer --all --config /opt/sphinx/conf/sphinx.conf
+  sphinx:
+    tty: true
+    image: macbre/sphinxsearch:3.4.1
+    environment:
+      - SPHINX_CONFIG_FILE=/opt/sphinx/conf/sphinx.conf
+    volumes:
+      - ../db/SPHINX:/opt/sphinx/index
+      - ../config/SPHINX:/opt/sphinx/conf
+      - ../shared:/shared
+    ports:
+      - 5003:36307
+    mem_limit: 512m
+
+  rails:
+    tty: true
+    image: iamteacher/opencook.ru:webapp.arm64
+    volumes:
+      - ../:/home
+    ports:
+      - 5004:3000
+    depends_on:
+      - psql
+      - sphinx
+      - redis
