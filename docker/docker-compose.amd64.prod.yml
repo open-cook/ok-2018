@@ -48,7 +48,7 @@ services:
     volumes:
       - ../:/home
     working_dir: /home
-    user: '1000:1000'
+    # user: '1000:1000'
     depends_on:
       - psql
       - redis
