@@ -32,7 +32,6 @@ services:
   # docker exec -ti docker-sphinx-1 ash
   # docker-compose run docker-sphinx-1 indexer --all --config /opt/sphinx/conf/sphinx.conf
   sphinx:
-    tty: true
     image: macbre/sphinxsearch:3.4.1
     environment:
       - SPHINX_CONFIG_FILE=/opt/sphinx/conf/sphinx.conf
@@ -52,10 +51,11 @@ services:
       - ../:/home
     ports:
       - 5004:3000
+    working_dir: /home
+    command: tail -f /dev/null
+    # entrypoint: ["/root/.rbenv/shims/bundle","exec","puma","-C","config/PUMA.production.rb"]
 
-    command: 'tail -f /dev/null'
-
-    #depends_on:
-    #  - psql
+    depends_on:
+      - psql
     #  - sphinx
     #  - redis
