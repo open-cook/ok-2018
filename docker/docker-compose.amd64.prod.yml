@@ -7,6 +7,7 @@
 version: '3.8'
 
 services:
+  # port: 5432
   psql:
     image: postgres:15.1-bullseye
     restart: always
@@ -16,19 +17,17 @@ services:
     volumes:
       - ../db/PGSQL:/var/lib/postgresql/data/pgdata
       - ../shared:/shared
-    ports:
-      - 5000:5432
     user: '1000:1000'
 
+  # port: 6379
   redis:
     image: redis:7.0.5-alpine
-    ports:
-      - 5001:6379
     volumes:
       - ../db/REDIS:/data
       - ../shared:/shared
     user: '1000:1000'
 
+  # port: 36307
   # docker exec -ti docker-sphinx-1 ash
   # docker-compose run docker-sphinx-1 indexer --all --config /opt/sphinx/conf/sphinx.conf
   sphinx:
@@ -39,22 +38,17 @@ services:
       - ../db/SPHINX:/opt/sphinx/index
       - ../config/SPHINX:/opt/sphinx/conf
       - ../shared:/shared
-    ports:
-      - 5003:36307
     mem_limit: 512m
     user: '1000:1000'
 
   rails:
     tty: true
+    stdin_open: true
     image: iamteacher/opencook.ru:webapp.amd64
     volumes:
       - ../:/home
-    ports:
-      - 5004:3000
     working_dir: /home
-    command: tail -f /dev/null
-    # entrypoint: ["/root/.rbenv/shims/bundle","exec","puma","-C","config/PUMA.production.rb"]
-
+    # user: '1000:1000'
     depends_on:
       - psql
     #  - sphinx

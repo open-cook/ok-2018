@@ -7,43 +7,40 @@
 version: '3.8'
 
 services:
+  # port: 5432
   psql:
     image: postgres:15.1-bullseye
-    restart: always
+    # restart: always
     environment:
       POSTGRES_PASSWORD: qwerty
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - ../db/PGSQL:/var/lib/postgresql/data/pgdata
       - ../shared:/shared
-    ports:
-      - 5432:5432
 
+  # port: 6379
+  # command: redis-server --save 60 1 --loglevel warning
   redis:
     image: redis:7.0.5-alpine
-    ports:
-      - 6379:6379
     volumes:
       - ../db/REDIS:/data
       - ../shared:/shared
-    # entrypoint: docker-entrypoint.sh
-    # command: redis-server --save 60 1 --loglevel warning
 
-  sidekiq_web:
-    image: iamteacher/sidekiq:web.arm64
-    environment:
-      REDIS_URL: redis://redis:6379
-      SIDEKIQ_USER: admin
-      SIDEKIQ_PASSWORD: qwerty
-    ports:
-      - 3030:3030
-    depends_on:
-      - redis
+  # sidekiq_web:
+  #   image: iamteacher/sidekiq:web.arm64
+  #   environment:
+  #     REDIS_URL: redis://redis:6379
+  #     SIDEKIQ_USER: admin
+  #     SIDEKIQ_PASSWORD: qwerty
+  #   ports:
+  #     - 3030:3030
+  #   depends_on:
+  #     - redis
 
   # docker exec -ti docker-sphinx-1 ash
   # docker-compose run docker-sphinx-1 indexer --all --config /opt/sphinx/conf/sphinx.conf
+  # port: 36307
   sphinx:
-    tty: true
     image: macbre/sphinxsearch:3.4.1
     environment:
       - SPHINX_CONFIG_FILE=/opt/sphinx/conf/sphinx.conf
@@ -51,41 +48,18 @@ services:
       - ../db/SPHINX:/opt/sphinx/index
       - ../config/SPHINX:/opt/sphinx/conf
       - ../shared:/shared
-    ports:
-      - 36307:36307
     mem_limit: 512m
-    # command: tail -f /dev/null
 
   # rails s -p 3000 -b 0.0.0.0
+  # port 3000
   rails:
     tty: true
+    stdin_open: true
     image: iamteacher/opencook.ru:webapp.arm64
     volumes:
       - ../:/home
-    ports:
-      - 3000:3000
     depends_on:
       - psql
       - sphinx
       - redis
       - sidekiq_web
-
-  # mysql:
-  #   image: mysql
-  #   # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
-  #   # (this is just an example, not intended to be a production configuration)
-  #   command: --default-authentication-plugin=mysql_native_password
-  #   restart: always
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: qwerty
-  #     MYSQL_USER: rails
-  #     MYSQL_PASSWORD: qwerty
-  #     MYSQL_DATABASE: opencook
-  #   volumes:
-  #     - ../db/MYSQL:/var/lib/mysql
-  #     - ../shared:/shared
-  #   ports:
-  #     - 3306:33060
-
-# volumes:
-#   shared-volume:
