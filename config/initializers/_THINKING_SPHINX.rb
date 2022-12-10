@@ -4,7 +4,7 @@ if defined? ThinkingSphinx
     private
 
     def settings_file
-      framework_root.join 'config', 'ENV', Rails.env.to_s, 'services', 'thinking_sphinx.yml'
+      framework_root.join 'config', "THINKING_SPHINX.#{Rails.env.to_s}.yml"
     end
   end
 
@@ -13,7 +13,7 @@ if defined? ThinkingSphinx
     private
 
     def file
-      @file ||= Pathname.new(framework.root).join 'config', 'ENV', Rails.env.to_s, 'services', 'thinking_sphinx.yml'
+      @file ||= Pathname.new(framework.root).join 'config', "THINKING_SPHINX.#{Rails.env.to_s}.yml"
     end
   end
 end
