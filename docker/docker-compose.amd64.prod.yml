@@ -1,10 +1,12 @@
 #
-# docker-compose -f docker-compose.yml up
-# docker-compose -f docker-compose.yml down
+# docker compose -f docker-compose.amd64.prod.yml up
+# docker compose -f docker-compose.amd64.prod.yml down
 #
-# docker exec -ti docker-rails-1 /bin/bash
-# docker exec -ti docker-psql-1 /bin/bash
+# docker exec -ti open_cook-rails-1 /bin/bash
+# docker exec -ti open_cook-psql-1 /bin/bash
 version: '3.8'
+
+name: open_cook
 
 services:
   # port: 5432
@@ -28,8 +30,8 @@ services:
     user: '1000:1000'
 
   # port: 36307
-  # docker exec -ti docker-sphinx-1 ash
-  # docker-compose run docker-sphinx-1 indexer --all --config /opt/sphinx/conf/sphinx.conf
+  # docker exec -ti open_cook-sphinx-1 ash
+  # docker-compose run open_cook-sphinx-1 indexer --all --config /opt/sphinx/conf/sphinx.conf
   sphinx:
     image: macbre/sphinxsearch:3.4.1
     environment:
@@ -41,6 +43,10 @@ services:
     mem_limit: 512m
     user: '1000:1000'
 
+  # docker  exec -ti open_cook-rails-1 bash
+  # rails s -p 3000 -b 0.0.0.0
+  # puma -C config/PUMA.production.rb
+  # port 3000
   rails:
     tty: true
     stdin_open: true

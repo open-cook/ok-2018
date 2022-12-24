@@ -39,8 +39,8 @@ services:
   #   depends_on:
   #     - redis
 
-  # docker exec -ti docker-sphinx-1 ash
-  # docker-compose run docker-sphinx-1 indexer --all --config /opt/sphinx/conf/sphinx.conf
+  # docker exec -ti open_cook-sphinx-1 ash
+  # docker-compose run open_cook-sphinx-1 indexer --all --config /opt/sphinx/conf/sphinx.conf
   # port: 36307
   sphinx:
     image: macbre/sphinxsearch:3.4.1
@@ -52,7 +52,9 @@ services:
       - ../shared:/shared
     mem_limit: 512m
 
+  # docker  exec -ti open_cook-rails-1 bash
   # rails s -p 3000 -b 0.0.0.0
+  # puma -C config/PUMA.production.rb
   # port 3000
   rails:
     tty: true
