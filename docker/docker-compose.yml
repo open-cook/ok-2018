@@ -60,6 +60,8 @@ services:
     image: iamteacher/opencook.ru:webapp.arm64
     volumes:
       - ../:/home
+    ports:
+      - 3000:3000
     depends_on:
       - psql
       - sphinx
