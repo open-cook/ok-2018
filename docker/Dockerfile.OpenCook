@@ -13,6 +13,7 @@ RUN echo "$BUILDPLATFORM" > /BUILDPLATFORM
 RUN apt-get update && \
     apt-get install --force-yes -y \
     curl wget libreadline-dev libz-dev
+    # (!) telnet htop
 
 # For ruby 2.3.3
 # https://unix.stackexchange.com/questions/688268/package-libssl1-0-0-has-no-installation-candidate

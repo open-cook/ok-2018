@@ -6,6 +6,8 @@
 # docker exec -ti docker-psql-1 /bin/bash
 version: '3.8'
 
+name: open_cook
+
 services:
   # port: 5432
   psql:
@@ -62,4 +64,3 @@ services:
       - psql
       - sphinx
       - redis
-      - sidekiq_web

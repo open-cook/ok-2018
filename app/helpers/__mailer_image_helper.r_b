@@ -1,5 +1,0 @@
-# module MailerImageHelper
-#   def inline_image_path name
-#     @preview_mode ? image_path(@images[name]) : attachments[name].try(:url)
-#   end
-# end
