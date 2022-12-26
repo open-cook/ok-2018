@@ -3,7 +3,6 @@
 # docker-compose -f docker-compose.yml down
 #
 # docker exec -ti open_cook-rails-1 /bin/bash
-# docker exec -ti open_cook-rails-1 /bin/bash
 version: '3.8'
 
 name: open_cook
@@ -60,7 +59,7 @@ services:
   rails:
     tty: true
     stdin_open: true
-    image: iamteacher/opencook.ru:ok.amd64
+    image: iamteacher/opencook.ru:ok.arm64
     volumes:
       - ../:/home/lucky/app
     ports:

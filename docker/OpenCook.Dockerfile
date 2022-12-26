@@ -1,9 +1,11 @@
 #
-# ARM: docker build -t iamteacher/opencook.ru:ok.arm64 -f OpenCook.Dockerfile --build-arg BUILDPLATFORM="linux/arm64" ../
-# AMD: docker build -t iamteacher/opencook.ru:ok.amd64 -f OpenCook.Dockerfile --build-arg BUILDPLATFORM="linux/amd64" ../
-#
-# docker run -ti iamteacher/opencook.ru:ok.arm64
+# ARM:
+# docker build -t iamteacher/opencook.ru:ok.arm64 -f OpenCook.Dockerfile --build-arg BUILDPLATFORM="linux/arm64" ../
 # docker run -ti iamteacher/opencook.ru:ok.amd64
+#
+# AMD:
+# docker build -t iamteacher/opencook.ru:ok.amd64 -f OpenCook.Dockerfile --build-arg BUILDPLATFORM="linux/amd64" ../
+# docker run -ti iamteacher/opencook.ru:ok.arm64
 
 FROM --platform=$BUILDPLATFORM debian:10.13 as base_stage
 ARG BUILDPLATFORM
@@ -14,15 +16,17 @@ RUN apt-get update && \
     build-essential
 
 # Common software
-RUN apt-get install --force-yes curl wget git htop ctop telnet
+RUN apt-get install --force-yes -y curl wget git htop ctop telnet
 # For ruby
-RUN apt-get install --force-yes libreadline-dev libz-dev
+RUN apt-get install --force-yes -y libreadline-dev libz-dev
 # For SQLite
-RUN apt-get install --force-yes sqlite3 libsqlite3-0 libsqlite3-dev
+RUN apt-get install --force-yes -y sqlite3 libsqlite3-0 libsqlite3-dev
 # For MySql
-RUN apt-get install --force-yes default-libmysqlclient-dev
+RUN apt-get install --force-yes -y default-libmysqlclient-dev
 # For PgSql
-RUN apt-get install --force-yes libpq-dev
+RUN apt-get install --force-yes -y libpq-dev
+# For Image optimizer
+RUN apt-get install --force-yes -y musl-dev
 
 # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 # Pygments (Code Highlighting) / pygmentize -V
@@ -54,7 +58,6 @@ FROM ghcr.io/toy/image_optim:20221127 as image_optim
 # Continue
 FROM base_stage
 
-RUN apt-get install --force-yes -y musl-dev
 COPY --from=image_optim /usr/local/lib/libjpeg.so.9    /usr/local/lib/
 
 COPY --from=image_optim /usr/local/bin/jpegtran        /usr/local/bin/
