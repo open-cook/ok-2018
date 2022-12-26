@@ -9,6 +9,9 @@ gem 'puma', '3.11.2'
 
 gem 'exception_notification', '4.0.1'
 
+gem 'faraday', '0.9.0'
+gem 'multipart-post', '2.0.0'
+
 # Datebase
 gem 'pg', '0.19.0'
 gem 'mysql2', '0.5.2'
@@ -50,9 +53,9 @@ gem 'kaminari', '0.16.1'
 
 gem 'sass', '3.4.1'
 gem 'font-awesome-sass', '4.1.0'
-gem 'sass-rails', github: 'rails/sass-rails', tag: '423178729'
-gem 'bootstrap-sass',  github: 'twbs/bootstrap-sass', tag: '54317e5c'
-gem 'compass-rails', github: 'Compass/compass-rails', tag: '36eebc69'
+gem 'sass-rails', git: 'https://github.com/rails/sass-rails', tag: '423178729'
+gem 'bootstrap-sass',  git: 'https://github.com/twbs/bootstrap-sass', tag: '54317e5c'
+gem 'compass-rails', git: 'https://github.com/Compass/compass-rails', tag: '36eebc69'
 
 gem 'autoprefixer-rails', '3.0.0.20140821'
 
@@ -71,7 +74,7 @@ gem 'RedCloth', '4.2.9', require: 'redcloth'
 gem 'acts-as-taggable-on', '3.5.0'
 
 gem 'awesome_nested_set',
-  github: "collectiveidea/awesome_nested_set",
+  git: "https://github.com/collectiveidea/awesome_nested_set",
   tag: 'a4c1ec42d'
 
 # Images and files
@@ -119,7 +122,7 @@ gem 'image_optim', '0.24.2'
 
 gem 'the_sortable_tree',
   # path: '../the_sortable_tree'
-  github: 'the-teacher/the_sortable_tree',
+  git: 'https://github.com/the-teacher/the_sortable_tree',
   tag: 'fa1ceac3ca'
 
 group :development, :test do

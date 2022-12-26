@@ -51,23 +51,27 @@ RUN apt-get install --force-yes -y imagemagick libmagickwand-dev
 COPY --from=image_optim /usr/local/bin/advpng          /usr/local/bin/
 COPY --from=image_optim /usr/local/bin/gifsicle        /usr/local/bin/
 COPY --from=image_optim /usr/local/bin/jhead           /usr/local/bin/
-COPY --from=image_optim /usr/local/bin/jpeg-recompress /usr/local/bin/
+
 COPY --from=image_optim /usr/local/bin/jpegoptim       /usr/local/bin/
-COPY --from=image_optim /usr/local/bin/jpegtran        /usr/local/bin/
+
 COPY --from=image_optim /usr/local/bin/optipng         /usr/local/bin/
-COPY --from=image_optim /usr/local/bin/oxipng          /usr/local/bin/
+
 COPY --from=image_optim /usr/local/bin/pngcrush        /usr/local/bin/
-COPY --from=image_optim /usr/local/bin/pngout          /usr/local/bin/
 COPY --from=image_optim /usr/local/bin/pngquant        /usr/local/bin/
+
+COPY --from=image_optim /usr/local/bin/jpegtran        /usr/local/bin/
+COPY --from=image_optim /usr/local/bin/jpeg-recompress /usr/local/bin/
+COPY --from=image_optim /usr/local/bin/oxipng          /usr/local/bin/
+COPY --from=image_optim /usr/local/bin/pngout          /usr/local/bin/
 
 COPY --from=image_optim /usr/local/lib/libjpeg.so.9    /usr/local/lib/
 COPY --from=image_optim /usr/local/lib/libpng16.so.16  /usr/local/lib/
-COPY --from=image_optim /usr/local/lib/libz.so.1       /usr/local/lib/
+
 COPY --from=image_optim /usr/local/lib/liblcms2.so.2   /usr/local/lib/
 
 COPY --from=image_optim /lib/ld-musl-x86_64.so.1   /lib/
-COPY --from=image_optim /usr/lib/libstdc++.so.6    /usr/lib/
-COPY --from=image_optim /usr/lib/libgcc_s.so.1     /usr/lib/
+
+
 
 # RAILS
 RUN /root/.rbenv/shims/gem install bundler -v 1.16.1
@@ -100,4 +104,5 @@ COPY X_GEMS /home/X_GEMS
 COPY plugins /home/plugins
 
 EXPOSE 3000/tcp
+RUN cd /home/lucky && /root/.rbenv/shims/bundle
 RUN cd /home && /root/.rbenv/shims/bundle
