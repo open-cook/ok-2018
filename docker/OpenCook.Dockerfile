@@ -24,11 +24,17 @@ RUN apt-get install --force-yes default-libmysqlclient-dev
 # For PgSql
 RUN apt-get install --force-yes libpq-dev
 
-# Pygments / pygmentize -V
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# Pygments (Code Highlighting) / pygmentize -V
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
 RUN apt-get install --force-yes -y python-pip && \
     pip install --upgrade Pygments
 
-# IMAGE PROCESSORS
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# Image Processors
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
 RUN apt-get install --force-yes -y \
     imagemagick libmagickwand-dev \
     advancecomp \
@@ -39,12 +45,10 @@ RUN apt-get install --force-yes -y \
     pngcrush \
     pngquant
 
-# TEST ImageMagic
-RUN curl https://upload.wikimedia.org/wikipedia/commons/b/bc/Juvenile_Ragdoll.jpg > /tmp/kitty.jpg && \
-    convert /tmp/kitty.jpg /tmp/kitty.png && \
-    identify /tmp/kitty.jpg /tmp/kitty.png
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# Image to import some Image Processors
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-# Image to import some image processors
 FROM ghcr.io/toy/image_optim:20221127 as image_optim
 
 # Continue
@@ -57,6 +61,10 @@ COPY --from=image_optim /usr/local/bin/jpegtran        /usr/local/bin/
 COPY --from=image_optim /usr/local/bin/jpeg-recompress /usr/local/bin/
 COPY --from=image_optim /usr/local/bin/oxipng          /usr/local/bin/
 COPY --from=image_optim /usr/local/bin/pngout          /usr/local/bin/
+
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# OS specific LIBSSL (For the old Ruby)
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 # For ruby 2.3.3
 # https://unix.stackexchange.com/questions/688268/package-libssl1-0-0-has-no-installation-candidate
@@ -71,13 +79,9 @@ RUN chmod +x /tmp/libssl.install.sh && /tmp/libssl.install.sh
 RUN git clone https://github.com/rbenv/rbenv.git /opt/.rbenv && \
     git clone https://github.com/rbenv/ruby-build.git /opt/.rbenv/plugins/ruby-build
 
-ENV RBENV_ROOT=/opt/.rbenv
-ENV PATH=$PATH:/opt/.rbenv/bin:/opt/.rbenv/shims
-
-RUN /opt/.rbenv/bin/rbenv install 2.3.3 && \
-    /opt/.rbenv/bin/rbenv global 2.3.3
-
-RUN echo 'eval "$(rbenv init - qemu)"' > ~/.bashrc
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# My Lucky User
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 # CREATE GROUP `lucky`
 RUN groupadd -g 7777 lucky
@@ -93,23 +97,24 @@ RUN adduser lucky \
 RUN usermod -G lucky root
 RUN usermod -G lucky lucky
 
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# RBENV and Ruby
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+ENV RBENV_ROOT=/opt/.rbenv
+ENV PATH=$PATH:/opt/.rbenv/bin:/opt/.rbenv/shims
+
+RUN /opt/.rbenv/bin/rbenv install 2.3.3 && \
+    /opt/.rbenv/bin/rbenv global 2.3.3
+
+RUN echo 'eval "$(rbenv init - qemu)"' > /root/.bashrc
+RUN echo 'eval "$(rbenv init - qemu)"' > /home/lucky/.bashrc
+
 RUN chown -R lucky:lucky /opt/.rbenv
 
-USER lucky
-WORKDIR /home/lucky
-RUN echo 'eval "$(rbenv init - qemu)"' > ~/.bashrc
-
-RUN gem install bundler -v 1.17.3 --verbose --no-ri --no-rdoc --no-document
-RUN bundle config --global github.https true
-RUN git config --global --add safe.directory /home/lucky
-
-COPY Gemfile /home/lucky/Gemfile
-COPY Gemfile.lock /home/lucky/Gemfile.lock
-
-COPY X_GEMS /home/lucky/X_GEMS
-COPY plugins /home/lucky/plugins
-
-USER root
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# NVM Node
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 # [BUILDPLATFORM="linux/amd64"] has to be before Mysql/PGSQL
 # or will produce `qemu: uncaught target signal 11`
@@ -122,8 +127,35 @@ RUN chown -R lucky:lucky /opt/.nvm
 
 USER lucky
 SHELL ["/bin/bash", "-c"]
+
+# NODE. To update local .bashrc
 ENV NVM_DIR="/opt/.nvm"
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 
-EXPOSE 3000/tcp
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# Ruby App. Install gems
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+RUN gem install bundler -v 1.17.3 --verbose --no-ri --no-rdoc --no-document
+RUN bundle config --global github.https true
+RUN git config --global --add safe.directory /home/lucky
+
+RUN mkdir /home/lucky/app
+WORKDIR /home/lucky/app
+
+COPY Gemfile /home/lucky/app/Gemfile
+COPY Gemfile.lock /home/lucky/app/Gemfile.lock
+
+COPY X_GEMS /home/lucky/app/X_GEMS
+COPY plugins /home/lucky/app/plugins
+
 RUN bundle
+EXPOSE 3000/tcp
+
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# Test for ImageMagic
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# RUN curl https://upload.wikimedia.org/wikipedia/commons/b/bc/Juvenile_Ragdoll.jpg > /tmp/kitty.jpg && \
+#     convert /tmp/kitty.jpg /tmp/kitty.png && \
+#     identify /tmp/kitty.jpg /tmp/kitty.png
