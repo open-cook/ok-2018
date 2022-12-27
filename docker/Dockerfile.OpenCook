@@ -71,8 +71,6 @@ COPY --from=image_optim /usr/local/lib/liblcms2.so.2   /usr/local/lib/
 
 COPY --from=image_optim /lib/ld-musl-x86_64.so.1   /lib/
 
-
-
 # RAILS
 RUN /root/.rbenv/shims/gem install bundler -v 1.16.1
 RUN /root/.rbenv/shims/bundle config --global github.https true
