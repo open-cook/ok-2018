@@ -12,7 +12,7 @@ services:
   # port: 5432
   psql:
     image: postgres:15.1-bullseye
-    user: '1000:1000'
+    user: '7777:7777'
     # restart: always
     environment:
       POSTGRES_PASSWORD: qwerty
@@ -25,7 +25,7 @@ services:
   # command: redis-server --save 60 1 --loglevel warning
   redis:
     image: redis:7.0.5-alpine
-    user: '1000:1000'
+    user: '7777:7777'
     volumes:
       - ../db/REDIS:/data
       - ../shared:/shared
@@ -47,7 +47,7 @@ services:
   # port: 36307
   sphinx:
     image: macbre/sphinxsearch:3.4.1
-    user: '1000:1000'
+    user: '7777:7777'
     environment:
       - SPHINX_CONFIG_FILE=/opt/sphinx/conf/sphinx.conf
     volumes:
