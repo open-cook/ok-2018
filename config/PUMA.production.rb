@@ -1,7 +1,7 @@
 # https://github.com/puma/puma/blob/master/examples/config.rb
 # https://www.digitalocean.com/community/tutorials/how-to-deploy-a-rails-app-with-puma-and-nginx-on-ubuntu-14-04
 
-workers 2
+workers 1
 threads 2, 4
 daemonize true
 environment "production"
