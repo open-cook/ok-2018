@@ -381,7 +381,7 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.0.0)
     mysql2 (0.5.2)
-    nokogiri (1.8.1)
+    nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
     nokogumbo (1.1.9)
       nokogiri
@@ -591,7 +591,7 @@ DEPENDENCIES
   minitest-reporters (= 1.0.19)
   multipart-post (= 2.0.0)
   mysql2 (= 0.5.2)
-  nokogiri (= 1.8.1)
+  nokogiri (= 1.8.5)
   notifications!
   omniauth-facebook (= 2.0.0)
   omniauth-google-oauth2 (= 0.2.5)

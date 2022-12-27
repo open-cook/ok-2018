@@ -22,7 +22,7 @@ gem 'devise', '3.5.2'
 gem 'colorize', '0.8.1'
 gem 'letter_opener', '1.4.1'
 
-gem 'nokogiri', '1.8.1'
+gem 'nokogiri', '1.8.5'
 
 gem 'omniauth-twitter', '1.0.1'
 gem 'omniauth-facebook', '2.0.0'
