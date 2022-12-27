@@ -66,8 +66,8 @@ services:
     image: iamteacher/opencook.ru:ok.${PLATFORM:-arm}64
     volumes:
       - ../:/home/lucky/app
-    ports:
-      - 3000:3000
+    # ports:
+    #   - 3000:3000
     depends_on:
       - psql
       - sphinx
