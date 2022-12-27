@@ -1,8 +1,8 @@
 ---
 :verbose: true
 :concurrency: 10
-:logfile: /home/log/sidekiq.log
-:pidfile: /home/tmp/pids/sidekiq.pid
+:logfile: /home/lucky/app/log/sidekiq.log
+:pidfile: /home/lucky/app/tmp/pids/sidekiq.pid
 
 :queues:
   - [critical, 5]

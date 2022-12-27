@@ -1,6 +1,7 @@
 #
-# PLATFORM=arm docker-compose -f docker-compose.yml up
-# PLATFORM=amd docker-compose -f docker-compose.yml up
+# PLATFORM=arm docker compose -f docker-compose.yml up
+# PLATFORM=amd docker compose -f docker-compose.yml up -d
+# usermod -G docker lucky
 # docker-compose -f docker-compose.yml down
 #
 # docker exec -ti open_cook-rails-1 bash
@@ -58,7 +59,7 @@ services:
 
   # docker exec -ti open_cook-rails-1 bash
   # rails s -p 3000 -b 0.0.0.0
-  # puma -C config/PUMA.production.rb
+  # bundle exec puma -C config/PUMA.production.rb
   # port 3000
   rails:
     tty: true
