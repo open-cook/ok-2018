@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 # source 'http://gems.github.com'
 
 gem 'rails', '4.2.7.1'
-gem 'puma', '3.11.2'
+gem 'puma', '6.0.1'
 
 # Just NewRelic
 # gem 'newrelic_rpm'
