@@ -310,7 +310,7 @@ GEM
     foreman (0.82.0)
       thor (~> 0.19.1)
     fspath (3.1.2)
-    gibbon (1.1.5)
+    gibbon (1.2.1)
       httparty
       multi_json (>= 1.9.0)
     globalid (0.4.2)
@@ -574,7 +574,7 @@ DEPENDENCIES
   font-awesome-sass (= 4.1.0)
   foreman (= 0.82.0)
   friendly_id_pack!
-  gibbon (= 1.1.5)
+  gibbon (= 1.2.1)
   haml (= 4.0.5)
   image_optim (= 0.24.2)
   image_tools!
