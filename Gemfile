@@ -49,7 +49,7 @@ gem 'slim', '3.0.6'
 gem 'slim-rails', '0.2.1'
 gem 'role_block_haml', '0.2.4'
 
-gem 'kaminari', '0.16.1'
+gem 'kaminari', '1.2.2'
 
 gem 'sass', '3.4.1'
 gem 'font-awesome-sass', '4.1.0'
