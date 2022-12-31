@@ -16,7 +16,7 @@ class AttachedFile < ActiveRecord::Base
     build_watermarks
     watermark_on_base
 
-    optimize_base
+    # optimize_base
   end
 
   def watermark_on_base

@@ -116,7 +116,7 @@ gem "the_comments", path: './X_GEMS/the_comments'
 
 # ~ SHOP
 
-gem 'image_optim', '0.24.2'
+gem 'image_optim', '0.31.2'
 
 # Open Cook components
 
