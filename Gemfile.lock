@@ -222,9 +222,9 @@ GEM
     autoprefixer-rails (3.0.0.20140821)
       execjs
     bcrypt (3.1.18)
-    better_errors (2.0.0)
+    better_errors (2.9.1)
       coderay (>= 1.0.0)
-      erubis (>= 2.6.6)
+      erubi (>= 1.0.0)
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
@@ -292,6 +292,7 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    erubi (1.12.0)
     erubis (2.7.0)
     exception_notification (4.0.1)
       actionmailer (>= 3.0.4)
@@ -557,7 +558,7 @@ DEPENDENCIES
   acts-as-taggable-on (= 3.5.0)
   autoprefixer-rails (= 3.0.0.20140821)
   awesome_nested_set!
-  better_errors (= 2.0.0)
+  better_errors (= 2.9.1)
   binding_of_caller (= 0.7.2)
   bootstrap-sass!
   browser (= 0.6.0)

@@ -132,7 +132,7 @@ group :development, :test do
   gem 'minitest-reporters', '1.0.19'
   gem 'm', '1.3.4'
 
-  gem "better_errors", '2.0.0'
+  gem "better_errors", '2.9.1'
   gem "binding_of_caller", '0.7.2'
 end
 
