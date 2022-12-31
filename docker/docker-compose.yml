@@ -1,8 +1,7 @@
 #
-# PLATFORM=arm docker compose -f docker-compose.yml up
-# PLATFORM=amd docker compose -f docker-compose.yml up -d
-# usermod -G docker lucky
-# docker-compose -f docker-compose.yml down
+# dev: docker compose -f docker-compose.yml up
+# PLATFORM=arm APP_PORT=3000:3000 RUN_AS=7777:7777 docker compose -f docker-compose.yml up
+# PLATFORM=amd APP_PORT=3000:3000 RUN_AS=7777:7777 docker compose -f docker-compose.yml up -d
 #
 # docker exec -ti open_cook-rails-1 bash
 version: '3.8'
@@ -13,7 +12,7 @@ services:
   # port: 5432
   psql:
     image: postgres:15.1-bullseye
-    user: '7777:7777'
+    user: ${RUN_AS:-root}
     # restart: always
     environment:
       POSTGRES_PASSWORD: qwerty
@@ -26,7 +25,7 @@ services:
   # command: redis-server --save 60 1 --loglevel warning
   redis:
     image: redis:7.0.5-alpine
-    user: '7777:7777'
+    user: ${RUN_AS:-root}
     volumes:
       - ../db/REDIS:/data
       - ../shared:/shared
@@ -42,34 +41,43 @@ services:
   #   depends_on:
   #     - redis
 
+  # port: 36307
+  #
   # docker exec -ti open_cook-sphinx-1 ash
+  #
   # docker exec open_cook-sphinx-1 indexer --all --config /opt/sphinx/conf/sphinx.conf
   # docker exec open_cook-sphinx-1 indexer --all --config /opt/sphinx/conf/sphinx.conf --rotate
-  # port: 36307
+  #
   sphinx:
     image: macbre/sphinxsearch:3.4.1
-    user: '7777:7777'
+    user: ${RUN_AS:-root}
     environment:
       - SPHINX_CONFIG_FILE=/opt/sphinx/conf/sphinx.conf
     volumes:
-      - ../db/SPHINX:/opt/sphinx/index
       - ../config/SPHINX:/opt/sphinx/conf
+      - ../db/SPHINX:/opt/sphinx/index
       - ../shared:/shared
     mem_limit: 512m
 
-  # docker exec -ti open_cook-rails-1 bash
-  # rails s -p 3000 -b 0.0.0.0
-  # bundle exec puma -C config/PUMA.production.rb
   # port 3000
+  #
+  # docker exec -ti open_cook-rails-1 bash
+  #
+  # bundle exec rake ts:configure
+  # docker exec open_cook-sphinx-1 indexer --all --config /opt/sphinx/conf/sphinx.conf --rotate
+  #
+  # bundle exec rails s -p 3000 -b 0.0.0.0
+  # bundle exec puma -C config/PUMA.production.rb
+  #
   rails:
     tty: true
     stdin_open: true
-    image: iamteacher/opencook.ru:ok.${PLATFORM:-arm}64
+    image: iamteacher/opencook.ru:2022.${PLATFORM:-arm}64
     volumes:
       - ../:/home/lucky/app
-    # ports:
-    #   - 3000:3000
+      - ../shared:/shared
+      - ../db/SPNINX:/opt/sphinx/index
+    ports:
+      - ${APP_PORT:-3000:3000}
     depends_on:
       - psql
-      - sphinx
-      - redis
