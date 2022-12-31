@@ -35,7 +35,7 @@ gem 'whenever', '0.9.2'
 
 gem 'redis', '3.2.1'
 # gem 'sinatra', '1.4.6', require: nil
-gem 'sidekiq', '3.5.0'
+gem 'sidekiq', '4.2.10'
 
 # views
 gem 'browser', '0.6.0'
