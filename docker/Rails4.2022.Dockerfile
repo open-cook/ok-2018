@@ -136,3 +136,5 @@ SHELL ["/bin/bash", "-c"]
 RUN touch ~/.bash_profile
 ENV NVM_DIR="/opt/.nvm"
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+
+# RUN npm -g install svgo

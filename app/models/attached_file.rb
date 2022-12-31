@@ -50,7 +50,7 @@ class AttachedFile < ActiveRecord::Base
   def optimize_base
     return unless is_jpg?
     # pngquant: false, svgo: false, pngcrush: false, advpng: false
-    image_optim = ImageOptim.new()
+    image_optim = ImageOptim.new(advpng: false)
     image_optim.optimize_image! path(:base)
   end
 end
