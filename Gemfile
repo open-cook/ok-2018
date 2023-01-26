@@ -41,7 +41,7 @@ gem 'sidekiq', '3.5.0'
 gem 'browser', '0.6.0'
 gem 'truncato', '0.7.10'
 gem 'jquery-rails', '4.0.4'
-gem 'jquery-ui-rails', '5.0.0'
+gem 'jquery-ui-rails', '6.0.1'
 gem 'jbuilder', '1.0.2'
 
 gem 'haml', '4.0.5'
