@@ -17,7 +17,7 @@ gem 'pg', '0.19.0'
 gem 'mysql2', '0.5.2'
 
 # App level
-gem 'devise', '3.5.2'
+gem 'devise', '4.8.1'
 
 gem 'colorize', '0.8.1'
 gem 'letter_opener', '1.4.1'
