@@ -1,4 +1,5 @@
 development:
+  host: postgres
   adapter: postgresql
   encoding: unicode
   database: open_cook_dev
